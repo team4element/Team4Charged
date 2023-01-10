@@ -27,7 +27,7 @@ public class Drive extends CommandBase {
   @Override
   public void execute() {
     double leftPower = this.controller.getLeftY();
-    double rightPower = this.controller.getLeftX();
+    double rightPower = this.controller.getRightY();
     m_drive.setPower(leftPower, rightPower);
   }
 

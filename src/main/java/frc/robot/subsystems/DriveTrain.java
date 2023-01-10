@@ -4,6 +4,7 @@
 
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.TalonSRXControlMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 
@@ -36,6 +37,10 @@ public class DriveTrain extends SubsystemBase {
     rightMiddle.follow(rightBack);
     rightFront.follow(leftBack);
 
+    leftBack.setInverted(true);
+    leftMiddle.setInverted(true);
+    leftFront.setInverted(true);
+
   }
 
   @Override
@@ -44,7 +49,7 @@ public class DriveTrain extends SubsystemBase {
   }
 
   public void setPower(double leftPower, double rightPower){
-    leftBack.set(leftPower);
-    rightBack.set(rightPower);
+    leftBack.set(TalonSRXControlMode.PercentOutput, leftPower);
+    rightBack.set(TalonSRXControlMode.PercentOutput, rightPower);
   }
 }
