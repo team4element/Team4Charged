@@ -17,8 +17,8 @@ public class DriveTrain extends SubsystemBase {
   private WPI_TalonSRX leftBack;
 
   private WPI_VictorSPX rightFront;
-  private WPI_VictorSPX rightMiddle;
-  private WPI_TalonSRX rightBack;
+  private WPI_TalonSRX rightMiddle;
+  private WPI_VictorSPX rightBack;
 
   public DriveTrain() {
     //Define Motor Objects
@@ -27,15 +27,15 @@ public class DriveTrain extends SubsystemBase {
     leftBack = new WPI_TalonSRX(3);
     
     rightFront = new WPI_VictorSPX(4);
-    rightMiddle = new WPI_VictorSPX(5);
-    rightBack = new WPI_TalonSRX(6);
+    rightMiddle = new WPI_TalonSRX(5);
+    rightBack = new WPI_VictorSPX(6);
 
     //Make motors Follow the Leader 
     leftMiddle.follow(leftBack);
     leftFront.follow(leftBack);
 
-    rightMiddle.follow(rightBack);
-    rightFront.follow(leftBack);
+    rightBack.follow(rightMiddle);
+    rightFront.follow(rightMiddle);
 
     leftBack.setInverted(true);
     leftMiddle.setInverted(true);
@@ -50,6 +50,6 @@ public class DriveTrain extends SubsystemBase {
 
   public void setPower(double leftPower, double rightPower){
     leftBack.set(TalonSRXControlMode.PercentOutput, leftPower);
-    rightBack.set(TalonSRXControlMode.PercentOutput, rightPower);
+    rightMiddle.set(TalonSRXControlMode.PercentOutput, rightPower);
   }
 }
