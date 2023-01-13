@@ -7,6 +7,7 @@ package frc.robot.subsystems;
 import com.ctre.phoenix.motorcontrol.TalonSRXControlMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
+import frc.robot.Constants;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
@@ -22,13 +23,13 @@ public class DriveTrain extends SubsystemBase {
 
   public DriveTrain() {
     //Define Motor Objects
-    leftFront = new WPI_VictorSPX(1);
-    leftMiddle = new WPI_VictorSPX(2);
-    leftBack = new WPI_TalonSRX(3);
+    leftFront = new WPI_VictorSPX(Constants.DriveConstants.kLeftFrontMotor);
+    leftMiddle = new WPI_VictorSPX(Constants.DriveConstants.kLeftMiddleMotor);
+    leftBack = new WPI_TalonSRX(Constants.DriveConstants.kLeftBackMotor);
     
-    rightFront = new WPI_VictorSPX(4);
-    rightMiddle = new WPI_TalonSRX(5);
-    rightBack = new WPI_VictorSPX(6);
+    rightFront = new WPI_VictorSPX(Constants.DriveConstants.kRightFrontMotor);
+    rightMiddle = new WPI_TalonSRX(Constants.DriveConstants.kRightMiddleMotor);
+    rightBack = new WPI_VictorSPX(Constants.DriveConstants.kRightBackMotor);
 
     //Make motors Follow the Leader 
     leftMiddle.follow(leftBack);
