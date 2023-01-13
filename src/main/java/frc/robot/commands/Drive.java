@@ -26,9 +26,9 @@ public class Drive extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    double leftPower = this.controller.getLeftY();
-    double rightPower = this.controller.getRightY();
-    m_drive.setPower(leftPower, rightPower);
+    double straightPower = this.controller.getLeftY();
+    double rotationPower = this.controller.getRightX();
+    m_drive.setPower(straightPower + rotationPower, straightPower - rotationPower);
   }
 
   // Called once the command ends or is interrupted.
