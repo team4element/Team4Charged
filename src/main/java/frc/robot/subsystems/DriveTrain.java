@@ -50,11 +50,6 @@ public class DriveTrain extends SubsystemBase {
 
   }
 
-  @Override
-  public void periodic() {
-    // This method will be called once per scheduler run
-  }
-
   public void setPower(double leftPower, double rightPower){
     leftBack.set(TalonSRXControlMode.PercentOutput, leftPower);
     rightMiddle.set(TalonSRXControlMode.PercentOutput, rightPower);
@@ -64,9 +59,15 @@ public class DriveTrain extends SubsystemBase {
     navX.reset();
   }
 
-  public void getGyro(){
-    navX.getYaw();
+  public double getGyro(){
+    return navX.getYaw();
   }
+  
+  @Override
+  public void periodic() {
+    System.out.println(getGyro());
+  }
+
 }
 
 
