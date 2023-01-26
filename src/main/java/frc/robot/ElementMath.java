@@ -1,6 +1,6 @@
 package frc.robot;
 
-public class ElementalMath {
+public class ElementMath {
     public static final double kEpsilon = 1e-9;
 	static double prevArrVal;
 
