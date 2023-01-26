@@ -7,8 +7,10 @@ package frc.robot.subsystems;
 import com.ctre.phoenix.motorcontrol.TalonSRXControlMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
-import frc.robot.Constants;
+import com.kauailabs.navx.frc.AHRS;
 
+import frc.robot.Constants;
+import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class DriveTrain extends SubsystemBase {
@@ -21,6 +23,8 @@ public class DriveTrain extends SubsystemBase {
   private WPI_TalonSRX rightMiddle;
   private WPI_VictorSPX rightBack;
 
+  private AHRS navX;
+
   public DriveTrain() {
     //Define Motor Objects
     leftFront = new WPI_VictorSPX(Constants.DriveConstants.kLeftFrontMotor);
@@ -30,6 +34,8 @@ public class DriveTrain extends SubsystemBase {
     rightFront = new WPI_VictorSPX(Constants.DriveConstants.kRightFrontMotor);
     rightMiddle = new WPI_TalonSRX(Constants.DriveConstants.kRightMiddleMotor);
     rightBack = new WPI_VictorSPX(Constants.DriveConstants.kRightBackMotor);
+
+    navX = new AHRS(SPI.Port.kMXP);
 
     //Make motors Follow the Leader 
     leftMiddle.follow(leftBack);
@@ -53,4 +59,14 @@ public class DriveTrain extends SubsystemBase {
     leftBack.set(TalonSRXControlMode.PercentOutput, leftPower);
     rightMiddle.set(TalonSRXControlMode.PercentOutput, rightPower);
   }
+  
+  public void resetSensors(){
+    navX.reset();
+  }
+
+  public void getGyro(){
+    navX.getYaw();
+  }
 }
+
+
