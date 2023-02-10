@@ -28,5 +28,11 @@ public final class Constants {
     public static final int kRightFrontMotor = 4;
     public static final int kRightMiddleMotor = 5;
     public static final int kRightBackMotor = 6;
+
+    public static final int kAngleP = 0;
+    public static final int kAngleI = 0;
+    public static final int kAngleD = 0;
+    public static final int kAngleF = 0;
+
   }
 }
