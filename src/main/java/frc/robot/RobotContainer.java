@@ -7,6 +7,7 @@ package frc.robot;
 import frc.robot.Constants;
 import frc.robot.commands.Autos;
 import frc.robot.commands.ExampleCommand;
+import frc.robot.commands.RotateToAngle;
 import frc.robot.commands.Drive;
 import frc.robot.controllers.DriverController;
 import frc.robot.controllers.OperatorController;
@@ -30,7 +31,7 @@ public class RobotContainer {
   // Replace with CommandPS4Controller or CommandJoystick if needed
   private final DriverController m_driverController = new DriverController();
   private final OperatorController m_operatorController = new OperatorController();
-
+  
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     // Configure the trigger bindings
@@ -49,8 +50,8 @@ public class RobotContainer {
    */
   private void configureBindings() {
     // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
-    new Trigger(m_exampleSubsystem::exampleCondition)
-        .onTrue(new ExampleCommand(m_exampleSubsystem));
+    new Trigger(m_driveTrain::rotate)
+        .onTrue(new RotateToAngle(m_driveTrain, 90));
 
     // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
     // cancelling on release.

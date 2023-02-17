@@ -10,6 +10,8 @@ import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 import com.kauailabs.navx.frc.AHRS;
 
 import frc.robot.Constants;
+import frc.robot.controllers.DriverController;
+
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
@@ -24,6 +26,8 @@ public class DriveTrain extends SubsystemBase {
   private WPI_VictorSPX rightBack;
 
   private AHRS navX;
+
+  public static DriverController mDriverController = new DriverController();
 
   public DriveTrain() {
     //Define Motor Objects
@@ -54,7 +58,7 @@ public class DriveTrain extends SubsystemBase {
     leftBack.set(TalonSRXControlMode.PercentOutput, leftPower);
     rightMiddle.set(TalonSRXControlMode.PercentOutput, rightPower);
   }
-  
+
   public void resetSensors(){
     navX.reset();
   }
@@ -63,11 +67,11 @@ public class DriveTrain extends SubsystemBase {
     return navX.getYaw();
   }
   
+  public boolean rotate(){
+     return mDriverController.getRotate();
+  }
   @Override
   public void periodic() {
     System.out.println(getGyro());
   }
-
 }
-
-

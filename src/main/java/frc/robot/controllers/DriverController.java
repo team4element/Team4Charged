@@ -19,4 +19,8 @@ public class DriverController {
     public double getTurn(){
         return ElementMath.squareInput(mController.getRightX()/-1.5);
     }
+
+    public boolean getRotate(){
+        return mController.getYButton();
+    }
 }
