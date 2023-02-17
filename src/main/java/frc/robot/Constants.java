@@ -17,9 +17,10 @@ public final class Constants {
     //Controllers
     public static final int kDriverControllerPort = 0;
     public static final int kOperatorControllerPort = 1;
+    public static final double kJoystickThreshold = 0.1;
   }
   
-  public static class DriveConstants{
+  public static class DriveConstants {
     //DriveTrain
     public static final int kLeftFrontMotor = 1;
     public static final int kLeftMiddleMotor = 2;
@@ -29,10 +30,15 @@ public final class Constants {
     public static final int kRightMiddleMotor = 5;
     public static final int kRightBackMotor = 6;
 
-    public static final int kAngleP = 0;
-    public static final int kAngleI = 0;
-    public static final int kAngleD = 0;
-    public static final int kAngleF = 0;
+    public static final double kAngleP = 0.04;
+    public static final double kAngleI = 0;
+    public static final double kAngleD = 0.02;
+    public static final double kAngleF = 0;
+  }
 
+  public static class PneumaticsConstants {
+    public static final int kCompressorID = 1;
+    public static final int kIntakeSolenoid = 5;
+    public static final int kArmSolenoid = 6;
   }
 }

@@ -9,6 +9,13 @@
       "name": "Launch Main",
       "request": "launch",
       "mainClass": "frc.robot.Main",
+      "projectName": "Team4Charged-master"
+    },
+    {
+      "type": "java",
+      "name": "Launch Main",
+      "request": "launch",
+      "mainClass": "frc.robot.Main",
       "projectName": "Dumb Robot"
     },
     {

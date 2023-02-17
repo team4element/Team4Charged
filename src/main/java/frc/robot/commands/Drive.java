@@ -8,19 +8,21 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.ElementMath;
 import frc.robot.subsystems.DriveTrain;
+import frc.robot.controllers.TeleopControls;
+import frc.robot.controllers.DriverController;
+import frc.robot.Constants;
 
 public class Drive extends CommandBase {
   private final DriveTrain m_drive;
-  private final CommandXboxController controller;
-  
-  public Drive(DriveTrain drive, CommandXboxController controller) {
+  DriverController mDriverController = TeleopControls.mDriverController;
+
+  public Drive(DriveTrain drive, DriverController controller) {
     this.m_drive = drive;
-    this.controller = controller;
+    this.mDriverController = controller;
 
     addRequirements(this.m_drive);
   }
-
-
+ 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {}
@@ -28,14 +30,16 @@ public class Drive extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    double straightPower = this.controller.getLeftY();
-    double rotationPower = ElementMath.squareInput(this.controller.getRightX()/1.5);
+    double straightPower = this.mDriverController.getThrottle();
+    double rotationPower = this.mDriverController.getTurn();
     m_drive.setPower(straightPower + rotationPower, straightPower - rotationPower);
   }
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+    m_drive.resetSensors();
+  }
 
   // Returns true when the command should end.
   @Override
@@ -43,3 +47,5 @@ public class Drive extends CommandBase {
     return false;
   }
 }
+
+
