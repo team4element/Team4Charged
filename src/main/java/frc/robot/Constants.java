@@ -30,9 +30,9 @@ public final class Constants {
     public static final int kRightMiddleMotor = 5;
     public static final int kRightBackMotor = 6;
 
-    public static final double kAngleP = 0.04;
+    public static final double kAngleP = 0.006;
     public static final double kAngleI = 0;
-    public static final double kAngleD = 0.02;
+    public static final double kAngleD = 0;
     public static final double kAngleF = 0;
   }
 

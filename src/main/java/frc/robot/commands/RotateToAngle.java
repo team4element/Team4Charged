@@ -35,7 +35,7 @@ public class RotateToAngle extends CommandBase {
     @Override
     public void execute() {
         double power = anglePID.calculate(this.m_drive.getGyro());
-        this.m_drive.setPower(power, -power);
+        this.m_drive.setPower(-power, power);
     }
 
     @Override
