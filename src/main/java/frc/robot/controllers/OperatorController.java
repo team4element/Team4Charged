@@ -11,4 +11,8 @@ public class OperatorController {
     public OperatorController(){
         mController = new XboxController(Constants.ControllerConstants.kOperatorControllerPort);
     }
+
+    public boolean getCompressorToggle(){
+        return mController.getBButton();
+    }
 }
