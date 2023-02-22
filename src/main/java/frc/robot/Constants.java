@@ -37,8 +37,19 @@ public final class Constants {
   public static class PneumaticsConstants {
     //Pneumatics
     public static final int kCompressorID = 1;
+
+    // Arm Solenoids
     public static final int kLeftArmSolenoid = 5;
     public static final int kRightArmSolenoid = 6;
+  }
+
+  public static class ArmConstants {
+    // Arm
+    public static final int kLeftFrontMotor = 5;
+    public static final int kLeftBackMotor = 6;
+
+    public static final int kRightFrontMotor = 7;
+    public static final int kRightBackMotor = 8;
   }
 
   public static class TargetingConstants {
