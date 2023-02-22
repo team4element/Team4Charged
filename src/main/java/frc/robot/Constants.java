@@ -23,12 +23,10 @@ public final class Constants {
   public static class DriveConstants {
     //DriveTrain
     public static final int kLeftFrontMotor = 1;
-    public static final int kLeftMiddleMotor = 2;
-    public static final int kLeftBackMotor = 3;
+    public static final int kLeftBackMotor = 2;
 
-    public static final int kRightFrontMotor = 4;
-    public static final int kRightMiddleMotor = 5;
-    public static final int kRightBackMotor = 6;
+    public static final int kRightFrontMotor = 3;
+    public static final int kRightBackMotor = 4;
 
     public static final double kAngleP = 0.006;
     public static final double kAngleI = 0;
@@ -39,8 +37,8 @@ public final class Constants {
   public static class PneumaticsConstants {
     //Pneumatics
     public static final int kCompressorID = 1;
-    public static final int kIntakeSolenoid = 5;
-    public static final int kArmSolenoid = 6;
+    public static final int kLeftArmSolenoid = 5;
+    public static final int kRightArmSolenoid = 6;
   }
 
   public static class TargetingConstants {

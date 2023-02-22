@@ -5,7 +5,7 @@ import frc.robot.Constants;
 import edu.wpi.first.wpilibj.XboxController;
 
 public class OperatorController {
-    private double triggerTolerance = .25;
+    // private double triggerTolerance = .25;
     private final XboxController mController;
 
     public OperatorController(){
