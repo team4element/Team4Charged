@@ -36,7 +36,7 @@ public final class Constants {
 
   public static class PneumaticsConstants {
     //Pneumatics
-    public static final int kCompressorID = 1;
+    public static final int kCompressorID = 0;
 
     // Arm Solenoids
     public static final int kLeftArmSolenoid = 5;
