@@ -15,4 +15,12 @@ public class OperatorController {
     public boolean getCompressorToggle(){
         return mController.getBButton();
     }
+
+    public boolean getIntakeForward(){
+        return mController.getLeftBumper();
+    }
+
+    public boolean getIntakeReverse(){
+        return mController.getRightBumper();
+    }
 }

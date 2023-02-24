@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.Solenoid;
 
 import frc.robot.Constants;
+import frc.robot.controllers.OperatorController;
 
 import com.ctre.phoenix.motorcontrol.VictorSPXControlMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
@@ -21,6 +22,9 @@ public class Intake extends SubsystemBase {
   // Declaring Solenoids
   public static Solenoid mLeftIntakePiston;
   public static Solenoid mRightIntakePiston;
+
+  // Declaring and Instantiating Controller
+  private final OperatorController mOperatorController = new OperatorController();
 
   public Intake() {
     // Instantiating Motors
@@ -42,6 +46,14 @@ public class Intake extends SubsystemBase {
     right.set(VictorSPXControlMode.PercentOutput, reversePower);
   }
 
+  public boolean intakeForward(){
+    return mOperatorController.getIntakeForward();
+  }
+
+  public boolean intakeReverse(){
+    return mOperatorController.getIntakeReverse();
+  }
+  
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
