@@ -25,7 +25,8 @@ public class ToggleCompressor extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    System.out.println("pressed");
+    System.out.println(Arm.mCompressor.isEnabled());
+    System.out.println(Arm.mCompressor.getPressure());
   }
 
   // Called once the command ends or is interrupted.
