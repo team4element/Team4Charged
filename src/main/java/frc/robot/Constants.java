@@ -42,9 +42,8 @@ public final class Constants {
     public static final int kLeftArmSolenoid = 5;
     public static final int kRightArmSolenoid = 6;
 
-    // Intake Solenoids
-    public static final int kLeftIntakeSolenoid = 7;
-    public static final int kRightIntakeSolenoid = 8;
+    // Intake Solenoid
+    public static final int kIntakeSolenoid = 7;
   }
 
   public static class ArmConstants {

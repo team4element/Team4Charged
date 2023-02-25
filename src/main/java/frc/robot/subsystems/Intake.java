@@ -20,8 +20,7 @@ public class Intake extends SubsystemBase {
   private WPI_VictorSPX right;
 
   // Declaring Solenoids
-  public static Solenoid mLeftIntakePiston;
-  public static Solenoid mRightIntakePiston;
+  private static Solenoid mPiston;
 
   // Declaring and Instantiating Controller
   private final OperatorController mOperatorController = new OperatorController();
@@ -31,9 +30,8 @@ public class Intake extends SubsystemBase {
     left = new WPI_VictorSPX(Constants.IntakeConstants.kLeftMotor);
     right = new WPI_VictorSPX(Constants.IntakeConstants.kRightMotor);
 
-    // Instantiating Solenoids
-    mLeftIntakePiston = new Solenoid(3, PneumaticsModuleType.CTREPCM, Constants.PneumaticsConstants.kLeftIntakeSolenoid);
-    mRightIntakePiston = new Solenoid(4, PneumaticsModuleType.CTREPCM, Constants.PneumaticsConstants.kRightIntakeSolenoid);
+    // Instantiating Solenoid
+    mPiston = new Solenoid(0, PneumaticsModuleType.CTREPCM, Constants.PneumaticsConstants.kIntakeSolenoid);
   }
 
   public void setIntakeForwardPower(double forwardPower){
@@ -53,7 +51,14 @@ public class Intake extends SubsystemBase {
   public boolean intakeReverse(){
     return mOperatorController.getIntakeReverse();
   }
+
+  public static void getToggleClaw(){
+    mPiston.toggle();
+  }
   
+  public boolean toggleClaw(){
+    return mOperatorController.getDeployClaw();
+  }
   @Override
   public void periodic() {
     // This method will be called once per scheduler run

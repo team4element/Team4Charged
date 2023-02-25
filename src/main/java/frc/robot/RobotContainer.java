@@ -12,9 +12,9 @@ import frc.robot.commands.Drive;
 import frc.robot.commands.ToggleCompressor;
 import frc.robot.commands.IntakeForward;
 import frc.robot.commands.IntakeReverse;
+import frc.robot.commands.ToggleClaw;
 
 import frc.robot.controllers.DriverController;
-import frc.robot.controllers.OperatorController;
 
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.Arm;
@@ -40,7 +40,6 @@ public class RobotContainer {
 
   // Replace with CommandPS4Controller or CommandJoystick if needed
   private final DriverController m_driverController = new DriverController();
-  private final OperatorController m_operatorController = new OperatorController();
   
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -59,22 +58,26 @@ public class RobotContainer {
    * joysticks}.
    */
   private void configureBindings() {
-    // Run RotateToAngle Command when Driver Y Button is Pressed)
+    // Run RotateToAngle Command when Driver Y Button is Pressed
     new Trigger(m_driveTrain::rotate)
       .onTrue(new RotateToAngle(m_driveTrain, 90));
     
-    // Run ToggleCompressor Command when Operator B Button is Pressed)
+    // Run ToggleCompressor Command when Operator B Button is Pressed
     new Trigger(m_arm::toggleCompressor)
       .onTrue(new ToggleCompressor(m_arm));
 
-    // Run IntakeForward Command when Operator Left Trigger is Held)
+    // Run IntakeForward Command when Operator Left Bumper is Held
     new Trigger(m_intake::intakeForward)
       .whileTrue(new IntakeForward(m_intake));
 
-    // Run IntakeReverse Command when Operator Right Trigger is Held)
+    // Run IntakeReverse Command when Operator Left Trigger is Held
     new Trigger(m_intake::intakeReverse)
       .whileTrue(new IntakeReverse(m_intake));
-      
+    
+    // Run ToggleClaw Command when Operator X Button is Pressed
+    new Trigger(m_intake::toggleClaw)
+      .onTrue(new ToggleClaw(m_intake));
+
     // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
     // cancelling on release.
     // m_driverController.b().whileTrue(m_exampleSubsystem.exampleMethodCommand());

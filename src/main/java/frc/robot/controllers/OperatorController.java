@@ -5,7 +5,7 @@ import frc.robot.Constants;
 import edu.wpi.first.wpilibj.XboxController;
 
 public class OperatorController {
-    // private double triggerTolerance = .25;
+    private double triggerTolerance = .25;
     private final XboxController mController;
 
     public OperatorController(){
@@ -21,6 +21,10 @@ public class OperatorController {
     }
 
     public boolean getIntakeReverse(){
-        return mController.getRightBumper();
+        return mController.getLeftTriggerAxis() > triggerTolerance;
+    }
+
+    public boolean getDeployClaw(){
+        return mController.getXButtonPressed();
     }
 }
