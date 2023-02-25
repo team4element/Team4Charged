@@ -24,8 +24,8 @@ public class Arm extends SubsystemBase {
   private WPI_TalonFX rightBack;
 
   // Declaring Solenoids
-  public static Solenoid mLeftArmPiston;
-  public static Solenoid mRightArmPiston;
+  private static Solenoid mLeftArmPiston;
+  private static Solenoid mRightArmPiston;
 
   // Declaring Controller
   public static OperatorController mOperatorController = new OperatorController();
@@ -46,8 +46,8 @@ public class Arm extends SubsystemBase {
     rightBack.follow(rightFront);
 
     //Instantiating Solenoids
-    mLeftArmPiston = new Solenoid(1, PneumaticsModuleType.CTREPCM, Constants.PneumaticsConstants.kLeftArmSolenoid);
-    mRightArmPiston = new Solenoid(2, PneumaticsModuleType.CTREPCM, Constants.PneumaticsConstants.kRightArmSolenoid);
+    mLeftArmPiston = new Solenoid(0, PneumaticsModuleType.CTREPCM, Constants.PneumaticsConstants.kLeftArmSolenoid);
+    mRightArmPiston = new Solenoid(0, PneumaticsModuleType.CTREPCM, Constants.PneumaticsConstants.kRightArmSolenoid);
 
     //Instantiating Compressor
     mCompressor = new Compressor(Constants.PneumaticsConstants.kCompressorID, PneumaticsModuleType.CTREPCM);
