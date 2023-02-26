@@ -13,7 +13,7 @@ public class ToggleCompressor extends CommandBase {
 
   public ToggleCompressor(Arm arm) {
     this.m_arm = arm;
-    addRequirements(m_arm);
+    addRequirements(this.m_arm);
   }
 
   // Called when the command is initially scheduled.

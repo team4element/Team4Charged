@@ -10,7 +10,7 @@ public class IntakeForward extends CommandBase {
 
   public IntakeForward(Intake intake) {
     this.m_intake = intake;
-    addRequirements(m_intake);
+    addRequirements(this.m_intake);
   }
 
   // Called when the command is initially scheduled.
