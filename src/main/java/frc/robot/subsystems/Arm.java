@@ -50,33 +50,54 @@ public class Arm extends SubsystemBase {
     leftBack.follow(leftFront);
     rightBack.follow(rightFront);
 
-    //Instantiating Solenoids
+    // Instantiating Solenoids
     mLeftArmPiston = new Solenoid(0, PneumaticsModuleType.CTREPCM, Constants.PneumaticsConstants.kLeftArmSolenoid);
     mRightArmPiston = new Solenoid(0, PneumaticsModuleType.CTREPCM, Constants.PneumaticsConstants.kRightArmSolenoid);
 
-    //Instantiating Compressor
+    // Instantiating Compressor
     mCompressor = new Compressor(Constants.PneumaticsConstants.kCompressorID, PneumaticsModuleType.CTREPCM);
 
     mEncoder = new Encoder(0, 1);
   }
 
-  public boolean toggleCompressor(){
+  public boolean toggleCompressor() {
     return mOperatorController.getCompressorToggle();
   }
 
-  public double getEncoderDistance(){
+  public double getEncoderDistance() {
     return mEncoder.getDistance();
   }
-  
-  public void setArmPower(double power){
-    leftFront.set(TalonFXControlMode.PercentOutput, power);
-    rightFront.set(TalonFXControlMode.PercentOutput, power);
+
+  public void setArmPower(double power) {
+    double filteredValue = filterForSafeValues(power);
+    leftFront.set(TalonFXControlMode.PercentOutput, filteredValue);
+    rightFront.set(TalonFXControlMode.PercentOutput, filteredValue);
   }
 
-  public void resetSensors(){
+  public void resetSensors() {
     mEncoder.reset();
   }
-  
+
+  private boolean maxLimit() {
+    return (mEncoder.getDistance() >= Constants.ArmConstants.kForwardLimit);
+  }
+
+  private boolean minLimit() {
+    return (mEncoder.getDistance() <= Constants.ArmConstants.kBackwardLimit);
+  }
+
+  private double filterForSafeValues(double power){
+    if (maxLimit() && power < 0){
+      return power;
+    } else if (minLimit() && power > 0) {
+      return power;
+    } else if (!minLimit() && !maxLimit()){
+      return power;
+    } else {
+      return 0;
+    }
+  }
+
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
