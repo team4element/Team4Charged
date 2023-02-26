@@ -66,8 +66,8 @@ public final class Constants {
     public static final double kDistanceF = 0;
 
     // Limit values not final
-    public static final double kForwardLimit = 0;
-    public static final double kBackwardLimit = 0;
+    public static final double kMaxLimit = 0;
+    public static final double kMinLimit = 0;
   }
   
   public static class IntakeConstants {

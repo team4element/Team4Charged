@@ -25,8 +25,8 @@ public class Arm extends SubsystemBase {
   private WPI_TalonFX rightBack;
 
   // Declaring Solenoids
-  private static Solenoid mLeftArmPiston;
-  private static Solenoid mRightArmPiston;
+  private static Solenoid mLeftPivotPiston;
+  private static Solenoid mRightPivotPiston;
 
   // Declaring Controller
   public static OperatorController mOperatorController = new OperatorController();
@@ -51,8 +51,8 @@ public class Arm extends SubsystemBase {
     rightBack.follow(rightFront);
 
     // Instantiating Solenoids
-    mLeftArmPiston = new Solenoid(0, PneumaticsModuleType.CTREPCM, Constants.PneumaticsConstants.kLeftArmSolenoid);
-    mRightArmPiston = new Solenoid(0, PneumaticsModuleType.CTREPCM, Constants.PneumaticsConstants.kRightArmSolenoid);
+    mLeftPivotPiston = new Solenoid(0, PneumaticsModuleType.CTREPCM, Constants.PneumaticsConstants.kLeftArmSolenoid);
+    mRightPivotPiston = new Solenoid(0, PneumaticsModuleType.CTREPCM, Constants.PneumaticsConstants.kRightArmSolenoid);
 
     // Instantiating Compressor
     mCompressor = new Compressor(Constants.PneumaticsConstants.kCompressorID, PneumaticsModuleType.CTREPCM);
@@ -79,23 +79,31 @@ public class Arm extends SubsystemBase {
   }
 
   private boolean maxLimit() {
-    return (mEncoder.getDistance() >= Constants.ArmConstants.kForwardLimit);
+    return (mEncoder.getDistance() >= Constants.ArmConstants.kMaxLimit);
   }
 
   private boolean minLimit() {
-    return (mEncoder.getDistance() <= Constants.ArmConstants.kBackwardLimit);
+    return (mEncoder.getDistance() <= Constants.ArmConstants.kMinLimit);
   }
 
   private double filterForSafeValues(double power){
     if (maxLimit() && power < 0){
       return power;
-    } else if (minLimit() && power > 0) {
+    } else if (minLimit() && power > 0 && extendedPosition()) {
       return power;
     } else if (!minLimit() && !maxLimit()){
       return power;
     } else {
       return 0;
     }
+  }
+
+  // private boolean defaultPosition() {
+  //   return (!mLeftPivotPiston.get() && !mRightPivotPiston.get());
+  // }
+
+  private boolean extendedPosition() {
+    return (mLeftPivotPiston.get() && mRightPivotPiston.get());
   }
 
   @Override
