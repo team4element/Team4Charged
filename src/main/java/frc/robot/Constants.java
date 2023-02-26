@@ -28,6 +28,7 @@ public final class Constants {
     public static final int kRightFrontMotor = 3;
     public static final int kRightBackMotor = 4;
 
+    // RotateToAngle PID
     public static final double kAngleP = 0.006;
     public static final double kAngleI = 0;
     public static final double kAngleD = 0;
@@ -53,6 +54,16 @@ public final class Constants {
 
     public static final int kRightFrontMotor = 7;
     public static final int kRightBackMotor = 8;
+
+    // Setpoint values not final
+    public static final int kMidSetpoint = 15;
+    public static final int kHighSetpoint = 30;
+
+    // Arm Mid/High Position PID
+    public static final double kDistanceP = 0;
+    public static final double kDistanceI = 0;
+    public static final double kDistanceD = 0;
+    public static final double kDistanceF = 0;
   }
   
   public static class IntakeConstants {
