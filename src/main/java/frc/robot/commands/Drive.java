@@ -6,12 +6,11 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.DriveTrain;
-import frc.robot.controllers.TeleopControls;
 import frc.robot.controllers.DriverController;
 
 public class Drive extends CommandBase {
   private final DriveTrain m_drive;
-  DriverController mDriverController = TeleopControls.mDriverController;
+  DriverController mDriverController = new DriverController();
 
   public Drive(DriveTrain drive, DriverController controller) {
     this.m_drive = drive;
