@@ -73,6 +73,10 @@ public class Arm extends SubsystemBase {
     rightFront.set(TalonFXControlMode.PercentOutput, power);
   }
 
+  public void resetSensors(){
+    mEncoder.reset();
+  }
+  
   @Override
   public void periodic() {
     // This method will be called once per scheduler run

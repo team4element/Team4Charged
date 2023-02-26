@@ -27,4 +27,8 @@ public class OperatorController {
     public boolean getDeployClaw(){
         return mController.getXButtonPressed();
     }
+
+    public double getThrottle(){
+        return mController.getLeftY();
+    }
 }

@@ -13,8 +13,10 @@ import frc.robot.commands.ToggleCompressor;
 import frc.robot.commands.IntakeForward;
 import frc.robot.commands.IntakeReverse;
 import frc.robot.commands.ToggleClaw;
+import frc.robot.commands.ArmControl;
 
 import frc.robot.controllers.DriverController;
+import frc.robot.controllers.OperatorController;
 
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.Arm;
@@ -38,14 +40,15 @@ public class RobotContainer {
   public static Arm m_arm = new Arm();
   public static Intake m_intake = new Intake();
 
-  // Replace with CommandPS4Controller or CommandJoystick if needed
   private final DriverController m_driverController = new DriverController();
+  private final OperatorController m_operatorController = new OperatorController();
   
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     // Configure the trigger bindings
     configureBindings();
     m_driveTrain.setDefaultCommand(new Drive(m_driveTrain, m_driverController));
+    m_arm.setDefaultCommand(new ArmControl(m_arm, m_operatorController));
   }
 
   /**
