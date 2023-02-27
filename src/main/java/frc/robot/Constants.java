@@ -49,11 +49,8 @@ public final class Constants {
 
   public static class ArmConstants {
     // Arm
-    public static final int kLeftFrontMotor = 5;
-    public static final int kLeftBackMotor = 6;
-
-    public static final int kRightFrontMotor = 7;
-    public static final int kRightBackMotor = 8;
+    public static final int kLeftMotor = 5;
+    public static final int kRightMotor = 6;
 
     // Setpoint values not final
     public static final int kMidSetpoint = 15;
@@ -66,14 +63,14 @@ public final class Constants {
     public static final double kDistanceF = 0;
 
     // Limit values not final
-    public static final double kMaxLimit = 0;
+    public static final double kMaxLimit = 50;
     public static final double kMinLimit = 0;
   }
   
   public static class IntakeConstants {
     // Intake
-    public static final int kLeftMotor = 9;
-    public static final int kRightMotor = 10;
+    public static final int kLeftMotor = 7;
+    public static final int kRightMotor = 8;
 
     public static final double kIntakeForwardPower = 0.5;
     public static final double kIntakeReversePower = -0.5;

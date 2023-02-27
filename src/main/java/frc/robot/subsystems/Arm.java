@@ -18,11 +18,9 @@ import frc.robot.Constants;
 
 public class Arm extends SubsystemBase {
   // Declaring Motors
-  private WPI_TalonFX leftFront;
-  private WPI_TalonFX leftBack;
+  private WPI_TalonFX left;
 
-  private WPI_TalonFX rightFront;
-  private WPI_TalonFX rightBack;
+  private WPI_TalonFX right;
 
   // Declaring Solenoids
   private static Solenoid mLeftPivotPiston;
@@ -40,15 +38,9 @@ public class Arm extends SubsystemBase {
 
   public Arm() {
     // Instantiating Motors
-    leftFront = new WPI_TalonFX(Constants.ArmConstants.kLeftFrontMotor);
-    leftBack = new WPI_TalonFX(Constants.ArmConstants.kLeftBackMotor);
+    left = new WPI_TalonFX(Constants.ArmConstants.kLeftMotor);
 
-    rightFront = new WPI_TalonFX(Constants.ArmConstants.kRightFrontMotor);
-    rightBack = new WPI_TalonFX(Constants.ArmConstants.kRightBackMotor);
-
-    // Make motors follow the leader
-    leftBack.follow(leftFront);
-    rightBack.follow(rightFront);
+    right = new WPI_TalonFX(Constants.ArmConstants.kRightMotor);
 
     // Instantiating Solenoids
     mLeftPivotPiston = new Solenoid(0, PneumaticsModuleType.CTREPCM, Constants.PneumaticsConstants.kLeftArmSolenoid);
@@ -70,8 +62,8 @@ public class Arm extends SubsystemBase {
 
   public void setArmPower(double power) {
     double filteredValue = filterForSafeValues(power);
-    leftFront.set(TalonFXControlMode.PercentOutput, filteredValue);
-    rightFront.set(TalonFXControlMode.PercentOutput, filteredValue);
+    left.set(TalonFXControlMode.PercentOutput, filteredValue);
+    right.set(TalonFXControlMode.PercentOutput, filteredValue);
   }
 
   public void resetSensors() {
