@@ -61,34 +61,34 @@ public class Arm extends SubsystemBase {
   }
 
   public void setArmPower(double power) {
-    double filteredValue = filterForSafeValues(power);
-    left.set(TalonFXControlMode.PercentOutput, filteredValue);
-    right.set(TalonFXControlMode.PercentOutput, filteredValue);
+    // double filteredValue = filterForSafeValues(power);
+    left.set(TalonFXControlMode.PercentOutput, power);
+    right.set(TalonFXControlMode.PercentOutput, power);
   }
 
   public void resetSensors() {
     mEncoder.reset();
   }
 
-  private boolean maxLimit() {
-    return (mEncoder.getDistance() >= Constants.ArmConstants.kMaxLimit);
-  }
+  // private boolean maxLimit() {
+  //   return (mEncoder.getDistance() >= Constants.ArmConstants.kMaxLimit);
+  // }
 
-  private boolean minLimit() {
-    return (mEncoder.getDistance() <= Constants.ArmConstants.kMinLimit);
-  }
+  // private boolean minLimit() {
+  //   return (mEncoder.getDistance() <= Constants.ArmConstants.kMinLimit);
+  // }
 
-  private double filterForSafeValues(double power){
-    if (maxLimit() && power < 0){
-      return power;
-    } else if (minLimit() && power > 0 && extendedPosition()) {
-      return power;
-    } else if (!minLimit() && !maxLimit()){
-      return power;
-    } else {
-      return 0;
-    }
-  }
+  // private double filterForSafeValues(double power){
+  //   if (maxLimit() && power < 0){
+  //     return power;
+  //   } else if (minLimit() && power > 0 && extendedPosition()) {
+  //     return power;
+  //   } else if (!minLimit() && !maxLimit()){
+  //     return power;
+  //   } else {
+  //     return 0;
+  //   }
+  // }
 
   // private boolean defaultPosition() {
   //   return (!mLeftPivotPiston.get() && !mRightPivotPiston.get());

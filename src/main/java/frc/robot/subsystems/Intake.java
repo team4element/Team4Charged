@@ -35,12 +35,12 @@ public class Intake extends SubsystemBase {
   }
 
   public void setIntakeForwardPower(double forwardPower){
-    left.set(VictorSPXControlMode.PercentOutput, forwardPower);
+    left.set(VictorSPXControlMode.PercentOutput, -forwardPower);
     right.set(VictorSPXControlMode.PercentOutput, forwardPower);
   }
 
   public void setIntakeReversePower(double reversePower){
-    left.set(VictorSPXControlMode.PercentOutput, reversePower);
+    left.set(VictorSPXControlMode.PercentOutput, -reversePower);
     right.set(VictorSPXControlMode.PercentOutput, reversePower);
   }
 

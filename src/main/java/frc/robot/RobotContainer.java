@@ -67,7 +67,7 @@ public class RobotContainer {
     
     // Run ToggleCompressor Command when Operator B Button is Pressed
     new Trigger(m_arm::toggleCompressor)
-      .onTrue(new ToggleCompressor(m_arm));
+      .whileTrue(new ToggleCompressor(m_arm));
 
     // Run IntakeForward Command when Operator Left Bumper is Held
     new Trigger(m_intake::intakeForward)
