@@ -19,7 +19,11 @@ public class ToggleCompressor extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    Arm.mCompressor.enableDigital();
+    if (Arm.mCompressor.isEnabled()) {
+      Arm.mCompressor.disable();
+    } else {
+      Arm.mCompressor.enableDigital();
+    }
   }
 
   // Called every time the scheduler runs while the command is scheduled.
