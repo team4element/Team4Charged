@@ -28,7 +28,7 @@ public class OperatorController {
         return mController.getXButton();
     }
 
-    public boolean getTogglePivot(){
+    public boolean getPivot(){
         return mController.getAButton();
     }
 

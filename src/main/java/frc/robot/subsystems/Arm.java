@@ -57,7 +57,7 @@ public class Arm extends SubsystemBase {
   }
 
   public boolean togglePivot() {
-    return mOperatorController.getTogglePivot();
+    return mOperatorController.getPivot();
   }
 
   public double getEncoderDistance() {
@@ -69,8 +69,7 @@ public class Arm extends SubsystemBase {
     left.set(TalonFXControlMode.PercentOutput, power);
     right.set(TalonFXControlMode.PercentOutput, power);
   }
-
-
+  
   public void resetSensors() {
     mEncoder.reset();
   }
