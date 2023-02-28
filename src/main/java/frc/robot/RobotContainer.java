@@ -14,6 +14,7 @@ import frc.robot.commands.IntakeForward;
 import frc.robot.commands.IntakeReverse;
 import frc.robot.commands.ToggleClaw;
 import frc.robot.commands.ArmControl;
+import frc.robot.commands.TogglePivot;
 
 import frc.robot.controllers.DriverController;
 import frc.robot.controllers.OperatorController;
@@ -65,9 +66,13 @@ public class RobotContainer {
     new Trigger(m_driveTrain::rotate)
       .onTrue(new RotateToAngle(m_driveTrain, 90));
     
+    // Run TogglePivot Command when Operator A Button is Pressed
+    new Trigger(m_arm::togglePivot)
+    .onTrue(new TogglePivot(m_arm));
+
     // Run ToggleCompressor Command when Operator B Button is Pressed
     new Trigger(m_arm::toggleCompressor)
-      .whileTrue(new ToggleCompressor(m_arm));
+      .onTrue(new ToggleCompressor(m_arm));
 
     // Run IntakeForward Command when Operator Left Bumper is Held
     new Trigger(m_intake::intakeForward)

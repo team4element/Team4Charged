@@ -25,7 +25,11 @@ public class OperatorController {
     }
 
     public boolean getDeployClaw(){
-        return mController.getXButtonPressed();
+        return mController.getXButton();
+    }
+
+    public boolean getTogglePivot(){
+        return mController.getAButton();
     }
 
     public double getThrottle(){

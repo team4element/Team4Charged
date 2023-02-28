@@ -56,6 +56,10 @@ public class Arm extends SubsystemBase {
     return mOperatorController.getCompressorToggle();
   }
 
+  public boolean togglePivot() {
+    return mOperatorController.getTogglePivot();
+  }
+
   public double getEncoderDistance() {
     return mEncoder.getDistance();
   }
@@ -65,6 +69,7 @@ public class Arm extends SubsystemBase {
     left.set(TalonFXControlMode.PercentOutput, power);
     right.set(TalonFXControlMode.PercentOutput, power);
   }
+
 
   public void resetSensors() {
     mEncoder.reset();
@@ -89,13 +94,18 @@ public class Arm extends SubsystemBase {
   //     return 0;
   //   }
   // }
-
+    
   // private boolean defaultPosition() {
   //   return (!mLeftPivotPiston.get() && !mRightPivotPiston.get());
   // }
 
-  private boolean extendedPosition() {
-    return (mLeftPivotPiston.get() && mRightPivotPiston.get());
+  // private boolean extendedPosition() {
+  //   return (mLeftPivotPiston.get() && mRightPivotPiston.get());
+  // }
+
+  public static void getTogglePivot(){
+    mLeftPivotPiston.toggle();
+    mRightPivotPiston.toggle();
   }
 
   @Override
