@@ -13,7 +13,7 @@ public class DriverController {
     }
 
     public double getThrottle(){
-        return mController.getLeftY();
+        return ElementMath.squareInput(mController.getLeftY());
     }
 
     public double getTurn(){
