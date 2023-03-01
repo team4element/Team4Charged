@@ -4,6 +4,7 @@
 
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import com.kauailabs.navx.frc.AHRS;
@@ -30,7 +31,9 @@ public class DriveTrain extends SubsystemBase {
     //Define Motor Objects
     leftFront = new WPI_TalonFX(Constants.DriveConstants.kLeftFrontMotor);
     leftBack = new WPI_TalonFX(Constants.DriveConstants.kLeftBackMotor);
-    
+
+    leftBack.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor);
+
     rightFront = new WPI_TalonFX(Constants.DriveConstants.kRightFrontMotor);
     rightBack = new WPI_TalonFX(Constants.DriveConstants.kRightBackMotor);
 
@@ -44,11 +47,30 @@ public class DriveTrain extends SubsystemBase {
     leftBack.setInverted(true);
     leftFront.setInverted(true);
 
+    configurePIDF();
+
+  }
+
+  private void configurePIDF() {
+    leftBack.config_kP();
+    leftBack.config_kI();
+    leftBack.config_kD();
+    leftBack.config_kF();
+
+    rightBack.config_kP();
+    rightBack.config_kI();
+    rightBack.config_kD();
+    rightBack.config_kF();
   }
 
   public void setPower(double leftPower, double rightPower){
     leftBack.set(TalonFXControlMode.PercentOutput, leftPower);
     rightBack.set(TalonFXControlMode.PercentOutput, rightPower);
+  }
+
+  public void setPosition(double position) {
+    leftBack.set(TalonFXControlMode.Position, position);
+    rightBack.set(TalonFXControlMode.Position, position);
   }
 
   public void resetSensors(){

@@ -7,7 +7,7 @@ import frc.robot.controllers.OperatorController;
 
 public class ArmControl extends CommandBase {
   private final Arm m_arm;
-  OperatorController mOperatorController = new OperatorController();
+  OperatorController mOperatorController;
   
   public ArmControl(Arm arm, OperatorController controller) {
     this.m_arm = arm;

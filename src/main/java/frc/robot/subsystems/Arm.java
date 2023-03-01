@@ -4,6 +4,7 @@
 
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
@@ -32,15 +33,13 @@ public class Arm extends SubsystemBase {
   // Declaring Compressor
   public static Compressor mCompressor;
 
-  // Declaring Encoder
-
-  private static Encoder mEncoder;
-
   public Arm() {
     // Instantiating Motors
     left = new WPI_TalonFX(Constants.ArmConstants.kLeftMotor);
 
     right = new WPI_TalonFX(Constants.ArmConstants.kRightMotor);
+    right.setInverted(true);
+    right.follow(left);
 
     // Instantiating Solenoids
     mLeftPivotPiston = new Solenoid(0, PneumaticsModuleType.CTREPCM, Constants.PneumaticsConstants.kLeftArmSolenoid);
@@ -49,7 +48,12 @@ public class Arm extends SubsystemBase {
     // Instantiating Compressor
     mCompressor = new Compressor(Constants.PneumaticsConstants.kCompressorID, PneumaticsModuleType.CTREPCM);
 
-    mEncoder = new Encoder(0, 1);
+    left.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor);
+
+    // look into position limits
+
+    // TODO add remaining pid values
+    left.config_kP(0, Constants.ArmConstants.kDistanceP);
   }
 
   public boolean toggleCompressor() {
@@ -61,17 +65,20 @@ public class Arm extends SubsystemBase {
   }
 
   public double getEncoderDistance() {
-    return mEncoder.getDistance();
+    return left.getSelectedSensorPosition(0);
   }
 
   public void setArmPower(double power) {
     // double filteredValue = filterForSafeValues(power);
     left.set(TalonFXControlMode.PercentOutput, power);
-    right.set(TalonFXControlMode.PercentOutput, power);
+  }
+
+  public void setArmPosition(double position) {
+    left.set(TalonFXControlMode.Position, position);
   }
   
   public void resetSensors() {
-    mEncoder.reset();
+    left.setSelectedSensorPosition(0);
   }
 
   // private boolean maxLimit() {

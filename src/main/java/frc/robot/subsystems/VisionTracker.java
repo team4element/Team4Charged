@@ -12,12 +12,13 @@ import frc.robot.Constants;
 
 public class VisionTracker extends SubsystemBase {
 
-  private NetworkTable mCurrentTargetingLimelightNT;
   private NetworkTable limelightNT = NetworkTableInstance.getDefault().getTable("limelight");
+
+  double getAngle;
+  double getDistance;
 
   /** Creates a new VisionTracker. */
   private VisionTracker() {
-    mCurrentTargetingLimelightNT = limelightNT;
   }
 
   @Override
@@ -26,8 +27,16 @@ public class VisionTracker extends SubsystemBase {
     double getX = limelightNT.getEntry("tx").getDouble(0);
     double getY = limelightNT.getEntry("ty").getDouble(0);
     double getArea = limelightNT.getEntry("ta").getDouble(0);
-    double getDistance = (Constants.TargetingConstants.kTargetHeight - Constants.TargetingConstants.kFloorToLens) /
+    getDistance = (Constants.TargetingConstants.kTargetHeight - Constants.TargetingConstants.kFloorToLens) /
       Math.tan(Math.toRadians(Constants.TargetingConstants.kFloorToLensAngle + getY));
-  
+    getAngle = getX;
+  }
+
+  public double getDistance(){
+    return getDistance;
+  }
+
+  public double getAngle() {
+    return getAngle;
   }
 }
