@@ -7,6 +7,7 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.controllers.DriverController;
+import frc.robot.ElementMath;
 
 public class Drive extends CommandBase {
   private final DriveTrain m_drive;
@@ -26,8 +27,8 @@ public class Drive extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    double straightPower = this.mDriverController.getThrottle();
-    double rotationPower = this.mDriverController.getTurn();
+    double straightPower = ElementMath.squareInput(this.mDriverController.getThrottle());
+    double rotationPower = ElementMath.squareInput(this.mDriverController.getTurn()/1.5);
     m_drive.setPower(straightPower + rotationPower, straightPower - rotationPower);
   }
 
