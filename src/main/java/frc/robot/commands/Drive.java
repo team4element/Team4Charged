@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.controllers.DriverController;
 import frc.robot.ElementMath;
+import frc.robot.Constants;
 
 public class Drive extends CommandBase {
   private final DriveTrain m_drive;
@@ -27,8 +28,10 @@ public class Drive extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    double straightPower = ElementMath.squareInput(this.mDriverController.getThrottle());
-    double rotationPower = ElementMath.squareInput(this.mDriverController.getTurn()/1.5);
+    // double straightPower = ElementMath.handleDeadband((ElementMath.squareInput(this.mDriverController.getThrottle())), Constants.ControllerConstants.kJoystickThreshold);
+    // double rotationPower = -ElementMath.handleDeadband(0.5*(ElementMath.squareInput(this.mDriverController.getTurn())), Constants.ControllerConstants.kJoystickThreshold);
+    double straightPower = ElementMath.squareInput(ElementMath.handleDeadband(this.mDriverController.getThrottle(), Constants.ControllerConstants.kJoystickThreshold));
+    double rotationPower = 0.5 * ElementMath.squareInput(ElementMath.handleDeadband(this.mDriverController.getThrottle(), Constants.ControllerConstants.kJoystickThreshold));
     m_drive.setPower(straightPower + rotationPower, straightPower - rotationPower);
   }
 
