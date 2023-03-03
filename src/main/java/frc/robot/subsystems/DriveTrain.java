@@ -47,21 +47,21 @@ public class DriveTrain extends SubsystemBase {
     leftBack.setInverted(true);
     leftFront.setInverted(true);
 
-    configurePIDF();
+    // configurePIDF();
 
   }
 
-  private void configurePIDF() {
-    leftBack.config_kP();
-    leftBack.config_kI();
-    leftBack.config_kD();
-    leftBack.config_kF();
+  // private void configurePIDF() {
+  //   leftBack.config_kP();
+  //   leftBack.config_kI();
+  //   leftBack.config_kD();
+  //   leftBack.config_kF();
 
-    rightBack.config_kP();
-    rightBack.config_kI();
-    rightBack.config_kD();
-    rightBack.config_kF();
-  }
+  //   rightBack.config_kP();
+  //   rightBack.config_kI();
+  //   rightBack.config_kD();
+  //   rightBack.config_kF();
+  // }
 
   public void setPower(double leftPower, double rightPower){
     leftBack.set(TalonFXControlMode.PercentOutput, leftPower);

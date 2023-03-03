@@ -4,6 +4,7 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 
 import frc.robot.subsystems.Arm;
 import frc.robot.controllers.OperatorController;
+import frc.robot.ElementMath;
 
 public class ArmControl extends CommandBase {
   private final Arm m_arm;
@@ -23,8 +24,10 @@ public class ArmControl extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    double power = this.mOperatorController.getThrottle();
+    double power = ElementMath.cubeInput(this.mOperatorController.getThrottle());
     m_arm.setArmPower(power);
+    // m_arm.getYAxis();
+    // m_arm.getMotorOutput();
   }
 
   // Called once the command ends or is interrupted.
