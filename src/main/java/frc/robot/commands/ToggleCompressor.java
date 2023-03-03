@@ -19,24 +19,20 @@ public class ToggleCompressor extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    if (Arm.mCompressor.isEnabled()) {
-      Arm.mCompressor.disable();
-    } else {
-      Arm.mCompressor.enableDigital();
-    }
+    m_arm.mCompressor.enableDigital();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    System.out.println(Arm.mCompressor.isEnabled());
-    System.out.println(Arm.mCompressor.getPressure());
+    System.out.println(m_arm.mCompressor.isEnabled());
+    System.out.println(m_arm.mCompressor.getPressure());
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    Arm.mCompressor.disable();
+    m_arm.mCompressor.disable();
   }
 
   // Returns true when the command should end.
