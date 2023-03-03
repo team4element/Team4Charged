@@ -52,7 +52,7 @@ public class Intake extends SubsystemBase {
     return mOperatorController.getIntakeReverse();
   }
 
-  public static void getToggleClaw(){
+  public void getToggleClaw(){
     mPiston.toggle();
   }
   

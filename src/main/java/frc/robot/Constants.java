@@ -52,12 +52,12 @@ public final class Constants {
     public static final int kLeftMotor = 5;
     public static final int kRightMotor = 6;
 
-    // Setpoint values not final
-    public static final int kMidSetpoint = 15;
-    public static final int kHighSetpoint = 30;
+    // Store setpoint values 
+    // public static final int kMidSetpoint = 0;
+    // public static final int kHighSetpoint = 72450;
 
     // Arm Mid/High Position PID
-    public static final double kDistanceP = 0;
+    public static final double kDistanceP = 0.0000001;
     public static final double kDistanceI = 0;
     public static final double kDistanceD = 0;
     public static final double kDistanceF = 0;
@@ -72,8 +72,8 @@ public final class Constants {
     public static final int kLeftMotor = 7;
     public static final int kRightMotor = 8;
 
-    public static final double kIntakeForwardPower = 1;
-    public static final double kIntakeReversePower = -1;
+    public static final double kIntakeForwardPower = .5;
+    public static final double kIntakeReversePower = -.5;
   }
 
   public static class TargetingConstants {
