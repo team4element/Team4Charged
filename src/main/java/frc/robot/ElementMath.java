@@ -14,6 +14,11 @@ public class ElementMath {
 		return Math.pow(input, 3);
 	}
 
+	// Raise input to the fourth power
+	public static double biquadrateInput(double input) {
+		return Math.pow(input, 4) * input/Math.abs(input);
+	}
+
 	// Deadband for TeleOp Drive
 	public static double handleDeadband(double val, double deadband){
 		val = (Math.abs(val) > Math.abs(deadband)) ? val : 0.0;
