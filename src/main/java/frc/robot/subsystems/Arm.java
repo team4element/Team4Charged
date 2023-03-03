@@ -9,7 +9,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.Solenoid;
-import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
@@ -31,16 +31,19 @@ public class Arm extends SubsystemBase {
   public static OperatorController mOperatorController = new OperatorController();
 
   // Declaring Compressor
-  public static Compressor mCompressor;
+  public Compressor mCompressor;
 
   public Arm() {
     // Instantiating Motors
     left = new WPI_TalonFX(Constants.ArmConstants.kLeftMotor);
 
     right = new WPI_TalonFX(Constants.ArmConstants.kRightMotor);
+    
+    left.setInverted(false);
     right.setInverted(true);
-    right.follow(left);
 
+    right.follow(left);
+    
     // Instantiating Solenoids
     mLeftPivotPiston = new Solenoid(0, PneumaticsModuleType.CTREPCM, Constants.PneumaticsConstants.kLeftArmSolenoid);
     mRightPivotPiston = new Solenoid(0, PneumaticsModuleType.CTREPCM, Constants.PneumaticsConstants.kRightArmSolenoid);
@@ -52,16 +55,23 @@ public class Arm extends SubsystemBase {
 
     // look into position limits
 
-    // TODO add remaining pid values
     left.config_kP(0, Constants.ArmConstants.kDistanceP);
+    left.config_kI(0, Constants.ArmConstants.kDistanceI);
+    left.config_kD(0, Constants.ArmConstants.kDistanceD);
+    left.config_kF(0, Constants.ArmConstants.kDistanceF);
+
   }
 
   public boolean toggleCompressor() {
     return mOperatorController.getCompressorToggle();
   }
 
-  public boolean togglePivot() {
+  public boolean getTogglePivot() {
     return mOperatorController.getPivot();
+  }
+
+  public void getMotorOutput() {
+    System.out.println(left.getMotorOutputPercent());
   }
 
   public double getEncoderDistance() {
@@ -69,24 +79,32 @@ public class Arm extends SubsystemBase {
   }
 
   public void setArmPower(double power) {
-    // double filteredValue = filterForSafeValues(power);
-    left.set(TalonFXControlMode.PercentOutput, power);
+    SmartDashboard.putNumber("arm input", power);
+    left.set(TalonFXControlMode.PercentOutput, -power * 0.5);
   }
 
   public void setArmPosition(double position) {
     left.set(TalonFXControlMode.Position, position);
+  }
+
+  public void getYAxis(){
+    System.out.println(mOperatorController.getThrottle());
   }
   
   public void resetSensors() {
     left.setSelectedSensorPosition(0);
   }
 
+  public boolean getHighPosition() {
+    return mOperatorController.highPosition();
+  }
+
   // private boolean maxLimit() {
-  //   return (mEncoder.getDistance() >= Constants.ArmConstants.kMaxLimit);
+  //   return (getEncoderDistance() >= Constants.ArmConstants.kMaxLimit);
   // }
 
   // private boolean minLimit() {
-  //   return (mEncoder.getDistance() <= Constants.ArmConstants.kMinLimit);
+  //   return (getEncoderDistance() <= Constants.ArmConstants.kMinLimit);
   // }
 
   // private double filterForSafeValues(double power){
@@ -109,13 +127,15 @@ public class Arm extends SubsystemBase {
   //   return (mLeftPivotPiston.get() && mRightPivotPiston.get());
   // }
 
-  public static void getTogglePivot(){
+  public void togglePivot(){
+    System.out.println("toggle pivot");
     mLeftPivotPiston.toggle();
     mRightPivotPiston.toggle();
   }
 
   @Override
   public void periodic() {
-    // This method will be called once per scheduler run
+    System.out.println(getEncoderDistance());
+    SmartDashboard.putNumber(getName(), getEncoderDistance());
   }
 }

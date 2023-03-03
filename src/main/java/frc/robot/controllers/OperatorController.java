@@ -35,4 +35,8 @@ public class OperatorController {
     public double getThrottle(){
         return mController.getLeftY();
     }
+
+    public boolean highPosition(){
+        return mController.getRightTriggerAxis() > triggerTolerance;
+    }
 }

@@ -14,6 +14,7 @@ import frc.robot.commands.IntakeReverse;
 import frc.robot.commands.ToggleClaw;
 import frc.robot.commands.ArmControl;
 import frc.robot.commands.TogglePivot;
+import frc.robot.commands.ArmToHigh;
 
 import frc.robot.controllers.DriverController;
 import frc.robot.controllers.OperatorController;
@@ -63,14 +64,18 @@ public class RobotContainer {
     // Run RotateToAngle Command when Driver Y Button is Pressed
     new Trigger(m_driveTrain::rotate)
       .onTrue(new RotateToAngle(m_driveTrain, 90));
+
+    // Run ArmToHigh Command when Operator Right Trigger is Pressed
+    new Trigger(m_arm::getHighPosition)
+      .onTrue(new ArmToHigh(m_arm, 72450));
     
     // Run TogglePivot Command when Operator A Button is Pressed
-    new Trigger(m_arm::togglePivot)
+    new Trigger(m_arm::getTogglePivot)
     .onTrue(new TogglePivot(m_arm));
 
     // Run ToggleCompressor Command when Operator B Button is Pressed
     new Trigger(m_arm::toggleCompressor)
-      .onTrue(new ToggleCompressor(m_arm));
+      .whileTrue(new ToggleCompressor(m_arm));
 
     // Run IntakeForward Command when Operator Left Bumper is Held
     new Trigger(m_intake::intakeForward)
