@@ -36,6 +36,10 @@ public class OperatorController {
         return mController.getLeftY();
     }
 
+    public boolean midPosition(){
+        return mController.getRightBumper();
+    }
+    
     public boolean highPosition(){
         return mController.getRightTriggerAxis() > triggerTolerance;
     }

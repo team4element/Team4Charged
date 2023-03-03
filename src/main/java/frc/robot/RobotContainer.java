@@ -15,6 +15,7 @@ import frc.robot.commands.ToggleClaw;
 import frc.robot.commands.ArmControl;
 import frc.robot.commands.TogglePivot;
 import frc.robot.commands.ArmToHigh;
+import frc.robot.commands.ArmToMid;
 
 import frc.robot.controllers.DriverController;
 import frc.robot.controllers.OperatorController;
@@ -65,6 +66,11 @@ public class RobotContainer {
     new Trigger(m_driveTrain::rotate)
       .onTrue(new RotateToAngle(m_driveTrain, 90));
 
+    // Run ArmToMid Command when Operator Right Bumper is Pressed
+    new Trigger(m_arm::getMidPosition)
+      .onTrue(new ArmToMid(m_arm, 0));
+    // TODO: Set distance for ArmToMid
+    
     // Run ArmToHigh Command when Operator Right Trigger is Pressed
     new Trigger(m_arm::getHighPosition)
       .onTrue(new ArmToHigh(m_arm, 72450));
