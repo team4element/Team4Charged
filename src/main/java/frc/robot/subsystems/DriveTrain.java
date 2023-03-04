@@ -84,6 +84,15 @@ public class DriveTrain extends SubsystemBase {
   public boolean rotate(){
      return mDriverController.getRotate();
   }
+
+  public boolean slowTurnLeft(){
+    return mDriverController.getSlowTurnLeft();
+  }
+
+  public boolean slowTurnRight(){
+    return mDriverController.getSlowTurnRight();
+  }
+
   @Override
   public void periodic() {
     // System.out.println(getGyro());

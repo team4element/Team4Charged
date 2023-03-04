@@ -16,6 +16,8 @@ import frc.robot.commands.ArmControl;
 import frc.robot.commands.TogglePivot;
 import frc.robot.commands.ArmToHigh;
 import frc.robot.commands.ArmToMid;
+import frc.robot.commands.SlowTurnLeft;
+import frc.robot.commands.SlowTurnRight;
 
 import frc.robot.controllers.DriverController;
 import frc.robot.controllers.OperatorController;
@@ -66,11 +68,19 @@ public class RobotContainer {
     new Trigger(m_driveTrain::rotate)
       .onTrue(new RotateToAngle(m_driveTrain, 90));
 
+    // Run SlowTurnLeft Command when Driver Left Trigger is Pressed
+    new Trigger(m_driveTrain::slowTurnLeft)
+      .whileTrue(new SlowTurnLeft(m_driveTrain, m_driverController));
+
+    // Run SlowTurnRight Command when Driver Right Trigger is Pressed
+    new Trigger(m_driveTrain::slowTurnRight)
+      .whileTrue(new SlowTurnRight(m_driveTrain, m_driverController));
+
     // Run ArmToMid Command when Operator Right Bumper is Pressed
     new Trigger(m_arm::getMidPosition)
       .onTrue(new ArmToMid(m_arm, 0));
     // TODO: Set distance for ArmToMid
-    
+
     // Run ArmToHigh Command when Operator Right Trigger is Pressed
     new Trigger(m_arm::getHighPosition)
       .onTrue(new ArmToHigh(m_arm, 72450));
@@ -107,6 +117,6 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An example command will be run in autonomous
-    return Autos.exampleAuto(m_driveTrain);
+    return Autos.taxiAuto(m_driveTrain);
   }
 }

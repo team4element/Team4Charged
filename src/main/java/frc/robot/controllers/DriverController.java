@@ -5,6 +5,7 @@ import frc.robot.Constants;
 import edu.wpi.first.wpilibj.XboxController;
 
 public class DriverController {
+    private double triggerTolerance = .25;
     private final XboxController mController;
 
     public DriverController(){
@@ -19,6 +20,14 @@ public class DriverController {
         return mController.getRightX();
     }
 
+    public boolean getSlowTurnLeft(){
+        return mController.getLeftTriggerAxis() > triggerTolerance;
+    }
+
+    public boolean getSlowTurnRight(){
+        return mController.getRightTriggerAxis() > triggerTolerance;
+    }
+    
     public boolean getRotate(){
         return mController.getYButton();
     }
