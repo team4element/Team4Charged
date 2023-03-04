@@ -57,14 +57,14 @@ public final class Constants {
     // public static final int kHighSetpoint = 72450;
 
     // Arm Mid/High Position PID
-    public static final double kDistanceP = 0.0000001;
+    public static final double kDistanceP = 0.00001;
     public static final double kDistanceI = 0;
     public static final double kDistanceD = 0;
     public static final double kDistanceF = 0;
-
+    
     // Limit values not final
-    public static final double kMaxLimit = 50;
-    public static final double kMinLimit = 0;
+    public static final double kMaxLimit = 60;
+    public static final double kMinLimit = 5;
   }
   
   public static class IntakeConstants {

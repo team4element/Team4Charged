@@ -34,8 +34,8 @@ public class ArmToMid extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    double power = distancePID.calculate(this.m_arm.getEncoderDistance());
-    this.m_arm.setArmPower(power);
+    double pidPower = distancePID.calculate(this.m_arm.getArmAngle());
+    this.m_arm.setArmPower(pidPower);
   }
 
   // Called once the command ends or is interrupted.
@@ -47,6 +47,6 @@ public class ArmToMid extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return distancePID.atSetpoint();
+    return false;
   }
 }
