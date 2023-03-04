@@ -10,8 +10,9 @@ import edu.wpi.first.wpilibj2.command.Commands;
 
 public final class Autos {
   /** Example static factory for an autonomous command. */
-  public static CommandBase exampleAuto(DriveTrain drive) {
-    return Commands.sequence(new RotateToAngle(drive, 90.0));
+  public static CommandBase taxiAuto(DriveTrain drive) {
+   // return Commands.sequence(new RotateToAngle(drive, 90.0));
+    return null;
   }
 
   private Autos() {
