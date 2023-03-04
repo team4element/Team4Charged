@@ -8,11 +8,10 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.controllers.DriverController;
 import frc.robot.ElementMath;
-import frc.robot.Constants;
 
 public class Drive extends CommandBase {
   private final DriveTrain m_drive;
-  DriverController mDriverController = new DriverController();
+  DriverController mDriverController;
 
   public Drive(DriveTrain drive, DriverController controller) {
     this.m_drive = drive;
@@ -30,7 +29,7 @@ public class Drive extends CommandBase {
   public void execute() {
     // double straightPower = ElementMath.squareInput(ElementMath.handleDeadband(this.mDriverController.getThrottle(), Constants.ControllerConstants.kJoystickThreshold));
     double straightPower = ElementMath.squareInput(this.mDriverController.getThrottle() * 0.75);
-    double rotationPower = -this.mDriverController.getTurn() * 0.5;
+    double rotationPower = this.mDriverController.getTurn() * -0.5;
     // double rotationPower = ElementMath.cubeInput(ElementMath.handleDeadband(this.mDriverController.getTurn(), Constants.ControllerConstants.kJoystickThreshold));
     m_drive.setPower(straightPower + rotationPower, straightPower - rotationPower);
   }

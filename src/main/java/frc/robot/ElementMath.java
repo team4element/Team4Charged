@@ -6,7 +6,8 @@ public class ElementMath {
 
 	// Higher sensitivity on joystick
 	public static double squareInput(double input) {
-		return Math.pow(input, 2) * input/Math.abs(input);
+		double normalize = input < 0.0 ? -1.0 : 1.0;
+		return Math.pow(input, 2) * normalize;
 	}
 
 	// Higher sensitivity on joystick
