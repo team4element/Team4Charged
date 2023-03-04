@@ -28,8 +28,10 @@ public class Drive extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    double straightPower = ElementMath.squareInput(ElementMath.handleDeadband(this.mDriverController.getThrottle(), Constants.ControllerConstants.kJoystickThreshold));
-    double rotationPower = 0.5 * ElementMath.squareInput(ElementMath.handleDeadband(this.mDriverController.getThrottle(), Constants.ControllerConstants.kJoystickThreshold));
+    // double straightPower = ElementMath.squareInput(ElementMath.handleDeadband(this.mDriverController.getThrottle(), Constants.ControllerConstants.kJoystickThreshold));
+    double straightPower = ElementMath.squareInput(this.mDriverController.getThrottle() * 0.75);
+    double rotationPower = -this.mDriverController.getTurn() * 0.5;
+    // double rotationPower = ElementMath.cubeInput(ElementMath.handleDeadband(this.mDriverController.getTurn(), Constants.ControllerConstants.kJoystickThreshold));
     m_drive.setPower(straightPower + rotationPower, straightPower - rotationPower);
   }
 
