@@ -31,4 +31,8 @@ public class DriverController {
     public boolean getRotate(){
         return mController.getYButton();
     }
+
+    public boolean getSlowDrive(){
+        return mController.getBButton();
+    }
 }

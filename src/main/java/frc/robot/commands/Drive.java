@@ -28,8 +28,14 @@ public class Drive extends CommandBase {
   @Override
   public void execute() {
     // double straightPower = ElementMath.squareInput(ElementMath.handleDeadband(this.mDriverController.getThrottle(), Constants.ControllerConstants.kJoystickThreshold));
-    double straightPower = ElementMath.squareInput(this.mDriverController.getThrottle() * 0.75);
+    double straightPower = ElementMath.squareInput(this.mDriverController.getThrottle());
     double rotationPower = this.mDriverController.getTurn() * -0.5;
+
+    if (this.mDriverController.getSlowDrive()){
+      straightPower *= 0.25;
+      rotationPower *= 0.25;
+    }
+
     // double rotationPower = ElementMath.cubeInput(ElementMath.handleDeadband(this.mDriverController.getTurn(), Constants.ControllerConstants.kJoystickThreshold));
     m_drive.setPower(straightPower + rotationPower, straightPower - rotationPower);
   }
