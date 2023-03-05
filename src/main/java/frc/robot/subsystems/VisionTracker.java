@@ -26,7 +26,7 @@ public class VisionTracker extends SubsystemBase {
     // This method will be called once per scheduler run
     double getX = limelightNT.getEntry("tx").getDouble(0);
     double getY = limelightNT.getEntry("ty").getDouble(0);
-    double getArea = limelightNT.getEntry("ta").getDouble(0);
+    // double getArea = limelightNT.getEntry("ta").getDouble(0);
     getDistance = (Constants.TargetingConstants.kTargetHeight - Constants.TargetingConstants.kFloorToLens) /
       Math.tan(Math.toRadians(Constants.TargetingConstants.kFloorToLensAngle + getY));
     getAngle = getX;
