@@ -5,7 +5,7 @@
 package frc.robot;
 
 // import frc.robot.Constants;
-import frc.robot.commands.Autos;
+// import frc.robot.commands.Autos;
 import frc.robot.commands.RotateToAngle;
 import frc.robot.commands.Drive;
 import frc.robot.commands.ToggleCompressor;
@@ -14,8 +14,8 @@ import frc.robot.commands.IntakeReverse;
 import frc.robot.commands.ToggleClaw;
 import frc.robot.commands.ArmControl;
 import frc.robot.commands.TogglePivot;
-import frc.robot.commands.ArmToHigh;
-import frc.robot.commands.ArmToMid;
+// import frc.robot.commands.ArmToHigh;
+// import frc.robot.commands.ArmToMid;
 import frc.robot.commands.SlowTurnLeft;
 import frc.robot.commands.SlowTurnRight;
 
@@ -26,7 +26,7 @@ import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Intake;
 
-import edu.wpi.first.wpilibj2.command.Command;
+// import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 
@@ -77,13 +77,13 @@ public class RobotContainer {
       .whileTrue(new SlowTurnRight(m_driveTrain, m_driverController));
 
     // Run ArmToMid Command when Operator Right Bumper is Pressed
-    new Trigger(m_arm::getMidPosition)
-      .onTrue(new ArmToMid(m_arm, 0));
+    // new Trigger(m_arm::getMidPosition)
+    //   .onTrue(new ArmToMid(m_arm, 0));
     // TODO: Set distance for ArmToMid
 
     // Run ArmToHigh Command when Operator Right Trigger is Pressed
-    new Trigger(m_arm::getHighPosition)
-      .onTrue(new ArmToHigh(m_arm, 72450));
+    // new Trigger(m_arm::getHighPosition)
+    //   .onTrue(new ArmToHigh(m_arm, 72450));
     
     // Run TogglePivot Command when Operator A Button is Pressed
     new Trigger(m_arm::getTogglePivot)
@@ -115,8 +115,8 @@ public class RobotContainer {
    *
    * @return the command to run in autonomous
    */
-  public Command getAutonomousCommand() {
-    // An example command will be run in autonomous
-    return Autos.taxiAuto(m_driveTrain);
-  }
+  // public Command getAutonomousCommand() {
+  //   // An example command will be run in autonomous
+  //   return 
+  // }
 }
