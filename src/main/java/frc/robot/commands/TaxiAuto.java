@@ -6,7 +6,7 @@ import frc.robot.subsystems.DriveTrain;
 public class TaxiAuto extends CommandBase {
   private final DriveTrain m_drive;
 
-  private final static double TARGET_POSITION = -190;
+  private final static double TARGET_POSITION = 190;
 
   public TaxiAuto(DriveTrain drive) {
     this.m_drive = drive;
@@ -36,6 +36,6 @@ public class TaxiAuto extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return Math.abs(TARGET_POSITION - m_drive.getLeftEncoderDistance()) < -1.0;
+    return false; // Math.abs(TARGET_POSITION - m_drive.getLeftEncoderDistance()) < -1.0;
   }
 }

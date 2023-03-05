@@ -30,7 +30,7 @@ public class DriveTrain extends SubsystemBase {
 
   private static double gearRatio = 9.06;
 
-  private static double ticksPerInch = 2048 * gearRatio * 18.85;
+  private static double ticksPerInch = 2048 * gearRatio / 18.85;
 
   public DriveTrain() {
     // Define Motor Objects
@@ -66,12 +66,12 @@ public class DriveTrain extends SubsystemBase {
   }
 
   private void configurePIDF() {
-    leftBack.config_kP(0, 0.001);
+    leftBack.config_kP(0, 0.006);
     leftBack.config_kI(0, 0.0);
     leftBack.config_kD(0, 0.0);
     leftBack.config_kF(0, 0.0);
 
-    rightBack.config_kP(0, 0.001);
+    rightBack.config_kP(0, 0.006);
     rightBack.config_kI(0, 0.0);
     rightBack.config_kD(0, 0.0);
     rightBack.config_kF(0, 0.0);
