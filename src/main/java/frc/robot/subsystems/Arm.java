@@ -33,7 +33,7 @@ public class Arm extends SubsystemBase {
   // Declaring Compressor
   public Compressor mCompressor;
 
-  public double finalArmAngle = (getEncoderDistance() / 250) / 2048 * 360;
+  // public double finalArmAngle = (getEncoderDistance() / 250) / 2048 * 360;
 
   public Arm() {
     // Instantiating Motors
@@ -57,10 +57,10 @@ public class Arm extends SubsystemBase {
 
     // look into position limits
 
-    left.config_kP(0, Constants.ArmConstants.kDistanceP);
-    left.config_kI(0, Constants.ArmConstants.kDistanceI);
-    left.config_kD(0, Constants.ArmConstants.kDistanceD);
-    left.config_kF(0, Constants.ArmConstants.kDistanceF);
+    // left.config_kP(0, Constants.ArmConstants.kDistanceP);
+    // left.config_kI(0, Constants.ArmConstants.kDistanceI);
+    // left.config_kD(0, Constants.ArmConstants.kDistanceD);
+    // left.config_kF(0, Constants.ArmConstants.kDistanceF);
   }
 
   public boolean toggleCompressor() {
@@ -75,14 +75,14 @@ public class Arm extends SubsystemBase {
     System.out.println(left.getMotorOutputPercent());
   }
 
-  public double getEncoderDistance() {
-    return left.getSelectedSensorPosition(0);
-  }
+  // public double getEncoderDistance() {
+  //   return left.getSelectedSensorPosition(0);
+  // }
 
   public void setArmPower(double power) {
     SmartDashboard.putNumber("arm input", power);
-    double filteredValue = filterForSafeValues(power);
-    left.set(TalonFXControlMode.PercentOutput, -filteredValue * 0.5);
+    // double filteredValue = filterForSafeValues(power);
+    left.set(TalonFXControlMode.PercentOutput, -power * 0.5);
   }
 
   public void setArmPosition(double position) {
@@ -105,25 +105,25 @@ public class Arm extends SubsystemBase {
     return mOperatorController.highPosition();
   }
 
-  private boolean maxLimit() {
-    return (getArmAngle() >= Constants.ArmConstants.kMaxLimit);
-  }
+  // private boolean maxLimit() {
+  //   return (getArmAngle() >= Constants.ArmConstants.kMaxLimit);
+  // }
 
-  private boolean minLimit() {
-    return (getArmAngle() <= Constants.ArmConstants.kMinLimit);
-  }
+  // private boolean minLimit() {
+  //   return (getArmAngle() <= Constants.ArmConstants.kMinLimit);
+  // }
 
-  private double filterForSafeValues(double power){
-    if (maxLimit() && power < 0){
-      return power;
-    } else if (minLimit() && power > 0) {
-      return power;
-    } else if (!minLimit() && !maxLimit()){
-      return power;
-    } else {
-      return 0;
-    }
-  }
+  // private double filterForSafeValues(double power){
+  //   if (maxLimit() && power < 0){
+  //     return power;
+  //   } else if (minLimit() && power > 0) {
+  //     return power;
+  //   } else if (!minLimit() && !maxLimit()){
+  //     return power;
+  //   } else {
+  //     return 0;
+  //   }
+  // }
     
   // private boolean defaultPosition() {
   //   return (!mLeftPivotPiston.get() && !mRightPivotPiston.get());
@@ -139,14 +139,14 @@ public class Arm extends SubsystemBase {
     mRightPivotPiston.toggle();
   }
 
-  public double getArmAngle(){
-    return finalArmAngle;
-  }
+  // public double getArmAngle(){
+  //   return finalArmAngle;
+  // }
   @Override
   public void periodic() {
     // System.out.println(getEncoderDistance());
-    SmartDashboard.putNumber(getName(), getEncoderDistance());
-    SmartDashboard.putNumber("Final Arm", finalArmAngle);
-    getArmAngle();
+    // SmartDashboard.putNumber(getName(), getEncoderDistance());
+    // SmartDashboard.putNumber("Final Arm", finalArmAngle);
+    // getArmAngle();
   }
 }
