@@ -73,7 +73,7 @@ public final class Constants {
     public static final int kRightMotor = 8;
 
     public static final double kIntakeForwardPower = .5;
-    public static final double kIntakeReversePower = -.5;
+    public static final double kIntakeReversePower = -.75;
   }
 
   public static class TargetingConstants {
