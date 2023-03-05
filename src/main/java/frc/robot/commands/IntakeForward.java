@@ -20,7 +20,7 @@ public class IntakeForward extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_intake.setIntakeForwardPower(Constants.IntakeConstants.kIntakeForwardPower);
+    m_intake.setIntakeForwardPower(Constants.IntakeConstants.kTeleopIntakeForwardPower);
     /* If this doesn't work out, try running setIntakeForwardPower function in initialize
     and run with .onTrue in RobotContainer */
   }

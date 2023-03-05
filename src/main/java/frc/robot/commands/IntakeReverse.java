@@ -20,7 +20,7 @@ public class IntakeReverse extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_intake.setIntakeReversePower(Constants.IntakeConstants.kIntakeReversePower);
+    m_intake.setIntakeReversePower(Constants.IntakeConstants.kTeleopIntakeReversePower);
     /* If this doesn't work out, try running setIntakeReversePower function in initialize
     and run with .onTrue in RobotContainer */
   }
