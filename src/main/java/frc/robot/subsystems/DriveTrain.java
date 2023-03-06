@@ -5,6 +5,7 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import com.kauailabs.navx.frc.AHRS;
@@ -87,6 +88,20 @@ public class DriveTrain extends SubsystemBase {
     rightBack.config_kF(1, 0.0);
   }
 
+  public void setBrakeMode() {
+    leftBack.setNeutralMode(NeutralMode.Brake);
+    leftFront.setNeutralMode(NeutralMode.Brake);
+    rightBack.setNeutralMode(NeutralMode.Brake);
+    rightFront.setNeutralMode(NeutralMode.Brake);
+  }
+
+  public void setCoastMode() {
+    leftBack.setNeutralMode(NeutralMode.Coast);
+    leftFront.setNeutralMode(NeutralMode.Coast);
+    rightBack.setNeutralMode(NeutralMode.Coast);
+    rightFront.setNeutralMode(NeutralMode.Coast);
+  }
+  
   public void setLeftTargetPosition(double position) {
     leftBack.set(TalonFXControlMode.Position, position * ticksPerInch);
   }
