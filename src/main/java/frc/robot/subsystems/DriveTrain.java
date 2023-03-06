@@ -6,6 +6,8 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
+import com.ctre.phoenix.motorcontrol.StatorCurrentLimitConfiguration;
+import com.ctre.phoenix.motorcontrol.SupplyCurrentLimitConfiguration;
 import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import com.kauailabs.navx.frc.AHRS;
@@ -42,6 +44,15 @@ public class DriveTrain extends SubsystemBase {
 
     rightFront = new WPI_TalonFX(Constants.DriveConstants.kRightFrontMotor);
     rightBack = new WPI_TalonFX(Constants.DriveConstants.kRightBackMotor);
+   
+    // Current limit to prevent browning out due to too much current drawn 
+    var stator = new StatorCurrentLimitConfiguration(true, 80, 100, 0.05);
+    var supply = new SupplyCurrentLimitConfiguration(true, 40, 50, 0.05);
+
+    leftBack.configStatorCurrentLimit(stator);
+    leftBack.configSupplyCurrentLimit(supply);
+    rightBack.configStatorCurrentLimit(stator);
+    rightBack.configSupplyCurrentLimit(supply);
 
     navX = new AHRS(SPI.Port.kMXP);
 
@@ -102,6 +113,14 @@ public class DriveTrain extends SubsystemBase {
     rightFront.setNeutralMode(NeutralMode.Coast);
   }
   
+  public boolean slowTurnLeft() {
+    return mDriverController.getSlowTurnLeft();
+  }
+
+  public boolean slowTurnRight() {
+    return mDriverController.getSlowTurnRight();
+  }
+  
   public void setLeftTargetPosition(double position) {
     leftBack.set(TalonFXControlMode.Position, position * ticksPerInch);
   }
@@ -142,14 +161,6 @@ public class DriveTrain extends SubsystemBase {
 
   public boolean rotate() {
     return mDriverController.getRotate();
-  }
-
-  public boolean slowTurnLeft() {
-    return mDriverController.getSlowTurnLeft();
-  }
-
-  public boolean slowTurnRight() {
-    return mDriverController.getSlowTurnRight();
   }
 
   @Override
