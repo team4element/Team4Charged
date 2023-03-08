@@ -18,6 +18,8 @@ import frc.robot.commands.TogglePivot;
 // import frc.robot.commands.ArmToMid;
 import frc.robot.commands.SlowTurnLeft;
 import frc.robot.commands.SlowTurnRight;
+import frc.robot.commands.TaxiAuto;
+import frc.robot.commands.Score;
 
 import frc.robot.controllers.DriverController;
 import frc.robot.controllers.OperatorController;
@@ -25,8 +27,10 @@ import frc.robot.controllers.OperatorController;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Intake;
-
-// import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 
@@ -45,13 +49,29 @@ public class RobotContainer {
 
   private final DriverController m_driverController = new DriverController();
   private final OperatorController m_operatorController = new OperatorController();
-  
+
+  private final Command TaxiMode = new TaxiAuto(m_driveTrain);
+  private final Command ScoreLowMode = new Score(m_intake);
+
+  private final Command ScoreLowAndTaxiMode = Commands.sequence(
+    new Score(m_intake),
+    new TaxiAuto(m_driveTrain));
+
+  SendableChooser<Command> m_chooser = new SendableChooser<>();
+
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     // Configure the trigger bindings
     configureBindings();
     m_driveTrain.setDefaultCommand(new Drive(m_driveTrain, m_driverController));
     m_arm.setDefaultCommand(new ArmControl(m_arm, m_operatorController));
+
+    // Auto Modes
+    m_chooser.setDefaultOption("Taxi Auto", TaxiMode);
+    m_chooser.addOption("Score Low Auto", ScoreLowMode);
+    m_chooser.addOption("Score Low and Taxi Auto", ScoreLowAndTaxiMode);
+
+    SmartDashboard.putData(m_chooser);
   }
 
   /**
@@ -115,8 +135,7 @@ public class RobotContainer {
    *
    * @return the command to run in autonomous
    */
-  // public Command getAutonomousCommand() {
-  //   // An example command will be run in autonomous
-  //   return 
-  // }
+  public Command getAutonomousCommand() {
+    return m_chooser.getSelected();
+  }
 }

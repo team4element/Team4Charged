@@ -81,9 +81,11 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void autonomousInit() {
-    m_autonomousCommand = Commands.sequence(
-        new Score(RobotContainer.m_intake),
-        new TaxiAuto(RobotContainer.m_driveTrain));
+    m_autonomousCommand = m_robotContainer.getAutonomousCommand();
+
+    // m_autonomousCommand = Commands.sequence(
+    //     new Score(RobotContainer.m_intake),
+    //     new TaxiAuto(RobotContainer.m_driveTrain));
     RobotContainer.m_arm.mCompressor.disable();
     // schedule the autonomous command (example)
     if (m_autonomousCommand != null) {
