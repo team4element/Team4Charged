@@ -5,6 +5,8 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
+
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
@@ -61,6 +63,16 @@ public class Arm extends SubsystemBase {
     // left.config_kI(0, Constants.ArmConstants.kDistanceI);
     // left.config_kD(0, Constants.ArmConstants.kDistanceD);
     // left.config_kF(0, Constants.ArmConstants.kDistanceF);
+  }
+
+  public void setBrakeMode() {
+    left.setNeutralMode(NeutralMode.Brake);
+    right.setNeutralMode(NeutralMode.Brake);
+  }
+
+  public void setCoastMode() {
+    left.setNeutralMode(NeutralMode.Coast);
+    right.setNeutralMode(NeutralMode.Coast);
   }
 
   public boolean toggleCompressor() {

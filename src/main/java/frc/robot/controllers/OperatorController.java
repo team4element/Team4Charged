@@ -24,12 +24,16 @@ public class OperatorController {
         return mController.getLeftTriggerAxis() > triggerTolerance;
     }
 
+    public boolean getBrakeMode(){
+        return mController.getAButton();
+    }
+
     public boolean getDeployClaw(){
-        return mController.getXButton();
+        return mController.getYButton();
     }
 
     public boolean getPivot(){
-        return mController.getAButton();
+        return mController.getXButton();
     }
 
     public double getThrottle(){
