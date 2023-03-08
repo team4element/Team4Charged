@@ -40,11 +40,11 @@ public final class Constants {
     public static final int kCompressorID = 0;
 
     // Arm Solenoids
-    public static final int kLeftArmSolenoid = 0;
+    public static final int kLeftArmSolenoid = 2;
     public static final int kRightArmSolenoid = 1;
 
     // Intake Solenoid
-    public static final int kIntakeSolenoid = 2;
+    public static final int kIntakeSolenoid = 0;
   }
 
   public static class ArmConstants {
