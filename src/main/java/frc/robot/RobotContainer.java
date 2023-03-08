@@ -20,6 +20,7 @@ import frc.robot.commands.SlowTurnLeft;
 import frc.robot.commands.SlowTurnRight;
 import frc.robot.commands.TaxiAuto;
 import frc.robot.commands.Score;
+import frc.robot.commands.DoNothingMode;
 
 import frc.robot.controllers.DriverController;
 import frc.robot.controllers.OperatorController;
@@ -52,7 +53,7 @@ public class RobotContainer {
 
   private final Command TaxiMode = new TaxiAuto(m_driveTrain);
   private final Command ScoreLowMode = new Score(m_intake);
-
+  private final Command DoNothingMode = new DoNothingMode();
   private final Command ScoreLowAndTaxiMode = Commands.sequence(
     new Score(m_intake),
     new TaxiAuto(m_driveTrain));
@@ -70,6 +71,7 @@ public class RobotContainer {
     m_chooser.setDefaultOption("Taxi Auto", TaxiMode);
     m_chooser.addOption("Score Low Auto", ScoreLowMode);
     m_chooser.addOption("Score Low and Taxi Auto", ScoreLowAndTaxiMode);
+    m_chooser.addOption("Do Nothing Auto", DoNothingMode);
 
     SmartDashboard.putData(m_chooser);
   }
