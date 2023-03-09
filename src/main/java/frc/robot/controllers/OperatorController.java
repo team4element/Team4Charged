@@ -29,11 +29,11 @@ public class OperatorController {
     }
 
     public boolean getDeployClaw(){
-        return mController.getYButton();
+        return mController.getXButton();
     }
 
     public boolean getPivot(){
-        return mController.getXButton();
+        return mController.getYButton();
     }
 
     public double getThrottle(){

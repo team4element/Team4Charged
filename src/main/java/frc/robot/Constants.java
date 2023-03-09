@@ -79,8 +79,8 @@ public final class Constants {
     public static final int kRightMotor = 8;
 
     // Teleop Power
-    public static final double kTeleopIntakeForwardPower = -.5;
-    public static final double kTeleopIntakeReversePower = .3;
+    public static final double kTeleopIntakeForwardPower = .5;
+    public static final double kTeleopIntakeReversePower = -.3;
 
     // Auto Power
     public static final double kAutoIntakeReversePower = -1;
