@@ -6,21 +6,9 @@ package frc.robot;
 
 // import frc.robot.Constants;
 // import frc.robot.commands.Autos;
-import frc.robot.commands.RotateToAngle;
-import frc.robot.commands.Drive;
-import frc.robot.commands.ToggleCompressor;
-import frc.robot.commands.IntakeForward;
-import frc.robot.commands.IntakeReverse;
-import frc.robot.commands.ToggleClaw;
-import frc.robot.commands.ArmControl;
-import frc.robot.commands.TogglePivot;
+import frc.robot.commands.*;
 // import frc.robot.commands.ArmToHigh;
 // import frc.robot.commands.ArmToMid;
-import frc.robot.commands.SlowTurnLeft;
-import frc.robot.commands.SlowTurnRight;
-import frc.robot.commands.TaxiAuto;
-import frc.robot.commands.Score;
-import frc.robot.commands.DoNothingMode;
 
 import frc.robot.controllers.DriverController;
 import frc.robot.controllers.OperatorController;
@@ -99,13 +87,13 @@ public class RobotContainer {
       .whileTrue(new SlowTurnRight(m_driveTrain, m_driverController));
 
     // Run ArmToMid Command when Operator Right Bumper is Pressed
-    // new Trigger(m_arm::getMidPosition)
-    //   .onTrue(new ArmToMid(m_arm, 0));
+//     new Trigger(m_arm::getMidPosition)
+//       .onTrue(new ArmToAngle(m_arm, Constants.ArmConstants.kMidSetpoint));
     // TODO: Set distance for ArmToMid
 
     // Run ArmToHigh Command when Operator Right Trigger is Pressed
-    // new Trigger(m_arm::getHighPosition)
-    //   .onTrue(new ArmToHigh(m_arm, 72450));
+//     new Trigger(m_arm::getHighPosition)
+//       .onTrue(new ArmToAngle(m_arm, Constants.ArmConstants.kHighSetpoint));
     
     // Run TogglePivot Command when Operator A Button is Pressed
     new Trigger(m_arm::getTogglePivot)

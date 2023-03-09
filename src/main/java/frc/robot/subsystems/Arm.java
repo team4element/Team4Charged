@@ -16,6 +16,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 
+import frc.robot.ElementMath;
+import frc.robot.ElementUnits;
 import frc.robot.controllers.OperatorController;
 import frc.robot.Constants;
 
@@ -35,7 +37,7 @@ public class Arm extends SubsystemBase {
   // Declaring Compressor
   public Compressor mCompressor;
 
-  // public double finalArmAngle = (getEncoderDistance() / 250) / 2048 * 360;
+   public double currentAngle;
 
   public Arm() {
     // Instantiating Motors
@@ -59,10 +61,10 @@ public class Arm extends SubsystemBase {
 
     // look into position limits
 
-    // left.config_kP(0, Constants.ArmConstants.kDistanceP);
-    // left.config_kI(0, Constants.ArmConstants.kDistanceI);
-    // left.config_kD(0, Constants.ArmConstants.kDistanceD);
-    // left.config_kF(0, Constants.ArmConstants.kDistanceF);
+     left.config_kP(0, Constants.ArmConstants.kDistanceP);
+     left.config_kI(0, Constants.ArmConstants.kDistanceI);
+     left.config_kD(0, Constants.ArmConstants.kDistanceD);
+     left.config_kF(0, Constants.ArmConstants.kDistanceF);
   }
 
   public void setBrakeMode() {
@@ -151,14 +153,15 @@ public class Arm extends SubsystemBase {
     mRightPivotPiston.toggle();
   }
 
-  // public double getArmAngle(){
-  //   return finalArmAngle;
-  // }
+   public double getArmAngle(){
+     return currentAngle;
+   }
   @Override
   public void periodic() {
     // System.out.println(getEncoderDistance());
-    // SmartDashboard.putNumber(getName(), getEncoderDistance());
-    // SmartDashboard.putNumber("Final Arm", finalArmAngle);
-    // getArmAngle();
+    currentAngle = ElementUnits.ticksToRotations(left.getSelectedSensorPosition(), Constants.TalonFXEncoderPPR);
+    currentAngle *= Constants.ArmConstants.kGearRatio; // gets rotation of the arm from rotations of the motors
+    currentAngle *= 360; // gets the current angle of the arm in degrees
+     SmartDashboard.putNumber("Arm Angle", getArmAngle());
   }
 }

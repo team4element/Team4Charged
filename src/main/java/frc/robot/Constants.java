@@ -13,6 +13,9 @@ package frc.robot;
  * constants are needed, to reduce verbosity.
  */
 public final class Constants {
+
+  public static final double TalonFXEncoderPPR = 2048.0;
+
   public static class ControllerConstants {
     //Controllers
     public static final int kDriverControllerPort = 0;
@@ -52,9 +55,12 @@ public final class Constants {
     public static final int kLeftMotor = 5;
     public static final int kRightMotor = 6;
 
-    // Store setpoint values 
-    // public static final int kMidSetpoint = 0;
-    // public static final int kHighSetpoint = 72450;
+    public static final double kGearRatio = 1/250;
+
+    // Store setpoint values in degrees
+    // todo find exact values
+     public static final int kMidSetpoint = 0;
+     public static final int kHighSetpoint = 0;
 
     // Arm Mid/High Position PID
     public static final double kDistanceP = 0.00001;
