@@ -14,7 +14,7 @@ import com.kauailabs.navx.frc.AHRS;
 
 import frc.robot.Constants;
 import frc.robot.controllers.DriverController;
-
+import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -34,6 +34,8 @@ public class DriveTrain extends SubsystemBase {
   private static double gearRatio = 9.06;
 
   private static double ticksPerInch = 2048 * gearRatio / 18.85;
+
+  SlewRateLimiter filter = new SlewRateLimiter(.9);
 
   public DriveTrain() {
     // Define Motor Objects
@@ -72,7 +74,7 @@ public class DriveTrain extends SubsystemBase {
 
     leftBack.configClosedloopRamp(0.5);
     rightBack.configClosedloopRamp(0.5);
-
+    
     configurePIDF();
 
   }
@@ -97,6 +99,10 @@ public class DriveTrain extends SubsystemBase {
     rightBack.config_kI(1, 0.0);
     rightBack.config_kD(1, 0.0);
     rightBack.config_kF(1, 0.0);
+  }
+
+  public double calculateSlew(double input) {
+    return filter.calculate(input);
   }
 
   public void setBrakeMode() {

@@ -38,7 +38,7 @@ public class Drive extends CommandBase {
     }
     
     // double rotationPower = ElementMath.cubeInput(ElementMath.handleDeadband(this.mDriverController.getTurn(), Constants.ControllerConstants.kJoystickThreshold));
-    m_drive.setPower(straightPower + rotationPower, straightPower - rotationPower);
+    m_drive.setPower(m_drive.calculateSlew(straightPower) + rotationPower, m_drive.calculateSlew(straightPower) - rotationPower);
   }
 
   // Called once the command ends or is interrupted.
