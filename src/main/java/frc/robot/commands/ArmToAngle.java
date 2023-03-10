@@ -36,7 +36,7 @@
    @Override
    public void execute() {
        // TODO if calling once doesnt work uncomment line and use this
-        m_arm.setArmPosition(desiredTicks);
+        // m_arm.setArmPosition(desiredTicks);
    }
 
    // Called once the command ends or is interrupted.

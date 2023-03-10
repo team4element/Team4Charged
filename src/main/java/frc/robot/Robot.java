@@ -61,6 +61,7 @@ public class Robot extends TimedRobot {
     // robot's periodic
     // block in order for anything in the Command-based framework to work.
     CommandScheduler.getInstance().run();
+    SmartDashboard.putNumber("gyro", RobotContainer.m_driveTrain.getGyro());
     SmartDashboard.putNumber("dist left", RobotContainer.m_driveTrain.getLeftEncoderDistance());
     SmartDashboard.putNumber("dist right", RobotContainer.m_driveTrain.getRightEncoderDistance());
   }
@@ -113,8 +114,7 @@ public class Robot extends TimedRobot {
 
   /** This function is called periodically during operator control. */
   @Override
-  public void teleopPeriodic() {
-  }
+  public void teleopPeriodic() {}
 
   @Override
   public void testInit() {

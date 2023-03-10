@@ -87,8 +87,8 @@ public class RobotContainer {
       .whileTrue(new SlowTurnRight(m_driveTrain, m_driverController));
 
     // Run ArmToMid Command when Operator Right Bumper is Pressed
-//     new Trigger(m_arm::getMidPosition)
-//       .onTrue(new ArmToAngle(m_arm, Constants.ArmConstants.kMidSetpoint));
+    //  new Trigger(m_arm::getMidPosition)
+    //    .onTrue(new ArmToAngle(m_arm, Constants.ArmConstants.kMidSetpoint));
     // TODO: Set distance for ArmToMid
 
     // Run ArmToHigh Command when Operator Right Trigger is Pressed

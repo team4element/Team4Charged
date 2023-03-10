@@ -32,7 +32,7 @@ public final class Constants {
     public static final int kRightBackMotor = 4;
 
     // RotateToAngle PID
-    public static final double kAngleP = 0.006;
+    public static final double kAngleP = 0.009;
     public static final double kAngleI = 0;
     public static final double kAngleD = 0;
     public static final double kAngleF = 0;
@@ -62,12 +62,21 @@ public final class Constants {
      public static final int kMidSetpoint = 0;
      public static final int kHighSetpoint = 0;
 
-    // Arm Mid/High Position PID
-    public static final double kDistanceP = 0.00001;
+    // Arm Position PID
+    public static final double kDistanceP = 0.00059781;
     public static final double kDistanceI = 0;
     public static final double kDistanceD = 0;
     public static final double kDistanceF = 0;
     
+    // Feedforward Constants
+    public static final double kS = 0.10175;
+    public static final double kG = 0.25341;
+    public static final double kV = 0.072613;
+    public static final double kA = 0.0023521;
+
+    public static final double kVelocity = 0.01366086659;
+    public static final double kAcceleration = 0.01439809366;
+
     // Limit values not final
     public static final double kMaxLimit = 60;
     public static final double kMinLimit = 5;

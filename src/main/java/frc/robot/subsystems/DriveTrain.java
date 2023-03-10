@@ -162,7 +162,7 @@ public class DriveTrain extends SubsystemBase {
   }
 
   public double getGyro() {
-    return navX.getYaw();
+    return navX.getAngle();
   }
 
   public boolean rotate() {

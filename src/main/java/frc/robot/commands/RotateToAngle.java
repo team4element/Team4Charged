@@ -28,6 +28,7 @@ public class RotateToAngle extends CommandBase {
 
     @Override
     public void initialize() {
+        this.m_drive.resetSensors();
         anglePID.setSetpoint(this.m_angle);
         this.m_drive.setPower(0.0, 0.0);
     }
@@ -45,6 +46,6 @@ public class RotateToAngle extends CommandBase {
 
     @Override
     public boolean isFinished() {
-        return anglePID.atSetpoint();
+        return false;
     }
 }
