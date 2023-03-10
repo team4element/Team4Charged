@@ -8,6 +8,7 @@ import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import edu.wpi.first.math.controller.ArmFeedforward;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.Solenoid;
@@ -37,8 +38,10 @@ public class Arm extends SubsystemBase {
   // Declaring Compressor
   public Compressor mCompressor;
 
-   public double currentAngle;
+  public double currentAngle;
 
+  ArmFeedforward feedforward = new ArmFeedforward(Constants.ArmConstants.kS, Constants.ArmConstants.kG, Constants.ArmConstants.kV, Constants.ArmConstants.kA);
+  
   public Arm() {
     // Instantiating Motors
     left = new WPI_TalonFX(Constants.ArmConstants.kLeftMotor);
@@ -64,7 +67,7 @@ public class Arm extends SubsystemBase {
      left.config_kP(0, Constants.ArmConstants.kDistanceP);
      left.config_kI(0, Constants.ArmConstants.kDistanceI);
      left.config_kD(0, Constants.ArmConstants.kDistanceD);
-     left.config_kF(0, Constants.ArmConstants.kDistanceF);
+     left.config_kF(0, feedforward.calculate(Constants.ArmConstants.kMidSetpoint, Constants.ArmConstants.kVelocity, Constants.ArmConstants.kAcceleration));
   }
 
   public void setBrakeMode() {
