@@ -56,9 +56,9 @@ public class RobotContainer {
     m_arm.setDefaultCommand(new ArmControl(m_arm, m_operatorController));
 
     // Auto Modes
-    m_chooser.setDefaultOption("Taxi Auto", TaxiMode);
+    m_chooser.setDefaultOption("Score Low and Taxi Auto", ScoreLowAndTaxiMode);
     m_chooser.addOption("Score Low Auto", ScoreLowMode);
-    m_chooser.addOption("Score Low and Taxi Auto", ScoreLowAndTaxiMode);
+    m_chooser.addOption("Taxi Auto", TaxiMode);
     m_chooser.addOption("Do Nothing Auto", DoNothingMode);
 
     SmartDashboard.putData(m_chooser);
