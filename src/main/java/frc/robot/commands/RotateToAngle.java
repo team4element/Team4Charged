@@ -46,6 +46,6 @@ public class RotateToAngle extends CommandBase {
 
     @Override
     public boolean isFinished() {
-        return false;
+        return anglePID.atSetpoint();
     }
 }

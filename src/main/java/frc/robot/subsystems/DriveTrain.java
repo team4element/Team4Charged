@@ -143,6 +143,21 @@ public class DriveTrain extends SubsystemBase {
     return rightBack.getSelectedSensorPosition(0) / ticksPerInch;
   }
 
+  public double[] getStraightOutput(double l, double r, double target) {
+    final double angleTolerance = 1;
+    double l_out = l;
+    double r_out = r;
+    double currentAngle = getGyro() - target;
+
+    if (Math.abs(currentAngle) > angleTolerance) {
+      double modifier = currentAngle * Constants.DriveConstants.kAngleP;
+      l_out += modifier;
+      r_out -= modifier;
+    }
+
+    return new double[] {l_out, r_out};
+  }
+
   public void setPower(double leftPower, double rightPower) {
     SmartDashboard.putNumber("left power", leftPower);
     SmartDashboard.putNumber("right power", rightPower);

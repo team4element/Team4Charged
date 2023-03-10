@@ -4,6 +4,7 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.controllers.DriverController;
@@ -35,6 +36,11 @@ public class Drive extends CommandBase {
       m_drive.setBrakeMode(); 
     } else {
       m_drive.setCoastMode();
+    }
+
+    if ( rotationPower < .1){
+      double[] outputs = this.m_drive.getStraightOutput(m_drive.calculateSlew(straightPower),m_drive.calculateSlew(straightPower),0);
+      this.m_drive.setPower(outputs[0], outputs[1]);
     }
     
     // double rotationPower = ElementMath.cubeInput(ElementMath.handleDeadband(this.mDriverController.getTurn(), Constants.ControllerConstants.kJoystickThreshold));
