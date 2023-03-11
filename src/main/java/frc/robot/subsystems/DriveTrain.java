@@ -180,6 +180,14 @@ public class DriveTrain extends SubsystemBase {
     return navX.getAngle();
   }
 
+  public double getGyroPitch(){
+    return navX.getPitch();
+  }
+
+  public double getGyroRoll(){
+    return navX.getRoll();
+  }
+
   public boolean rotate() {
     return mDriverController.getRotate();
   }
