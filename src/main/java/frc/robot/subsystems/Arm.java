@@ -39,19 +39,20 @@ public class Arm extends SubsystemBase {
 
   public double currentAngle;
 
-  ArmFeedforward feedforward = new ArmFeedforward(Constants.ArmConstants.kS, Constants.ArmConstants.kG, Constants.ArmConstants.kV, Constants.ArmConstants.kA);
-  
+  ArmFeedforward feedforward = new ArmFeedforward(Constants.ArmConstants.kS, Constants.ArmConstants.kG,
+      Constants.ArmConstants.kV, Constants.ArmConstants.kA);
+
   public Arm() {
     // Instantiating Motors
     left = new WPI_TalonFX(Constants.ArmConstants.kLeftMotor);
 
     right = new WPI_TalonFX(Constants.ArmConstants.kRightMotor);
-    
-    left.setInverted(false);
-    right.setInverted(true);
+
+    left.setInverted(true);
+    right.setInverted(false);
 
     right.follow(left);
-    
+
     // Instantiating Solenoids
     mLeftPivotPiston = new Solenoid(0, PneumaticsModuleType.CTREPCM, Constants.PneumaticsConstants.kLeftArmSolenoid);
     mRightPivotPiston = new Solenoid(0, PneumaticsModuleType.CTREPCM, Constants.PneumaticsConstants.kRightArmSolenoid);
@@ -61,12 +62,14 @@ public class Arm extends SubsystemBase {
 
     left.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor);
 
+    // TODO - Set inverted 
     // look into position limits
 
-     left.config_kP(0, Constants.ArmConstants.kDistanceP);
-     left.config_kI(0, Constants.ArmConstants.kDistanceI);
-     left.config_kD(0, Constants.ArmConstants.kDistanceD);
-     left.config_kF(0, feedforward.calculate(Constants.ArmConstants.kMidSetpoint, Constants.ArmConstants.kVelocity, Constants.ArmConstants.kAcceleration));
+    left.config_kP(0, Constants.ArmConstants.kDistanceP);
+    left.config_kI(0, Constants.ArmConstants.kDistanceI);
+    left.config_kD(0, Constants.ArmConstants.kDistanceD);
+    // left.config_kF(0, feedforward.calculate(Constants.ArmConstants.kMidSetpoint, Constants.ArmConstants.kVelocity,
+    //     Constants.ArmConstants.kAcceleration));
   }
 
   public void setBrakeMode() {
@@ -92,78 +95,79 @@ public class Arm extends SubsystemBase {
   }
 
   // public double getEncoderDistance() {
-  //   return left.getSelectedSensorPosition(0);
+  // return left.getSelectedSensorPosition(0);
   // }
 
   public void setArmPower(double power) {
     SmartDashboard.putNumber("arm input", power);
     // double filteredValue = filterForSafeValues(power);
-    left.set(TalonFXControlMode.PercentOutput, -power * 0.5);
+    left.set(TalonFXControlMode.PercentOutput, power * 0.5);
   }
 
   public void setArmPosition(double position) {
     left.set(TalonFXControlMode.Position, position);
   }
 
-  public void getYAxis(){
+  public void getYAxis() {
     System.out.println(mOperatorController.getThrottle());
   }
-  
+
   public void resetSensors() {
-    left.setSelectedSensorPosition(0);
+    // left.setSelectedSensorPosition(0);
   }
 
   public boolean getMidPosition() {
     return mOperatorController.midPosition();
   }
-  
+
   public boolean getHighPosition() {
     return mOperatorController.highPosition();
   }
 
   // private boolean maxLimit() {
-  //   return (getArmAngle() >= Constants.ArmConstants.kMaxLimit);
+  // return (getArmAngle() >= Constants.ArmConstants.kMaxLimit);
   // }
 
   // private boolean minLimit() {
-  //   return (getArmAngle() <= Constants.ArmConstants.kMinLimit);
+  // return (getArmAngle() <= Constants.ArmConstants.kMinLimit);
   // }
 
   // private double filterForSafeValues(double power){
-  //   if (maxLimit() && power < 0){
-  //     return power;
-  //   } else if (minLimit() && power > 0) {
-  //     return power;
-  //   } else if (!minLimit() && !maxLimit()){
-  //     return power;
-  //   } else {
-  //     return 0;
-  //   }
+  // if (maxLimit() && power < 0){
+  // return power;
+  // } else if (minLimit() && power > 0) {
+  // return power;
+  // } else if (!minLimit() && !maxLimit()){
+  // return power;
+  // } else {
+  // return 0;
   // }
-    
+  // }
+
   // private boolean defaultPosition() {
-  //   return (!mLeftPivotPiston.get() && !mRightPivotPiston.get());
+  // return (!mLeftPivotPiston.get() && !mRightPivotPiston.get());
   // }
 
   // private boolean extendedPosition() {
-  //   return (mLeftPivotPiston.get() && mRightPivotPiston.get());
+  // return (mLeftPivotPiston.get() && mRightPivotPiston.get());
   // }
 
-  public void togglePivot(){
+  public void togglePivot() {
     System.out.println("toggle pivot");
     mLeftPivotPiston.toggle();
     mRightPivotPiston.toggle();
   }
 
-   public double getArmAngle(){
-     return currentAngle;
-   }
-  @Override
-  public void periodic() {
-    // System.out.println(getEncoderDistance());
-    currentAngle = ElementUnits.ticksToRotations(left.getSelectedSensorPosition(), Constants.TalonFXEncoderPPR);
+  public double getArmAngle() {
+    currentAngle = ElementUnits.ticksToRotations(left.getSelectedSensorPosition(0), Constants.TalonFXEncoderPPR);
     currentAngle *= Constants.ArmConstants.kGearRatio; // gets rotation of the arm from rotations of the motors
     currentAngle *= 360; // gets the current angle of the arm in degrees
-     SmartDashboard.putNumber("Arm Angle", getArmAngle());
+    return currentAngle;
+  }
+
+  @Override
+  public void periodic() {
+    // getArmAngle();
+    // System.out.println(getEncoderDistance());
   }
 }

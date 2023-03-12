@@ -66,11 +66,11 @@ public final class Constants {
     public static final int kLeftMotor = 5;
     public static final int kRightMotor = 6;
 
-    public static final double kGearRatio = 1/250;
+    public static final double kGearRatio = .004;
 
     // Store setpoint values in degrees
     // todo find exact values
-     public static final int kMidSetpoint = 0;
+     public static final int kMidSetpoint = 30;
      public static final int kHighSetpoint = 0;
 
     // Arm Position PID

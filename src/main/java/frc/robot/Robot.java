@@ -65,6 +65,8 @@ public class Robot extends TimedRobot {
     SmartDashboard.putNumber("roll", RobotContainer.m_driveTrain.getGyroRoll());
     SmartDashboard.putNumber("dist left", RobotContainer.m_driveTrain.getLeftEncoderDistance());
     SmartDashboard.putNumber("dist right", RobotContainer.m_driveTrain.getRightEncoderDistance());
+    SmartDashboard.putNumber("Arm Angle", RobotContainer.m_arm.getArmAngle());
+    
   }
 
   /** This function is called once each time the robot enters Disabled mode. */
@@ -84,6 +86,7 @@ public class Robot extends TimedRobot {
   public void autonomousInit() {
     m_autonomousCommand = m_robotContainer.getAutonomousCommand();
 
+    RobotContainer.m_arm.resetSensors();
     RobotContainer.m_arm.mCompressor.disable();
     // schedule the autonomous command (example)
     if (m_autonomousCommand != null) {
