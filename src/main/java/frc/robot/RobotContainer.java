@@ -5,10 +5,7 @@
 package frc.robot;
 
 // import frc.robot.Constants;
-// import frc.robot.commands.Autos;
 import frc.robot.commands.*;
-// import frc.robot.commands.ArmToHigh;
-// import frc.robot.commands.ArmToMid;
 
 import frc.robot.controllers.DriverController;
 import frc.robot.controllers.OperatorController;
@@ -45,6 +42,9 @@ public class RobotContainer {
   private final Command ScoreLowAndTaxiMode = Commands.sequence(
     new Score(m_intake),
     new TaxiAuto(m_driveTrain));
+  private final Command ScoreLowAndBalanceMode = Commands.sequence(
+    new Score(m_intake),
+    new DriveStraight(m_driveTrain, 30));
 
   SendableChooser<Command> m_chooser = new SendableChooser<>();
 
@@ -59,6 +59,7 @@ public class RobotContainer {
     m_chooser.setDefaultOption("Score Low and Taxi Auto", ScoreLowAndTaxiMode);
     m_chooser.addOption("Score Low Auto", ScoreLowMode);
     m_chooser.addOption("Taxi Auto", TaxiMode);
+    m_chooser.addOption("Score Low and Balance Auto", ScoreLowAndBalanceMode);
     m_chooser.addOption("Do Nothing Auto", DoNothingMode);
 
     SmartDashboard.putData(m_chooser);

@@ -110,6 +110,7 @@ public class DriveTrain extends SubsystemBase {
     leftFront.setNeutralMode(NeutralMode.Brake);
     rightBack.setNeutralMode(NeutralMode.Brake);
     rightFront.setNeutralMode(NeutralMode.Brake);
+    SmartDashboard.putBoolean("Brake Mode", true);
   }
 
   public void setCoastMode() {
@@ -117,6 +118,7 @@ public class DriveTrain extends SubsystemBase {
     leftFront.setNeutralMode(NeutralMode.Coast);
     rightBack.setNeutralMode(NeutralMode.Coast);
     rightFront.setNeutralMode(NeutralMode.Coast);
+    SmartDashboard.putBoolean("Coast Mode", false);
   }
   
   public boolean slowTurnLeft() {
@@ -141,6 +143,10 @@ public class DriveTrain extends SubsystemBase {
 
   public double getRightEncoderDistance() {
     return rightBack.getSelectedSensorPosition(0) / ticksPerInch;
+  }
+
+  public double getAverageEncoderDistance() {
+    return (getLeftEncoderDistance() + getRightEncoderDistance())/2;
   }
 
   public double[] getStraightOutput(double l, double r, double target) {

@@ -36,6 +36,17 @@ public final class Constants {
     public static final double kAngleI = 0;
     public static final double kAngleD = 0;
     public static final double kAngleF = 0;
+
+    // DriveStraight PID
+    public static final double kDriveP = 0.003;
+    public static final double kDriveI = 0;
+    public static final double kDriveD = 0;
+    public static final double kDriveF = 0;
+    
+    // DriveStraight Feedforward
+    public static final double kS = 0;
+    public static final double kV = 0;
+    public static final double kA = 0;
   }
 
   public static class PneumaticsConstants {
