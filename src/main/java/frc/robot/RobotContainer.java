@@ -65,6 +65,14 @@ public class RobotContainer {
     SmartDashboard.putData(m_chooser);
   }
 
+  public void enableBrakeMode() {
+    m_driveTrain.setBrakeMode();
+  }
+
+  public void disableBrakeMode() {
+    m_driveTrain.setCoastMode();
+  }
+  
   /**
    * Use this method to define your trigger->command mappings. Triggers can be created via the
    * {@link Trigger#Trigger(java.util.function.BooleanSupplier)} constructor with an arbitrary
