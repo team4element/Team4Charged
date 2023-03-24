@@ -37,7 +37,8 @@ public class OperatorController {
     }
 
     public double getThrottle(){
-        return mController.getLeftY();
+        // Up is negative on the controller by default
+        return -mController.getLeftY();
     }
 
     public boolean midPosition(){
