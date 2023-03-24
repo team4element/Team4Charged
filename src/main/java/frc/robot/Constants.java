@@ -70,23 +70,20 @@ public final class Constants {
 
     // Store setpoint values in degrees
     // todo find exact values
-     public static final int kMidSetpoint = 30;
+     public static final int kMidSetpoint = 90;
      public static final int kHighSetpoint = 0;
 
     // Arm Position PID
-    public static final double kDistanceP = 0.00059781;
-    public static final double kDistanceI = 0;
-    public static final double kDistanceD = 0;
-    public static final double kDistanceF = 0;
+    public static final double kArmP = 0.001;
+    public static final double kArmI = 0;
+    public static final double kArmD = 0;
+    public static final double kArmF = 0;
     
     // Feedforward Constants
-    public static final double kS = 0.10175;
-    public static final double kG = 0.25341;
-    public static final double kV = 0.072613;
-    public static final double kA = 0.0023521;
-
-    public static final double kVelocity = 0.01366086659;
-    public static final double kAcceleration = 0.01439809366;
+    public static final double kS = 0.041549;
+    public static final double kG = 0.011533;
+    public static final double kV = 4.3067;
+    public static final double kA = 0.097108;
 
     // Limit values not final
     public static final double kMaxLimit = 60;

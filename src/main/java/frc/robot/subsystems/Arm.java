@@ -6,6 +6,8 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
+import com.ctre.phoenix.motorcontrol.StatorCurrentLimitConfiguration;
+import com.ctre.phoenix.motorcontrol.SupplyCurrentLimitConfiguration;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.math.controller.ArmFeedforward;
@@ -47,6 +49,8 @@ public class Arm extends SubsystemBase {
     left = new WPI_TalonFX(Constants.ArmConstants.kLeftMotor);
 
     right = new WPI_TalonFX(Constants.ArmConstants.kRightMotor);
+    
+    // TODO: Set right to inverted after done testing arm PID
 
     left.setInverted(true);
     right.setInverted(false);
@@ -61,15 +65,39 @@ public class Arm extends SubsystemBase {
     mCompressor = new Compressor(Constants.PneumaticsConstants.kCompressorID, PneumaticsModuleType.CTREPCM);
 
     left.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor);
+    right.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor);
 
-    // TODO - Set inverted 
-    // look into position limits
+    // left.configReverseSoftLimitEnable(true, 0);
 
-    left.config_kP(0, Constants.ArmConstants.kDistanceP);
-    left.config_kI(0, Constants.ArmConstants.kDistanceI);
-    left.config_kD(0, Constants.ArmConstants.kDistanceD);
+    left.configForwardSoftLimitThreshold(armAngleToTicks(50), 0);
+    left.configReverseSoftLimitThreshold(armAngleToTicks(-2), 0);
+
+    left.configForwardSoftLimitEnable(true, 0);
+    left.configReverseSoftLimitEnable(true, 0);
+    
+    var stator = new StatorCurrentLimitConfiguration(true, 80, 100, 0.05);
+    var supply = new SupplyCurrentLimitConfiguration(true, 40, 50, 0.05);
+
+    left.configStatorCurrentLimit(stator);
+    left.configSupplyCurrentLimit(supply);
+
+    right.configStatorCurrentLimit(stator);
+    right.configSupplyCurrentLimit(supply);
+
+    // left.config_kP(0,  Constants.ArmConstants.kDistanceP);
+    // left.config_kI(0, Constants.ArmConstants.kDistanceI);
+    // left.config_kD(0, Constants.ArmConstants.kDistanceD);
+
+    // right.config_kP(0,  Constants.ArmConstants.kDistanceP);
+    // right.config_kI(0, Constants.ArmConstants.kDistanceI);
+    // right.config_kD(0, Constants.ArmConstants.kDistanceD);
     // left.config_kF(0, feedforward.calculate(Constants.ArmConstants.kMidSetpoint, Constants.ArmConstants.kVelocity,
-    //     Constants.ArmConstants.kAcceleration));
+    //    Constants.ArmConstants.kAcceleration));
+
+  }
+
+  public double armAngleToTicks(double angle) {
+    return ElementUnits.rotationsToTicks((angle / 360) / Constants.ArmConstants.kGearRatio, Constants.TalonFXEncoderPPR); 
   }
 
   public void setBrakeMode() {
@@ -113,7 +141,7 @@ public class Arm extends SubsystemBase {
   }
 
   public void resetSensors() {
-    // left.setSelectedSensorPosition(0);
+    left.setSelectedSensorPosition(0);
   }
 
   public boolean getMidPosition() {
@@ -162,6 +190,7 @@ public class Arm extends SubsystemBase {
     currentAngle = ElementUnits.ticksToRotations(left.getSelectedSensorPosition(0), Constants.TalonFXEncoderPPR);
     currentAngle *= Constants.ArmConstants.kGearRatio; // gets rotation of the arm from rotations of the motors
     currentAngle *= 360; // gets the current angle of the arm in degrees
+    // System.out.println(currentAngle);
     return currentAngle;
   }
 

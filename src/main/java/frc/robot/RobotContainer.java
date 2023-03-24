@@ -45,6 +45,8 @@ public class RobotContainer {
   private final Command ScoreLowAndBalanceMode = Commands.sequence(
     new Score(m_intake),
     new DriveStraight(m_driveTrain, 30));
+  private final Command MoveArmMode = new ArmToAngle(m_arm, 90);
+  private final Command HoldArmMode = new HoldArmPosition(m_arm, 30);
 
   SendableChooser<Command> m_chooser = new SendableChooser<>();
 
@@ -61,6 +63,8 @@ public class RobotContainer {
     m_chooser.addOption("Taxi Auto", TaxiMode);
     m_chooser.addOption("Score Low and Balance Auto", ScoreLowAndBalanceMode);
     m_chooser.addOption("Do Nothing Auto", DoNothingMode);
+    m_chooser.addOption("Move Arm Auto", MoveArmMode);
+    m_chooser.addOption("Hold Arm Auto", HoldArmMode);
 
     SmartDashboard.putData(m_chooser);
   }
@@ -97,7 +101,7 @@ public class RobotContainer {
 
     // Run ArmToMid Command when Operator Right Bumper is Pressed
     new Trigger(m_arm::getMidPosition)
-      .onTrue(new ArmToAngle(m_arm, Constants.ArmConstants.kMidSetpoint));
+      .whileTrue(new ArmToAngle(m_arm, Constants.ArmConstants.kMidSetpoint));
     // TODO: Set distance for ArmToMid
 
     // Run ArmToHigh Command when Operator Right Trigger is Pressed
