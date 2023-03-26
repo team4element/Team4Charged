@@ -45,8 +45,8 @@ public class RobotContainer {
   private final Command ScoreLowAndBalanceMode = Commands.sequence(
     new Score(m_intake),
     new DriveStraight(m_driveTrain, 30));
-  private final Command MoveArmMode = new ArmToAngle(m_arm, 90);
-  private final Command HoldArmMode = new HoldArmPosition(m_arm, 30);
+  private final Command MoveArmMode = new HoldArmPosition(m_arm, 72.5);
+  private final Command HoldPositionMode = new HoldDrivePosition(m_driveTrain);
 
   SendableChooser<Command> m_chooser = new SendableChooser<>();
 
@@ -58,13 +58,13 @@ public class RobotContainer {
     m_arm.setDefaultCommand(new ArmControl(m_arm, m_operatorController));
 
     // Auto Modes
-    m_chooser.setDefaultOption("Score Low and Taxi Auto", ScoreLowAndTaxiMode);
+    m_chooser.setDefaultOption("Move Arm Auto", MoveArmMode);
     m_chooser.addOption("Score Low Auto", ScoreLowMode);
     m_chooser.addOption("Taxi Auto", TaxiMode);
     m_chooser.addOption("Score Low and Balance Auto", ScoreLowAndBalanceMode);
     m_chooser.addOption("Do Nothing Auto", DoNothingMode);
-    m_chooser.addOption("Move Arm Auto", MoveArmMode);
-    m_chooser.addOption("Hold Arm Auto", HoldArmMode);
+    m_chooser.addOption("Score Low And Taxi Auto", ScoreLowAndTaxiMode);
+    m_chooser.addOption("Hold Position Auto", HoldPositionMode);
 
     SmartDashboard.putData(m_chooser);
   }
@@ -101,8 +101,8 @@ public class RobotContainer {
 
     // Run ArmToMid Command when Operator Right Bumper is Pressed
     new Trigger(m_arm::getMidPosition)
-      .whileTrue(new ArmToAngle(m_arm, Constants.ArmConstants.kMidSetpoint));
-    // TODO: Set distance for ArmToMid
+      .onTrue(new HoldArmPosition(m_arm, 72.5))
+      .onFalse(new LowerArmDown(m_arm));
 
     // Run ArmToHigh Command when Operator Right Trigger is Pressed
 //     new Trigger(m_arm::getHighPosition)
@@ -110,7 +110,8 @@ public class RobotContainer {
     
     // Run TogglePivot Command when Operator A Button is Pressed
     new Trigger(m_arm::getTogglePivot)
-    .onTrue(new TogglePivot(m_arm));
+      .onTrue(new TogglePivot(m_arm));
+    // .onTrue(new RaiseArmAndPivot(m_arm, 10));
 
     // Run ToggleCompressor Command when Operator B Button is Pressed
     new Trigger(m_arm::toggleCompressor)

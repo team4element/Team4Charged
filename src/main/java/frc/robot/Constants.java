@@ -43,10 +43,15 @@ public final class Constants {
     public static final double kDriveD = 0;
     public static final double kDriveF = 0;
     
-    // DriveStraight Feedforward
-    public static final double kS = 0;
-    public static final double kV = 0;
-    public static final double kA = 0;
+    // HoldDrivePosition PID
+    public static final double kPositionP = 0.00001;
+    public static final double kPositionI = 0;
+    public static final double kPositionD = 0;
+    public static final double kPositionF = 0;
+
+    public static final double kS = 0.12202;
+    public static final double kV = 2.054;
+    public static final double kA = 0.5882;
   }
 
   public static class PneumaticsConstants {
@@ -74,9 +79,9 @@ public final class Constants {
      public static final int kHighSetpoint = 0;
 
     // Arm Position PID
-    public static final double kArmP = 0.001;
+    public static final double kArmP = .0001;
     public static final double kArmI = 0;
-    public static final double kArmD = 0;
+    public static final double kArmD = 0.001;
     public static final double kArmF = 0;
     
     // Feedforward Constants
@@ -85,9 +90,9 @@ public final class Constants {
     public static final double kV = 4.3067;
     public static final double kA = 0.097108;
 
-    // Limit values not final
-    public static final double kMaxLimit = 60;
-    public static final double kMinLimit = 5;
+    // Default Angles
+    public static final double kBaseAngle = 3;
+    public static final double kPivotedAngle = 47;
   }
   
   public static class IntakeConstants {

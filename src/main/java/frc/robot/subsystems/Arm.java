@@ -50,10 +50,8 @@ public class Arm extends SubsystemBase {
 
     right = new WPI_TalonFX(Constants.ArmConstants.kRightMotor);
     
-    // TODO: Set right to inverted after done testing arm PID
-
-    left.setInverted(true);
-    right.setInverted(false);
+    left.setInverted(false);
+    right.setInverted(true);
 
     right.follow(left);
 
@@ -67,10 +65,10 @@ public class Arm extends SubsystemBase {
     left.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor);
     right.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor);
 
-    // left.configReverseSoftLimitEnable(true, 0);
+    left.configReverseSoftLimitEnable(true, 0);
 
-    left.configForwardSoftLimitThreshold(armAngleToTicks(50), 0);
-    left.configReverseSoftLimitThreshold(armAngleToTicks(-2), 0);
+    left.configForwardSoftLimitThreshold(armAngleToTicks(98), 0);
+    left.configReverseSoftLimitThreshold(armAngleToTicks(2), 0);
 
     left.configForwardSoftLimitEnable(true, 0);
     left.configReverseSoftLimitEnable(true, 0);
@@ -122,9 +120,9 @@ public class Arm extends SubsystemBase {
     System.out.println(left.getMotorOutputPercent());
   }
 
-  // public double getEncoderDistance() {
-  // return left.getSelectedSensorPosition(0);
-  // }
+  public double getEncoderDistance() {
+    return left.getSelectedSensorPosition(0);
+  }
 
   public void setArmPower(double power) {
     SmartDashboard.putNumber("arm input", power);
@@ -179,6 +177,10 @@ public class Arm extends SubsystemBase {
   // private boolean extendedPosition() {
   // return (mLeftPivotPiston.get() && mRightPivotPiston.get());
   // }
+
+  public boolean getPivotState(){
+    return mLeftPivotPiston.get();
+  }
 
   public void togglePivot() {
     System.out.println("toggle pivot");
