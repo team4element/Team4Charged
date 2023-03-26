@@ -4,6 +4,7 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.ArmFeedforward;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.util.Units;
@@ -18,7 +19,7 @@ public class HoldArmPosition extends CommandBase {
   private final double m_angle;
   private final Arm m_arm;
 
-  private static final double tolerance = 2;
+  private static final double tolerance = .25;
 
   ArmFeedforward feedForward = new ArmFeedforward(Constants.ArmConstants.kS, Constants.ArmConstants.kG,
       Constants.ArmConstants.kV, Constants.ArmConstants.kA);
@@ -28,7 +29,7 @@ public class HoldArmPosition extends CommandBase {
     this.m_angle = angle;
     this.m_arm = arm;
 
-    armPID = new PIDController(Constants.ArmConstants.kArmP, Constants.ArmConstants.kArmI, Constants.ArmConstants.kArmD, feedForward.calculate(Units.degreesToRadians(m_angle), 2, 2));
+    armPID = new PIDController(Constants.ArmConstants.kArmP, Constants.ArmConstants.kArmI, Constants.ArmConstants.kArmD, feedForward.calculate(Math.cos(Units.degreesToRadians(m_angle)), 2, 2));
 
     armPID.setTolerance(this.m_arm.armAngleToTicks(tolerance));
       
@@ -44,7 +45,7 @@ public class HoldArmPosition extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    double power = armPID.calculate(this.m_arm.armAngleToTicks(m_angle));
+    double power = MathUtil.clamp(armPID.calculate(this.m_arm.getEncoderDistance(), this.m_arm.armAngleToTicks(m_angle)), -0.9, 0.9);
     this.m_arm.setArmPower(power);
   }
 
