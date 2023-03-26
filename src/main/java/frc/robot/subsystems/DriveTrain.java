@@ -145,6 +145,9 @@ public class DriveTrain extends SubsystemBase {
     return rightBack.getSelectedSensorPosition(0) / ticksPerInch;
   }
 
+  public double getAverageRawEncoderTicks(){
+    return (rightBack.getSelectedSensorPosition(0) + leftBack.getSelectedSensorPosition(0))/2;
+  }
   public double getAverageEncoderDistance() {
     return (getLeftEncoderDistance() + getRightEncoderDistance())/2;
   }
