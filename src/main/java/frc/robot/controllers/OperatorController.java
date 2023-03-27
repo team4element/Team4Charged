@@ -13,19 +13,15 @@ public class OperatorController {
     }
 
     public boolean getCompressorToggle(){
-        return mController.getBButton();
+        return mController.getRightStickButton();
     }
 
     public boolean getIntakeForward(){
-        return mController.getLeftBumper();
+        return mController.getAButton();
     }
 
     public boolean getIntakeReverse(){
-        return mController.getLeftTriggerAxis() > triggerTolerance;
-    }
-
-    public boolean getBrakeMode(){
-        return mController.getAButton();
+        return mController.getBButton();
     }
 
     public boolean getDeployClaw(){
@@ -41,11 +37,19 @@ public class OperatorController {
         return -mController.getLeftY();
     }
 
-    public boolean midPosition(){
-        return mController.getRightBumper();
+    public boolean highConePosition(){
+        return mController.getLeftBumper();
     }
-    
-    public boolean highPosition(){
+
+    public boolean highCubePosition(){
+        return mController.getLeftTriggerAxis() > triggerTolerance;
+    }
+
+    public boolean midCubePosition(){
         return mController.getRightTriggerAxis() > triggerTolerance;
+    }
+
+    public boolean shelfPosition(){
+        return mController.getRightBumper();
     }
 }

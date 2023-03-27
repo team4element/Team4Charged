@@ -28,14 +28,6 @@ public class ArmControl extends CommandBase {
   public void execute() {
     double power = ElementMath.cubeInput(this.mOperatorController.getThrottle());
     m_arm.setArmPower(power);
-
-    if (this.mOperatorController.getBrakeMode()){
-      m_arm.setBrakeMode(); 
-    } else {
-      m_arm.setCoastMode();
-    }
-    // m_arm.getYAxis();
-    // m_arm.getMotorOutput();
   }
 
   // Called once the command ends or is interrupted.

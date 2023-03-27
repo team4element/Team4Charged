@@ -67,7 +67,7 @@ public class Arm extends SubsystemBase {
 
     left.configReverseSoftLimitEnable(true, 0);
 
-    left.configForwardSoftLimitThreshold(armAngleToTicks(98), 0);
+    left.configForwardSoftLimitThreshold(armAngleToTicks(115), 0);
     left.configReverseSoftLimitThreshold(armAngleToTicks(2), 0);
 
     left.configForwardSoftLimitEnable(true, 0);
@@ -142,43 +142,23 @@ public class Arm extends SubsystemBase {
     left.setSelectedSensorPosition(0);
   }
 
-  public boolean getMidPosition() {
-    return mOperatorController.midPosition();
+  public boolean getHighConePosition() {
+    return mOperatorController.highConePosition();
   }
 
-  public boolean getHighPosition() {
-    return mOperatorController.highPosition();
+  public boolean getHighCubePosition() {
+    return mOperatorController.highCubePosition();
   }
 
-  // private boolean maxLimit() {
-  // return (getArmAngle() >= Constants.ArmConstants.kMaxLimit);
-  // }
+  public boolean getMidCubePosition() {
+    return mOperatorController.midCubePosition();
+  }
 
-  // private boolean minLimit() {
-  // return (getArmAngle() <= Constants.ArmConstants.kMinLimit);
-  // }
+  public boolean getShelfPosition() {
+    return mOperatorController.shelfPosition();
+  }
 
-  // private double filterForSafeValues(double power){
-  // if (maxLimit() && power < 0){
-  // return power;
-  // } else if (minLimit() && power > 0) {
-  // return power;
-  // } else if (!minLimit() && !maxLimit()){
-  // return power;
-  // } else {
-  // return 0;
-  // }
-  // }
-
-  // private boolean defaultPosition() {
-  // return (!mLeftPivotPiston.get() && !mRightPivotPiston.get());
-  // }
-
-  // private boolean extendedPosition() {
-  // return (mLeftPivotPiston.get() && mRightPivotPiston.get());
-  // }
-
-  public boolean getPivotState(){
+  public boolean getPivotState() {
     return mLeftPivotPiston.get();
   }
 

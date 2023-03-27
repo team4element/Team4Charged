@@ -17,7 +17,7 @@ public class HoldDrivePosition extends CommandBase {
 
   private final DriveTrain m_drive;
 
-  private static final double tolerance = ElementUnits.inchesToTicks(1.5);
+  private static final double tolerance = ElementUnits.inchesToTicks(0.25);
 
   SimpleMotorFeedforward feedForward = new SimpleMotorFeedforward(Constants.DriveConstants.kS,
       Constants.DriveConstants.kV, Constants.DriveConstants.kA);

@@ -44,7 +44,7 @@ public final class Constants {
     public static final double kDriveF = 0;
     
     // HoldDrivePosition PID
-    public static final double kPositionP = 0.00001;
+    public static final double kPositionP = 0.000025;
     public static final double kPositionI = 0;
     public static final double kPositionD = 0;
     public static final double kPositionF = 0;
@@ -91,7 +91,7 @@ public final class Constants {
     public static final double kA = 0.097108;
 
     // Default Angles
-    public static final double kBaseAngle = 3;
+    public static final double kBaseAngle = 2;
     public static final double kPivotedAngle = 47;
   }
   
