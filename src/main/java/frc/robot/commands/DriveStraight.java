@@ -29,8 +29,8 @@ public class DriveStraight extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    this.m_drive.setCoastMode();
     this.m_drive.resetSensors();
-    this.m_drive.setBrakeMode();
     drivePID.setSetpoint(ElementUnits.inchesToTicks(this.m_distance));
     this.m_drive.setPower(0, 0);
   }
@@ -47,7 +47,6 @@ public class DriveStraight extends CommandBase {
   @Override
   public void end(boolean interrupted) {
     this.m_drive.setPower(0, 0);
-    this.m_drive.setCoastMode();
   }
 
   // Returns true when the command should end.

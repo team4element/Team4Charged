@@ -37,13 +37,13 @@ public class Drive extends CommandBase {
       m_drive.setCoastMode();
     }
 
-    if ( rotationPower < .1){
-      double[] outputs = this.m_drive.getStraightOutput(m_drive.calculateSlew(straightPower),m_drive.calculateSlew(straightPower),0);
-      this.m_drive.setPower(outputs[0], outputs[1]);
-    }
-    
-    // double rotationPower = ElementMath.cubeInput(ElementMath.handleDeadband(this.mDriverController.getTurn(), Constants.ControllerConstants.kJoystickThreshold));
+    // if ( rotationPower < .1 && rotationPower > -.1){
+    //   double[] outputs = this.m_drive.getStraightOutput(m_drive.calculateSlew(straightPower),m_drive.calculateSlew(straightPower),0);
+    //   this.m_drive.setPower(outputs[0], outputs[1]);
+  
     m_drive.setPower(m_drive.calculateSlew(straightPower) + rotationPower, m_drive.calculateSlew(straightPower) - rotationPower);
+
+    // double rotationPower = ElementMath.cubeInput(ElementMath.handleDeadband(this.mDriverController.getTurn(), Constants.ControllerConstants.kJoystickThreshold));
   }
 
   // Called once the command ends or is interrupted.
