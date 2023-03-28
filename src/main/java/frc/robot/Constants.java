@@ -4,6 +4,9 @@
 
 package frc.robot;
 
+import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
+import edu.wpi.first.math.util.Units;
+
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide numerical or boolean
  * constants. This class should not be used for any other purpose. All constants should be declared
@@ -31,6 +34,20 @@ public final class Constants {
     public static final int kRightFrontMotor = 3;
     public static final int kRightBackMotor = 4;
 
+    public static final double kDriveGearRatio = 9.06;
+    public static final double kDriveWheelRadiusInches = 3;
+
+    public static final double kLinearDistancePerMotorRotation = Units.inchesToMeters((2* Math.PI * kDriveWheelRadiusInches) / (2048 * kDriveGearRatio));
+
+    public static final double kTrackWidthMeters = Units.inchesToMeters(29.5);
+    public static final DifferentialDriveKinematics kDriveKinematics = new DifferentialDriveKinematics(kTrackWidthMeters);
+    
+    public static final double kMaxSpeedMetersPerSecond = 3.0;
+    public static final double kMaxAccelerationPerSecondSquared = 3.0;
+
+    public static final double kRamseteB = 2;
+    public static final double kRamseteZeta = 0.7;
+
     // RotateToAngle PID
     public static final double kAngleP = 0.009;
     public static final double kAngleI = 0;
@@ -49,9 +66,11 @@ public final class Constants {
     public static final double kPositionD = 0;
     public static final double kPositionF = 0;
 
+    // Feedforward Constants
     public static final double kS = 0.12202;
     public static final double kV = 2.054;
     public static final double kA = 0.5882;
+    public static final double kPDriveVel = 1.1695;
   }
 
   public static class PneumaticsConstants {
@@ -91,7 +110,7 @@ public final class Constants {
     public static final double kA = 0.097108;
 
     // Default Angles
-    public static final double kBaseAngle = 2;
+    public static final double kBaseAngle = .75;
     public static final double kPivotedAngle = 47;
   }
   

@@ -47,7 +47,7 @@ public class RobotContainer {
     new DriveStraight(m_driveTrain, 30));
   private final Command MoveArmMode = new HoldArmPosition(m_arm, 72.5);
   private final Command HoldPositionMode = new HoldDrivePosition(m_driveTrain);
-  //private final Command ScoreCubeHighMode = new (m_arm, m_intake);
+  private final Command BalanceMode = new FollowTrajectory(m_driveTrain);
 
   SendableChooser<Command> m_chooser = new SendableChooser<>();
 
@@ -56,7 +56,7 @@ public class RobotContainer {
     // Configure the trigger bindings
     configureBindings();
     m_driveTrain.setDefaultCommand(new Drive(m_driveTrain, m_driverController));
-    m_arm.setDefaultCommand(new ArmControl(m_arm, m_operatorController));
+    m_arm.setDefaultCommand(new LowerArmDown(m_arm));
 
     // Auto Modes
     m_chooser.setDefaultOption("Move Arm Auto", MoveArmMode);
@@ -66,7 +66,7 @@ public class RobotContainer {
     m_chooser.addOption("Do Nothing Auto", DoNothingMode);
     m_chooser.addOption("Score Low And Taxi Auto", ScoreLowAndTaxiMode);
     m_chooser.addOption("Hold Position Auto", HoldPositionMode);
-    // m_chooser.addOption("Score Cube High Auto", ScoreCubeHighMode);
+    m_chooser.addOption("Balance Auto", BalanceMode);
     SmartDashboard.putData(m_chooser);
   }
 
@@ -90,7 +90,7 @@ public class RobotContainer {
   private void configureBindings() {
     // Run RotateToAngle Command when Driver Y Button is Pressed
     new Trigger(m_driveTrain::rotate)
-      .onTrue(new RotateToAngle(m_driveTrain, 90));
+      .onTrue(new RotateToAngle(m_driveTrain, 90).withTimeout(2));
 
     // Run SlowTurnLeft Command when Driver Left Trigger is Pressed
     new Trigger(m_driveTrain::slowTurnLeft)
@@ -102,8 +102,8 @@ public class RobotContainer {
 
     // Run HoldArmPosition Command for High Cone Position When Operator Left Bumper is Pressed
     new Trigger(m_arm::getHighConePosition)
-      .onTrue(new HoldArmPosition(m_arm, 110))
-      .onFalse(new LowerArmDown(m_arm));
+      .onTrue(new HighConePosition(m_arm))
+      .onFalse(new TogglePivot(m_arm));
 
     // Run HoldArmPosition Command for High Cube Position when Operator Left Trigger is Pressed
     new Trigger(m_arm::getHighCubePosition)
@@ -144,6 +144,10 @@ public class RobotContainer {
     // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
     // cancelling on release.
     // m_driverController.b().whileTrue(m_exampleSubsystem.exampleMethodCommand());
+  }
+
+  public static DriveTrain getDriveTrainSubsystem() {
+    return m_driveTrain;
   }
 
   /**

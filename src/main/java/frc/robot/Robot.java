@@ -60,9 +60,7 @@ public class Robot extends TimedRobot {
     // robot's periodic
     // block in order for anything in the Command-based framework to work.
     CommandScheduler.getInstance().run();
-    SmartDashboard.putNumber("gyro", RobotContainer.m_driveTrain.getGyro());
-    SmartDashboard.putNumber("pitch", RobotContainer.m_driveTrain.getGyroPitch());
-    SmartDashboard.putNumber("roll", RobotContainer.m_driveTrain.getGyroRoll());
+    SmartDashboard.putNumber("gyro angle", RobotContainer.m_driveTrain.getGyroAngle());
     SmartDashboard.putNumber("dist left", RobotContainer.m_driveTrain.getLeftEncoderDistance());
     SmartDashboard.putNumber("dist right", RobotContainer.m_driveTrain.getRightEncoderDistance());
     SmartDashboard.putNumber("Arm Angle", RobotContainer.m_arm.getArmAngle());

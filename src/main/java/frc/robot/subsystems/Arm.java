@@ -68,7 +68,7 @@ public class Arm extends SubsystemBase {
     left.configReverseSoftLimitEnable(true, 0);
 
     left.configForwardSoftLimitThreshold(armAngleToTicks(115), 0);
-    left.configReverseSoftLimitThreshold(armAngleToTicks(2), 0);
+    left.configReverseSoftLimitThreshold(armAngleToTicks(0.5), 0);
 
     left.configForwardSoftLimitEnable(true, 0);
     left.configReverseSoftLimitEnable(true, 0);
@@ -118,6 +118,10 @@ public class Arm extends SubsystemBase {
 
   public void getMotorOutput() {
     System.out.println(left.getMotorOutputPercent());
+  }
+
+  public double getControllerInput() {
+    return mOperatorController.getThrottle();
   }
 
   public double getEncoderDistance() {
