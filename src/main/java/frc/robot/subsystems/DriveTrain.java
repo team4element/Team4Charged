@@ -29,11 +29,11 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class DriveTrain extends SubsystemBase {
   // Declare Motor Objects
-  private static WPI_TalonFX leftFront;
-  private static WPI_TalonFX leftBack;
+  private static WPI_TalonFX leftFront = new WPI_TalonFX(Constants.DriveConstants.kLeftFrontMotor);
+  private static WPI_TalonFX leftBack = new WPI_TalonFX(Constants.DriveConstants.kLeftBackMotor);
 
-  private static WPI_TalonFX rightFront;
-  private static WPI_TalonFX rightBack;
+  private static WPI_TalonFX rightFront = new WPI_TalonFX(Constants.DriveConstants.kRightFrontMotor);
+  private static WPI_TalonFX rightBack = new WPI_TalonFX(Constants.DriveConstants.kRightBackMotor);
 
   private static AHRS navX;
 
@@ -55,14 +55,7 @@ public class DriveTrain extends SubsystemBase {
   SlewRateLimiter filter = new SlewRateLimiter(.9);
 
   public DriveTrain() {
-    // Define Motor Objects
-    leftFront = new WPI_TalonFX(Constants.DriveConstants.kLeftFrontMotor);
-    leftBack = new WPI_TalonFX(Constants.DriveConstants.kLeftBackMotor);
-
     leftBack.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor);
-
-    rightFront = new WPI_TalonFX(Constants.DriveConstants.kRightFrontMotor);
-    rightBack = new WPI_TalonFX(Constants.DriveConstants.kRightBackMotor);
    
     // Current limit to prevent browning out due to too much current drawn 
     var stator = new StatorCurrentLimitConfiguration(true, 80, 100, 0.05);
