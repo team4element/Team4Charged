@@ -27,10 +27,12 @@ public class Drive extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    double straightPower = this.mDriverController.getThrottle();
     // double straightPower = ElementMath.squareInput(this.mDriverController.getThrottle());
-    double rotationPower = this.mDriverController.getTurn();
+    // double rotationPower = -this.mDriverController.getTurn() * 0.5;
 
+    double straightPower = this.mDriverController.getThrottle();
+    double rotationPower = this.mDriverController.getTurn();
+    
     if (this.mDriverController.getSlowDrive()){
       m_drive.setBrakeMode(); 
     } else {
@@ -42,9 +44,7 @@ public class Drive extends CommandBase {
     //   this.m_drive.setPower(outputs[0], outputs[1]);
     
     m_drive.arcadeDrive(m_drive.calculateSlew(straightPower), rotationPower);
-    // m_drive.setPower(m_drive.calculateSlew(straightPower) + rotationPower, m_drive.calculateSlew(straightPower) - rotationPower);
-
-    // double rotationPower = ElementMath.cubeInput(ElementMath.handleDeadband(this.mDriverController.getTurn(), Constants.ControllerConstants.kJoystickThreshold));
+   // m_drive.setPower(m_drive.calculateSlew(straightPower) + rotationPower, m_drive.calculateSlew(straightPower) - rotationPower);
   }
 
   // Called once the command ends or is interrupted.

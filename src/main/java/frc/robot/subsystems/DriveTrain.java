@@ -52,7 +52,7 @@ public class DriveTrain extends SubsystemBase {
 
   private static double ticksPerInch = 2048 * gearRatio / 18.85;
 
-  SlewRateLimiter filter = new SlewRateLimiter(.9);
+  SlewRateLimiter filter = new SlewRateLimiter(.4);
 
   public DriveTrain() {
     leftBack.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor);
