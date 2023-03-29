@@ -148,7 +148,7 @@ public class DriveTrain extends SubsystemBase {
   }
 
   public double getLeftEncoderPosition() {
-    return leftBack.getSelectedSensorPosition() * Constants.DriveConstants.kLinearDistancePerMotorRotation;
+    return -leftBack.getSelectedSensorPosition() * Constants.DriveConstants.kLinearDistancePerMotorRotation;
   }
 
   public double getRightEncoderVelocity() {
@@ -156,7 +156,7 @@ public class DriveTrain extends SubsystemBase {
   }
 
   public double getLeftEncoderVelocity() {
-    return leftBack.getSelectedSensorVelocity() * (Constants.DriveConstants.kLinearDistancePerMotorRotation / 60);
+    return -leftBack.getSelectedSensorVelocity() * (Constants.DriveConstants.kLinearDistancePerMotorRotation / 60);
   }
 
   public DifferentialDrive getDifferentialDrive() {
