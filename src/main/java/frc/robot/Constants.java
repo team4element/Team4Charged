@@ -42,7 +42,7 @@ public final class Constants {
     public static final double kTrackWidthMeters = Units.inchesToMeters(29.5);
     public static final DifferentialDriveKinematics kDriveKinematics = new DifferentialDriveKinematics(kTrackWidthMeters);
     
-    public static final double kMaxSpeedMetersPerSecond = 2.5;
+    public static final double kMaxSpeedMetersPerSecond = 0.5;
     public static final double kMaxAccelerationPerSecondSquared = 3;
 
     public static final double kRamseteB = 2;
