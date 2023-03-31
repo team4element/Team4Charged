@@ -11,7 +11,9 @@ import com.pathplanner.lib.PathPlanner;
 import com.pathplanner.lib.PathPlannerTrajectory;
 import com.pathplanner.lib.auto.PIDConstants;
 import com.pathplanner.lib.auto.RamseteAutoBuilder;
+import com.pathplanner.lib.commands.PPRamseteCommand;
 
+import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.RamseteController;
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -31,7 +33,6 @@ public class FollowTrajectoryPP extends SequentialCommandGroup {
     eventMap.put("holdPosition", new HoldDrivePosition(RobotContainer.getDriveTrainSubsystem()));
     eventMap.put("intake", new Score(RobotContainer.m_intake));
 
-
     RamseteAutoBuilder autoBuilder = new RamseteAutoBuilder(
         RobotContainer.getDriveTrainSubsystem()::getPose,
         RobotContainer.getDriveTrainSubsystem()::resetOdometry,
@@ -49,6 +50,21 @@ public class FollowTrajectoryPP extends SequentialCommandGroup {
         RobotContainer.getDriveTrainSubsystem());
 
     Command taxiAndBalance = autoBuilder.fullAuto(trajectory);
+    // Command taxiAndBalance = new PPRamseteCommand(
+    //     trajectory,
+    //     RobotContainer.getDriveTrainSubsystem()::getPose,
+    //     new RamseteController(Constants.DriveConstants.kRamseteB, Constants.DriveConstants.kRamseteZeta),
+    //     new SimpleMotorFeedforward(
+    //         DriveConstants.kS,
+    //         DriveConstants.kV,
+    //         DriveConstants.kA),
+    //     DriveConstants.kDriveKinematics,
+    //     RobotContainer.getDriveTrainSubsystem()::getWheelSpeeds,
+    //     new PIDController(DriveConstants.kPDriveVel, 0, 0),
+    //     new PIDController(DriveConstants.kPDriveVel, 0, 0),
+    //     RobotContainer.getDriveTrainSubsystem()::tankDriveVolts,
+    //     true,
+    //     RobotContainer.getDriveTrainSubsystem());
 
     if (resetOdometry) {
 
@@ -62,8 +78,8 @@ public class FollowTrajectoryPP extends SequentialCommandGroup {
   }
 
   public FollowTrajectoryPP(DriveTrain driveTrain) {
-    DriveTrain.resetEncoders();
-    addCommands(TaxiAndBalance(true));
+    // DriveTrain.resetEncoders();
+    addCommands(TaxiAndBalance(false));
 
     addRequirements(driveTrain);
   }
