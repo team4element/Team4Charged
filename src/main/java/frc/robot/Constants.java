@@ -121,7 +121,7 @@ public final class Constants {
 
     // Teleop Power
     public static final double kTeleopIntakeForwardPower = .5;
-    public static final double kTeleopIntakeReversePower = -.3;
+    public static final double kTeleopIntakeReversePower = -.5;
 
     // Auto Power
     public static final double kAutoIntakeReversePower = -1;
