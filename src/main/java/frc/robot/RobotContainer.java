@@ -47,7 +47,7 @@ public class RobotContainer {
     new DriveStraight(m_driveTrain, 30));
   private final Command MoveArmMode = new HoldArmPosition(m_arm, 72.5);
   private final Command HoldPositionMode = new HoldDrivePosition(m_driveTrain);
-  private final Command BalanceMode = new FollowTrajectory(m_driveTrain);
+  private final Command BalanceMode = new FollowTrajectoryPP(m_driveTrain);
 
   SendableChooser<Command> m_chooser = new SendableChooser<>();
 
@@ -59,12 +59,12 @@ public class RobotContainer {
     m_arm.setDefaultCommand(new LowerArmDown(m_arm));
 
     // Auto Modes
-    m_chooser.setDefaultOption("Move Arm Auto", MoveArmMode);
+    m_chooser.setDefaultOption("Score Low And Taxi Auto", ScoreLowAndTaxiMode);
     m_chooser.addOption("Score Low Auto", ScoreLowMode);
     m_chooser.addOption("Taxi Auto", TaxiMode);
     m_chooser.addOption("Score Low and Balance Auto", ScoreLowAndBalanceMode);
     m_chooser.addOption("Do Nothing Auto", DoNothingMode);
-    m_chooser.addOption("Score Low And Taxi Auto", ScoreLowAndTaxiMode);
+    m_chooser.addOption("Move Arm Auto", MoveArmMode);
     m_chooser.addOption("Hold Position Auto", HoldPositionMode);
     m_chooser.addOption("Balance Auto", BalanceMode);
     SmartDashboard.putData(m_chooser);
@@ -127,7 +127,7 @@ public class RobotContainer {
 
     // Run ToggleCompressor Command when Operator B Button is Pressed
     new Trigger(m_arm::toggleCompressor)
-      .whileTrue(new ToggleCompressor(m_arm));
+      .onTrue(new ToggleCompressor(m_arm));
 
     // Run IntakeForward Command when Operator Left Bumper is Held
     new Trigger(m_intake::intakeForward)
