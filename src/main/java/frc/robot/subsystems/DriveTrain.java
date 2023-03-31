@@ -40,6 +40,7 @@ public class DriveTrain extends SubsystemBase {
   private final static MotorControllerGroup leftMotorControllerGroup = new MotorControllerGroup(leftFront, leftBack);
   private final static MotorControllerGroup rightMotorControllerGroup = new MotorControllerGroup(rightFront, rightBack);
 
+  // private final static DifferentialDrive differentialDrive = new DifferentialDrive(leftBack, rightBack);
   private final static DifferentialDrive differentialDrive = new DifferentialDrive(leftMotorControllerGroup, rightMotorControllerGroup);
 
   private final DifferentialDriveOdometry m_odometry;
@@ -67,12 +68,13 @@ public class DriveTrain extends SubsystemBase {
 
     // Make motors Follow the Leader
     leftFront.follow(leftBack);
-
     rightFront.follow(rightBack);
 
+    leftFront.setInverted(true);
+    leftBack.setInverted(true);
+
     rightMotorControllerGroup.setInverted(true);
-    leftMotorControllerGroup.setInverted(false);
-    // leftFront.setInverted(true);
+    leftMotorControllerGroup.setInverted(true);
 
     leftBack.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor);
     leftFront.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor);
@@ -148,7 +150,7 @@ public class DriveTrain extends SubsystemBase {
   }
 
   public double getLeftEncoderPosition() {
-    return leftBack.getSelectedSensorPosition() * Constants.DriveConstants.kLinearDistancePerMotorRotation;
+    return -leftBack.getSelectedSensorPosition() * Constants.DriveConstants.kLinearDistancePerMotorRotation;
   }
 
   public double getRightEncoderVelocity() {
@@ -156,7 +158,7 @@ public class DriveTrain extends SubsystemBase {
   }
 
   public double getLeftEncoderVelocity() {
-    return leftBack.getSelectedSensorVelocity() * (Constants.DriveConstants.kLinearDistancePerMotorRotation / 60);
+    return -leftBack.getSelectedSensorVelocity() * (Constants.DriveConstants.kLinearDistancePerMotorRotation / 60);
   }
 
   public DifferentialDrive getDifferentialDrive() {
@@ -174,6 +176,12 @@ public class DriveTrain extends SubsystemBase {
   public void tankDriveVolts(double leftVolts, double rightVolts) {
     leftMotorControllerGroup.setVoltage(leftVolts);
     rightMotorControllerGroup.setVoltage(rightVolts);
+    // leftFront.setVoltage(leftVolts);
+    // leftBack.setVoltage(leftVolts);
+
+    // rightFront.setVoltage(rightVolts);
+    // rightBack.setVoltage(rightVolts);
+
     differentialDrive.feed();
   }
 

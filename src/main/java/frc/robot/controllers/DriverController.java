@@ -13,11 +13,11 @@ public class DriverController {
     }
 
     public double getThrottle(){
-        return mController.getLeftY();
+        return -mController.getLeftY();
     }
 
     public double getTurn(){
-        return mController.getRightX();
+        return -mController.getRightX();
     }
 
     public boolean getSlowTurnLeft(){
