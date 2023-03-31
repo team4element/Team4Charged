@@ -7,7 +7,6 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.controllers.DriverController;
-import frc.robot.ElementMath;
 
 public class Drive extends CommandBase {
   private final DriveTrain m_drive;
@@ -39,12 +38,7 @@ public class Drive extends CommandBase {
       m_drive.setCoastMode();
     }
 
-    // if ( rotationPower < .1 && rotationPower > -.1){
-    //   double[] outputs = this.m_drive.getStraightOutput(m_drive.calculateSlew(straightPower),m_drive.calculateSlew(straightPower),0);
-    //   this.m_drive.setPower(outputs[0], outputs[1]);
-    
     m_drive.arcadeDrive(m_drive.calculateSlew(straightPower), rotationPower);
-   // m_drive.setPower(m_drive.calculateSlew(straightPower) + rotationPower, m_drive.calculateSlew(straightPower) - rotationPower);
   }
 
   // Called once the command ends or is interrupted.
