@@ -35,7 +35,7 @@ public class DriveTrain extends SubsystemBase {
   private static WPI_TalonFX rightFront = new WPI_TalonFX(Constants.DriveConstants.kRightFrontMotor);
   private static WPI_TalonFX rightBack = new WPI_TalonFX(Constants.DriveConstants.kRightBackMotor);
 
-  private static AHRS navX;
+  private static Gyro navX = new AHRS(SPI.Port.kMXP);
 
   private final static MotorControllerGroup leftMotorControllerGroup = new MotorControllerGroup(leftFront, leftBack);
   private final static MotorControllerGroup rightMotorControllerGroup = new MotorControllerGroup(rightFront, rightBack);
@@ -52,32 +52,32 @@ public class DriveTrain extends SubsystemBase {
 
   private static double ticksPerInch = 2048 * gearRatio / 18.85;
 
-  SlewRateLimiter filter = new SlewRateLimiter(1.2);
+  SlewRateLimiter filter = new SlewRateLimiter(1.7);
 
   public DriveTrain() {
-    leftBack.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor);
-   
     // Current limit to prevent browning out due to too much current drawn 
     var stator = new StatorCurrentLimitConfiguration(true, 80, 100, 0.05);
     var supply = new SupplyCurrentLimitConfiguration(true, 40, 50, 0.05);
-
+    
     leftBack.configStatorCurrentLimit(stator);
     leftBack.configSupplyCurrentLimit(supply);
     rightBack.configStatorCurrentLimit(stator);
     rightBack.configSupplyCurrentLimit(supply);
 
-    navX = new AHRS(SPI.Port.kMXP);
 
     // Make motors Follow the Leader
     leftFront.follow(leftBack);
 
     rightFront.follow(rightBack);
 
-    leftBack.setInverted(true);
-    leftFront.setInverted(true);
+    rightMotorControllerGroup.setInverted(true);
+    leftMotorControllerGroup.setInverted(false);
+    // leftFront.setInverted(true);
 
     leftBack.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor);
+    leftFront.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor);
     rightBack.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor);
+    rightFront.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor);
 
     // leftBack.configOpenloopRamp(0.5);
     // rightBack.configOpenloopRamp(0.5);
@@ -148,7 +148,7 @@ public class DriveTrain extends SubsystemBase {
   }
 
   public double getLeftEncoderPosition() {
-    return -leftBack.getSelectedSensorPosition() * Constants.DriveConstants.kLinearDistancePerMotorRotation;
+    return leftBack.getSelectedSensorPosition() * Constants.DriveConstants.kLinearDistancePerMotorRotation;
   }
 
   public double getRightEncoderVelocity() {
@@ -156,7 +156,7 @@ public class DriveTrain extends SubsystemBase {
   }
 
   public double getLeftEncoderVelocity() {
-    return -leftBack.getSelectedSensorVelocity() * (Constants.DriveConstants.kLinearDistancePerMotorRotation / 60);
+    return leftBack.getSelectedSensorVelocity() * (Constants.DriveConstants.kLinearDistancePerMotorRotation / 60);
   }
 
   public DifferentialDrive getDifferentialDrive() {
