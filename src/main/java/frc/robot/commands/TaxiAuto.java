@@ -6,7 +6,7 @@ import frc.robot.subsystems.DriveTrain;
 public class TaxiAuto extends CommandBase {
   private final DriveTrain m_drive;
 
-  private final static double TARGET_POSITION = 190;
+  private final static double TARGET_POSITION = -190;
 
   public TaxiAuto(DriveTrain drive) {
     this.m_drive = drive;

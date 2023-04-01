@@ -22,7 +22,7 @@ import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.interfaces.Gyro;
-import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
+// import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -37,11 +37,11 @@ public class DriveTrain extends SubsystemBase {
 
   private static Gyro navX = new AHRS(SPI.Port.kMXP);
 
-  private final static MotorControllerGroup leftMotorControllerGroup = new MotorControllerGroup(leftFront, leftBack);
-  private final static MotorControllerGroup rightMotorControllerGroup = new MotorControllerGroup(rightFront, rightBack);
+  // private final static MotorControllerGroup leftMotorControllerGroup = new MotorControllerGroup(leftFront, leftBack);
+  // private final static MotorControllerGroup rightMotorControllerGroup = new MotorControllerGroup(rightFront, rightBack);
 
-  // private final static DifferentialDrive differentialDrive = new DifferentialDrive(leftBack, rightBack);
-  private final static DifferentialDrive differentialDrive = new DifferentialDrive(leftMotorControllerGroup, rightMotorControllerGroup);
+  private final static DifferentialDrive differentialDrive = new DifferentialDrive(leftBack, rightBack);
+  // private final static DifferentialDrive differentialDrive = new DifferentialDrive(leftMotorControllerGroup, rightMotorControllerGroup);
 
   private final DifferentialDriveOdometry m_odometry;
 
@@ -70,11 +70,14 @@ public class DriveTrain extends SubsystemBase {
     leftFront.follow(leftBack);
     rightFront.follow(rightBack);
 
-    leftFront.setInverted(true);
-    leftBack.setInverted(true);
+    leftFront.setInverted(false);
+    leftBack.setInverted(false);
 
-    rightMotorControllerGroup.setInverted(true);
-    leftMotorControllerGroup.setInverted(true);
+    rightFront.setInverted(true);
+    rightBack.setInverted(true);
+
+    // rightMotorControllerGroup.setInverted(true);
+    // leftMotorControllerGroup.setInverted(true);
 
     leftBack.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor);
     leftFront.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor);
@@ -146,19 +149,19 @@ public class DriveTrain extends SubsystemBase {
   }
 
   public double getRightEncoderPosition() {
-    return -rightBack.getSelectedSensorPosition() * Constants.DriveConstants.kLinearDistancePerMotorRotation;
+    return rightBack.getSelectedSensorPosition() * Constants.DriveConstants.kLinearDistancePerMotorRotation;
   }
 
   public double getLeftEncoderPosition() {
-    return -leftBack.getSelectedSensorPosition() * Constants.DriveConstants.kLinearDistancePerMotorRotation;
+    return leftBack.getSelectedSensorPosition() * Constants.DriveConstants.kLinearDistancePerMotorRotation;
   }
 
   public double getRightEncoderVelocity() {
-    return -rightBack.getSelectedSensorVelocity() * (Constants.DriveConstants.kLinearDistancePerMotorRotation / 60);
+    return rightBack.getSelectedSensorVelocity() * (Constants.DriveConstants.kLinearDistancePerMotorRotation / 600);
   }
 
   public double getLeftEncoderVelocity() {
-    return -leftBack.getSelectedSensorVelocity() * (Constants.DriveConstants.kLinearDistancePerMotorRotation / 60);
+    return leftBack.getSelectedSensorVelocity() * (Constants.DriveConstants.kLinearDistancePerMotorRotation / 600);
   }
 
   public DifferentialDrive getDifferentialDrive() {
@@ -174,13 +177,10 @@ public class DriveTrain extends SubsystemBase {
   }
 
   public void tankDriveVolts(double leftVolts, double rightVolts) {
-    leftMotorControllerGroup.setVoltage(leftVolts);
-    rightMotorControllerGroup.setVoltage(rightVolts);
-    // leftFront.setVoltage(leftVolts);
-    // leftBack.setVoltage(leftVolts);
-
-    // rightFront.setVoltage(rightVolts);
-    // rightBack.setVoltage(rightVolts);
+    // leftMotorControllerGroup.setVoltage(leftVolts);
+    // rightMotorControllerGroup.setVoltage(rightVolts);
+    leftBack.setVoltage(leftVolts);
+    rightBack.setVoltage(rightVolts);
 
     differentialDrive.feed();
   }
@@ -262,8 +262,10 @@ public class DriveTrain extends SubsystemBase {
 
     if (Math.abs(currentAngle) > angleTolerance) {
       double modifier = currentAngle * Constants.DriveConstants.kAngleP;
-      l_out -= modifier;
-      r_out += modifier;
+      l_out += modifier;
+      r_out -= modifier;
+      // l_out -= modifier;
+      // r_out += modifier;
     }
 
     return new double[] {l_out, r_out};
