@@ -28,12 +28,8 @@ public class LowerArmDown extends CommandBase {
   public LowerArmDown(Arm arm) {
     this.m_arm = arm;
 
-    // if (this.m_arm.getPivotState()){
     normalArmPID = new PIDController(Constants.ArmConstants.kArmP, Constants.ArmConstants.kArmI, Constants.ArmConstants.kArmD, feedForward.calculate(Math.cos(Units.degreesToRadians(Constants.ArmConstants.kBaseAngle)), 2, 2));
     pivotedArmPID = new PIDController(Constants.ArmConstants.kArmP, Constants.ArmConstants.kArmI, Constants.ArmConstants.kArmD, feedForward.calculate(Math.cos(Units.degreesToRadians(Constants.ArmConstants.kPivotedAngle)), 2, 2));
-    // } else {
-    //   armPID = new PIDController(Constants.ArmConstants.kArmP, Constants.ArmConstants.kArmI, Constants.ArmConstants.kArmD, feedForward.calculate(Math.cos(Units.degreesToRadians(Constants.ArmConstants.kBaseAngle)), 2, 2));
-    // }
   
     normalArmPID.setTolerance(this.m_arm.armAngleToTicks(tolerance));
     pivotedArmPID.setTolerance(this.m_arm.armAngleToTicks(tolerance));
