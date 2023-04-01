@@ -27,7 +27,7 @@ import frc.robot.subsystems.DriveTrain;
 public class FollowTrajectoryPP extends SequentialCommandGroup {
   public Command TaxiAndBalance(Boolean resetOdometry) {
 
-    PathPlannerTrajectory trajectory = PathPlanner.loadPath("TaxiAndBalance", new PathConstraints(1.5, 1));
+    PathPlannerTrajectory trajectory = PathPlanner.loadPath("TaxiAndBalance", new PathConstraints(0.75, 0.5), true);
 
     HashMap<String, Command> eventMap = new HashMap<>();
     eventMap.put("holdPosition", new HoldDrivePosition(RobotContainer.getDriveTrainSubsystem()));
