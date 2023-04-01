@@ -107,17 +107,17 @@ public class RobotContainer {
 
     // Run HoldArmPosition Command for High Cube Position when Operator Left Trigger is Pressed
     new Trigger(m_arm::getHighCubePosition)
-      .onTrue(new HoldArmPosition(m_arm, 72.5))
+      .onTrue(new HoldArmPosition(m_arm, 73.5))
       .onFalse(new LowerArmDown(m_arm));
     
     // Run HoldArmPosition Command for Mid Cube Position when Operator Right Trigger is Pressed
     new Trigger(m_arm::getMidCubePosition)
-      .onTrue(new HoldArmPosition(m_arm, 54))
+      .onTrue(new HoldArmPosition(m_arm, 55))
       .onFalse(new LowerArmDown(m_arm));
 
     // Run HoldArmPosition Command for Shelf Position when Operator Right Bumper is Pressed
     new Trigger(m_arm::getShelfPosition)
-      .onTrue(new HoldArmPosition(m_arm, 68))
+      .onTrue(new HoldArmPosition(m_arm, 69))
       .onFalse(new LowerArmDown(m_arm));
 
     // Run TogglePivot Command when Operator A Button is Pressed
