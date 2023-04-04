@@ -14,6 +14,6 @@ public class HighConePosition extends SequentialCommandGroup {
   public HighConePosition(Arm arm) {
     this.m_arm = arm;
 
-    addCommands(new TogglePivot(this.m_arm), new HoldArmPosition(this.m_arm, 110));
+    addCommands(new TogglePivot(this.m_arm), new HoldArmPosition(this.m_arm, 112));
   }
 }

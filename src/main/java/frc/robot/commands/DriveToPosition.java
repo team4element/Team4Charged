@@ -4,6 +4,7 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.wpilibj2.command.CommandBase;
@@ -11,20 +12,21 @@ import frc.robot.Constants;
 import frc.robot.ElementUnits;
 import frc.robot.subsystems.DriveTrain;
 
-public class HoldDrivePosition extends CommandBase {
-
+public class DriveToPosition extends CommandBase {
   private PIDController positionPID;
 
   private final DriveTrain m_drive;
+  private final double m_position;
 
   private static final double tolerance = ElementUnits.inchesToTicks(0.25);
 
   SimpleMotorFeedforward feedForward = new SimpleMotorFeedforward(Constants.DriveConstants.kS,
       Constants.DriveConstants.kV, Constants.DriveConstants.kA);
   
-  public HoldDrivePosition(DriveTrain drive) {
+  public DriveToPosition(DriveTrain drive, double position) {
 
     this.m_drive = drive;
+    this.m_position = position;
 
     positionPID = new PIDController(Constants.DriveConstants.kPositionP, Constants.DriveConstants.kPositionI, Constants.DriveConstants.kPositionD);
 
@@ -37,22 +39,23 @@ public class HoldDrivePosition extends CommandBase {
   @Override
   public void initialize() {
     this.m_drive.resetSensors();
-    positionPID.setSetpoint(ElementUnits.inchesToTicks(0));
+    positionPID.setSetpoint(ElementUnits.inchesToTicks(this.m_position));
     // this.m_drive.setPower(0, 0);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    double power = positionPID.calculate(this.m_drive.getAverageRawEncoderTicks(), 0);
+    double power = positionPID.calculate(this.m_drive.getAverageRawEncoderTicks());
     double[] outputs = this.m_drive.getStraightOutput(power, power, 0);
-    this.m_drive.setPower(outputs[0], outputs[1]);
+   
+    this.m_drive.setPower(MathUtil.clamp(outputs[0],-.3,.3), MathUtil.clamp(outputs[1], -.3,.3));
   }
 
   // Called once the command ends or is interrupted.
   @Override
 public void end(boolean interrupted) {
-  this.m_drive.setPower(0, 0);
+  // this.m_drive.setPower(0, 0);
 }
 
   // Returns true when the command should end.
