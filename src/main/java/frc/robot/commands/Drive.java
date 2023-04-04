@@ -30,7 +30,7 @@ public class Drive extends CommandBase {
     // double rotationPower = -this.mDriverController.getTurn() * 0.5;
 
     double straightPower = this.mDriverController.getThrottle();
-    double rotationPower = this.mDriverController.getTurn();
+    double rotationPower = this.mDriverController.getTurn() * 0.75;
     
     if (this.mDriverController.getSlowDrive()){
       m_drive.setBrakeMode(); 
