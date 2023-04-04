@@ -28,6 +28,7 @@ public final class Constants {
   
   public static class DriveConstants {
     //DriveTrain
+    public static final int kPigeon = 0;
     public static final int kLeftFrontMotor = 1;
     public static final int kLeftBackMotor = 2;
 
@@ -48,6 +49,8 @@ public final class Constants {
     public static final double kRamseteB = 2;
     public static final double kRamseteZeta = 0.7;
 
+    public static final boolean invertedGyro = false;
+    
     // RotateToAngle PID
     public static final double kAngleP = 0.009;
     public static final double kAngleI = 0;
@@ -71,6 +74,8 @@ public final class Constants {
     public static final double kV = 2.054;
     public static final double kA = 0.5882;
     public static final double kPDriveVel = 1.1695;
+    // public static final double kPDriveVel = 0;
+
   }
 
   public static class PneumaticsConstants {
@@ -121,7 +126,7 @@ public final class Constants {
 
     // Teleop Power
     public static final double kTeleopIntakeForwardPower = .5;
-    public static final double kTeleopIntakeReversePower = -.5;
+    public static final double kTeleopIntakeReversePower = -.6;
 
     // Auto Power
     public static final double kAutoIntakeReversePower = -1;

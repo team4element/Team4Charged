@@ -98,7 +98,7 @@ public class RobotContainer {
   private void configureBindings() {
     // Run RotateToAngle Command when Driver Y Button is Pressed
     new Trigger(m_driveTrain::rotate)
-        .onTrue(new RotateToAngle(m_driveTrain, 90).withTimeout(2));
+        .onTrue(new RotateToAngle(m_driveTrain, 90));
 
     // Run SlowTurnLeft Command when Driver Left Trigger is Pressed
     new Trigger(m_driveTrain::slowTurnLeft)

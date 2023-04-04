@@ -22,7 +22,9 @@ import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.interfaces.Gyro;
-// import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
+import com.ctre.phoenix.sensors.Pigeon2;
+import com.ctre.phoenix.sensors.Pigeon2Configuration;
+
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -35,7 +37,9 @@ public class DriveTrain extends SubsystemBase {
   private static WPI_TalonFX rightFront = new WPI_TalonFX(Constants.DriveConstants.kRightFrontMotor);
   private static WPI_TalonFX rightBack = new WPI_TalonFX(Constants.DriveConstants.kRightBackMotor);
 
-  private static Gyro navX = new AHRS(SPI.Port.kMXP);
+  private static Pigeon2 pigeon = new Pigeon2(Constants.DriveConstants.kPigeon);
+
+  // private static Gyro navX = new AHRS(SPI.Port.kMXP);
 
   // private final static MotorControllerGroup leftMotorControllerGroup = new MotorControllerGroup(leftFront, leftBack);
   // private final static MotorControllerGroup rightMotorControllerGroup = new MotorControllerGroup(rightFront, rightBack);
@@ -91,13 +95,21 @@ public class DriveTrain extends SubsystemBase {
     rightBack.configClosedloopRamp(0.5);
     
     configurePIDF();
+    
+    Pigeon2Configuration config = new Pigeon2Configuration();
+    config.MountPosePitch = 90;
+    config.MountPoseRoll = 180;
+    pigeon.configAllSettings(config);
+    zeroGyro();
 
-    navX.reset();
-    navX.calibrate();
+    // navX.reset();
+    // navX.calibrate();
     resetEncoders();
 
-    m_odometry = new DifferentialDriveOdometry(navX.getRotation2d(), 0, 0);
-    m_odometry.resetPosition(navX.getRotation2d(), 0, 0, new Pose2d());
+    m_odometry = new DifferentialDriveOdometry(getRotation2d(), 0, 0);
+    m_odometry.resetPosition(getRotation2d(), 0, 0, new Pose2d());
+    // m_odometry = new DifferentialDriveOdometry(navX.getRotation2d(), 0, 0);
+    // m_odometry.resetPosition(navX.getRotation2d(), 0, 0, new Pose2d());
   }
 
   private void configurePIDF() {
@@ -127,9 +139,16 @@ public class DriveTrain extends SubsystemBase {
     rightBack.setSelectedSensorPosition(0);
   }
 
-  public Gyro getGyro() {
-    return navX;
+  public static void zeroGyro() {
+    pigeon.setYaw(0);
   }
+
+  public static Rotation2d getRotation2d() {
+    return (Constants.DriveConstants.invertedGyro) ? Rotation2d.fromDegrees(360 - pigeon.getYaw()) : Rotation2d.fromDegrees(pigeon.getYaw());
+}
+  // public Gyro getGyro() {
+  //   return navX;
+  // }
 
   public Field2d getField() {
     return m_field;
@@ -145,7 +164,8 @@ public class DriveTrain extends SubsystemBase {
 
   public void resetOdometry(Pose2d pose) {
     resetEncoders();
-    m_odometry.resetPosition(navX.getRotation2d(), 0, 0, pose);
+    // m_odometry.resetPosition(navX.getRotation2d(), 0, 0, pose);
+    m_odometry.resetPosition(getRotation2d(), 0, 0, pose);
   }
 
   public double getRightEncoderPosition() {
@@ -190,17 +210,20 @@ public class DriveTrain extends SubsystemBase {
   }
 
   public static void zeroHeading() {
-    navX.calibrate();
-    navX.reset();
+    // navX.calibrate();
+    // navX.reset();
+    zeroGyro();
+    resetEncoders();
   }
 
   public static double getHeading() {
-    return navX.getRotation2d().getDegrees();
+    // return navX.getRotation2d().getDegrees();
+    return getRotation2d().getDegrees();
   }
 
-  public double getTurnRate() {
-    return navX.getRate();
-  }
+  // public double getTurnRate() {
+  //   return navX.getRate();
+  // }
 
   public void setMaxOutput(double maxOutput) {
     differentialDrive.setMaxOutput(maxOutput);
@@ -251,14 +274,15 @@ public class DriveTrain extends SubsystemBase {
   }
 
   public double getAverageRawEncoderTicks(){
-    return (rightBack.getSelectedSensorPosition(0) + leftBack.getSelectedSensorPosition(0))/2;
+    return ((rightBack.getSelectedSensorPosition(0)) + leftBack.getSelectedSensorPosition(0))/2;
   }
 
   public double[] getStraightOutput(double l, double r, double target) {
     final double angleTolerance = 1;
     double l_out = l;
     double r_out = r;
-    double currentAngle = target- this.getGyroAngle();
+    // double currentAngle = target- this.getGyroAngle();
+    double currentAngle = target - pigeon.getYaw();
 
     if (Math.abs(currentAngle) > angleTolerance) {
       double modifier = currentAngle * Constants.DriveConstants.kAngleP;
@@ -284,13 +308,14 @@ public class DriveTrain extends SubsystemBase {
   }
 
   public void resetSensors() {
-    navX.reset();
+    // navX.reset();
+    zeroGyro();
     leftBack.setSelectedSensorPosition(0);
     rightBack.setSelectedSensorPosition(0);
   }
 
   public double getGyroAngle() {
-    return navX.getAngle();
+    return pigeon.getYaw();
   }
 
   public boolean rotate() {
@@ -299,8 +324,9 @@ public class DriveTrain extends SubsystemBase {
 
   @Override
   public void periodic() {
-    SmartDashboard.putNumber("heading", navX.getAngle());
-    SmartDashboard.putNumber("turn rate", getTurnRate());
+    SmartDashboard.putNumber("heading", pigeon.getYaw());
+    // SmartDashboard.putNumber("heading", navX.getAngle());
+    // SmartDashboard.putNumber("turn rate", getTurnRate());
 
     SmartDashboard.putNumber("leftEncoder distance", getLeftEncoderPosition());
     SmartDashboard.putNumber("rightEncoder distance", getRightEncoderPosition());
@@ -309,13 +335,14 @@ public class DriveTrain extends SubsystemBase {
     SmartDashboard.putNumber("rightEncoder velocity", getRightEncoderVelocity());
 
     SmartDashboard.putNumber("leftEncoder raw", leftBack.getSelectedSensorPosition());
-    SmartDashboard.putNumber("rightEncoder raw", -rightBack.getSelectedSensorPosition());
+    SmartDashboard.putNumber("rightEncoder raw", rightBack.getSelectedSensorPosition());
 
     m_field.setRobotPose(m_odometry.getPoseMeters());
 
     m_odometry.update(Rotation2d.fromDegrees(getHeading()), getLeftEncoderPosition(),
       getRightEncoderPosition());
 
-    m_odometry.update(navX.getRotation2d(), getLeftEncoderPosition(), getRightEncoderPosition());
+    // m_odometry.update(navX.getRotation2d(), getLeftEncoderPosition(), getRightEncoderPosition());
+    m_odometry.update(getRotation2d(), getLeftEncoderPosition(), getRightEncoderPosition());
   }
 }
