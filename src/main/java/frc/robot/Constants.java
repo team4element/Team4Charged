@@ -69,13 +69,21 @@ public final class Constants {
     public static final double kPositionD = 0;
     public static final double kPositionF = 0;
 
+    // Balance PID
+    public static final double kBalanceP = .055;
+    public static final double kBalanceI = 0;
+    public static final double kBalanceD = 0;
+
     // Feedforward Constants
     public static final double kS = 0.12202;
     public static final double kV = 2.054;
-    public static final double kA = 0.5882;
+    public static final double kA = 0.58882;
     public static final double kPDriveVel = 1.1695;
     // public static final double kPDriveVel = 0;
 
+    // Clamps
+    public static final double kHoldPositionClamp = .3;
+    public static final double kBalanceClamp = .35;
   }
 
   public static class PneumaticsConstants {

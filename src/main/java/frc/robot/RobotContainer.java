@@ -32,12 +32,12 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   // private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
-  public static DriveTrain m_driveTrain = new DriveTrain();
-  public static Arm m_arm = new Arm();
-  public static Intake m_intake = new Intake();
+  public final static DriveTrain m_driveTrain = new DriveTrain();
+  public final static Arm m_arm = new Arm();
+  public final static Intake m_intake = new Intake();
 
   private final DriverController m_driverController = new DriverController();
-  private final OperatorController m_operatorController = new OperatorController();
+//   private final OperatorController m_operatorController = new OperatorController();
 
   private final Command TaxiMode = new TaxiAuto(m_driveTrain);
   private final Command ScoreLowMode = new Score(m_intake);
@@ -49,7 +49,15 @@ public class RobotContainer {
       new Score(m_intake),
       new DriveStraight(m_driveTrain, 30));
   private final Command BalanceMode = new DriveToPosition(m_driveTrain, -82);
+  private final Command ScoreMidAndTaxiAndBalanceMode = new ScoreMidAndBalance(m_driveTrain, m_arm, m_intake);
+  private final Command BalanceAndTaxiMode = Commands.sequence(
+      new DriveToPosition(m_driveTrain, -148).withTimeout(5),
+      new DriveToPosition(m_driveTrain, 68).withTimeout(3),
+      new Balance(m_driveTrain));
+  private final Command Stay = new DriveToPosition(m_driveTrain, 0);
+  private final Command NewBalanceMode = new Balance(m_driveTrain);
   private final Command ScoreMidAndTaxiMode = new ScoreMidAuto(m_driveTrain, m_arm, m_intake);
+  private final Command Straight = new FollowTrajectoryPP(m_driveTrain);
 
   SendableChooser<Command> m_chooser = new SendableChooser<>();
 
@@ -70,6 +78,10 @@ public class RobotContainer {
     m_chooser.addOption("Do Nothing Auto", DoNothingMode);
     m_chooser.addOption("Balance Auto", BalanceMode);
     m_chooser.addOption("Score Low And Taxi Auto", ScoreLowAndTaxiMode);
+    m_chooser.addOption("Score Mid, Taxi, and Balance Auto", ScoreMidAndTaxiAndBalanceMode);
+    m_chooser.addOption("Balance And Taxi Auto", BalanceAndTaxiMode);
+    m_chooser.addOption("stay", Stay);
+    m_chooser.addOption("New Balance Auto", NewBalanceMode);
     SmartDashboard.putData(m_chooser);
   }
 
@@ -129,7 +141,7 @@ public class RobotContainer {
     // Run HoldArmPosition Command for Shelf Position when Operator Right Bumper is
     // Pressed
     new Trigger(m_arm::getShelfPosition)
-        .onTrue(new HoldArmPosition(m_arm, 69))
+        .onTrue(new HoldArmPosition(m_arm, 70))
         .onFalse(new LowerArmDown(m_arm));
 
     // Run TogglePivot Command when Operator A Button is Pressed
