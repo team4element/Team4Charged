@@ -40,24 +40,35 @@ public class RobotContainer {
 //   private final OperatorController m_operatorController = new OperatorController();
 
   private final Command TaxiMode = new TaxiAuto(m_driveTrain);
-  private final Command ScoreLowMode = new Score(m_intake);
+  private final Command ScoreLowMode = new Score(m_intake).withTimeout(1);
+  private final Command ScoreMidMode = Commands.sequence(
+    new HoldArmPosition(m_arm, 74.5).withTimeout(2),
+    new DriveToPosition(m_driveTrain, 11.5).withTimeout(2),
+    new ToggleClaw(m_intake),
+    new DriveToPosition(m_driveTrain, -10).withTimeout(2),
+    new LowerArmDown(m_arm).withTimeout(1.5));
+  private final Command ScoreHighMode = Commands.sequence(
+    new HighConePosition(m_arm).withTimeout(2),
+    new DriveToPosition(m_driveTrain, 11.5).withTimeout(2),
+    new ToggleClaw(m_intake),
+    new DriveToPosition(m_driveTrain, -10).withTimeout(2),
+    new TogglePivot(m_arm),
+    new LowerArmDown(m_arm).withTimeout(1.5));
   private final Command DoNothingMode = new DoNothingMode();
   private final Command ScoreLowAndTaxiMode = Commands.sequence(
       new Score(m_intake),
       new TaxiAuto(m_driveTrain));
-  private final Command ScoreLowAndBalanceMode = Commands.sequence(
-      new Score(m_intake),
-      new DriveStraight(m_driveTrain, 30));
+  private final Command ScoreMidAndTaxiMode = new ScoreMidAndTaxiAuto(m_driveTrain, m_arm, m_intake);
+  private final Command ScoreHighAndTaxiMode = new ScoreHighAndTaxiAuto(m_driveTrain, m_arm, m_intake);
+  private final Command ScoreLowAndBalanceMode = new ScoreLowAndBalance(m_driveTrain, m_intake);
   private final Command BalanceMode = new DriveToPosition(m_driveTrain, -82);
   private final Command ScoreMidAndTaxiAndBalanceMode = new ScoreMidAndBalance(m_driveTrain, m_arm, m_intake);
   private final Command BalanceAndTaxiMode = Commands.sequence(
       new DriveToPosition(m_driveTrain, -148).withTimeout(5),
       new DriveToPosition(m_driveTrain, 68).withTimeout(3),
       new Balance(m_driveTrain));
-  private final Command Stay = new DriveToPosition(m_driveTrain, 0);
   private final Command NewBalanceMode = new Balance(m_driveTrain);
-  private final Command ScoreMidAndTaxiMode = new ScoreMidAuto(m_driveTrain, m_arm, m_intake);
-  private final Command Straight = new FollowTrajectoryPP(m_driveTrain);
+  // private final Command Straight = new FollowTrajectoryPP(m_driveTrain);
 
   SendableChooser<Command> m_chooser = new SendableChooser<>();
 
@@ -72,15 +83,17 @@ public class RobotContainer {
 
     // Auto Modes
     m_chooser.setDefaultOption("Score Mid and Taxi Auto", ScoreMidAndTaxiMode);
+    m_chooser.addOption("Do Nothing Auto", DoNothingMode);
     m_chooser.addOption("Score Low Auto", ScoreLowMode);
+    m_chooser.addOption("Score Mid Auto", ScoreMidMode);
+    m_chooser.addOption("Score High Auto", ScoreHighMode);
     m_chooser.addOption("Taxi Auto", TaxiMode);
     m_chooser.addOption("Score Low and Balance Auto", ScoreLowAndBalanceMode);
-    m_chooser.addOption("Do Nothing Auto", DoNothingMode);
     m_chooser.addOption("Balance Auto", BalanceMode);
     m_chooser.addOption("Score Low And Taxi Auto", ScoreLowAndTaxiMode);
+    m_chooser.addOption("Score High And Taxi Auto", ScoreHighAndTaxiMode);
     m_chooser.addOption("Score Mid, Taxi, and Balance Auto", ScoreMidAndTaxiAndBalanceMode);
     m_chooser.addOption("Balance And Taxi Auto", BalanceAndTaxiMode);
-    m_chooser.addOption("stay", Stay);
     m_chooser.addOption("New Balance Auto", NewBalanceMode);
     SmartDashboard.putData(m_chooser);
   }
