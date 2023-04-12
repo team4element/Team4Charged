@@ -36,7 +36,7 @@ public class HoldDrivePosition extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    this.m_drive.resetSensors();
+    DriveTrain.resetSensors();
     positionPID.setSetpoint(ElementUnits.inchesToTicks(0));
     // this.m_drive.setPower(0, 0);
   }

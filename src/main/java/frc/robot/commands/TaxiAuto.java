@@ -17,7 +17,7 @@ public class TaxiAuto extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    m_drive.resetSensors();
+    DriveTrain.resetSensors();
   }
 
   // Called every time the scheduler runs while the command is scheduled.

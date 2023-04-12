@@ -38,7 +38,7 @@ public class DriveToPosition extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    this.m_drive.resetSensors();
+    DriveTrain.resetSensors();
     positionPID.setSetpoint(ElementUnits.inchesToTicks(this.m_position));
     // this.m_drive.setPower(0, 0);
   }
@@ -49,7 +49,7 @@ public class DriveToPosition extends CommandBase {
     double power = positionPID.calculate(this.m_drive.getAverageRawEncoderTicks());
     double[] outputs = this.m_drive.getStraightOutput(power, power, 0);
    
-    this.m_drive.setPower(MathUtil.clamp(outputs[0],-.3,.3), MathUtil.clamp(outputs[1], -.3,.3));
+    this.m_drive.setPower(MathUtil.clamp(outputs[0], -Constants.DriveConstants.kHoldPositionClamp, Constants.DriveConstants.kHoldPositionClamp), MathUtil.clamp(outputs[1], -Constants.DriveConstants.kHoldPositionClamp, Constants.DriveConstants.kHoldPositionClamp));
   }
 
   // Called once the command ends or is interrupted.

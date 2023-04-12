@@ -30,7 +30,7 @@ public class DriveStraight extends CommandBase {
   @Override
   public void initialize() {
     this.m_drive.setCoastMode();
-    this.m_drive.resetSensors();
+    DriveTrain.resetSensors();
     drivePID.setSetpoint(ElementUnits.inchesToTicks(this.m_distance));
     this.m_drive.setPower(0, 0);
   }
