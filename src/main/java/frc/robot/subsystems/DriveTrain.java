@@ -10,24 +10,22 @@ import com.ctre.phoenix.motorcontrol.StatorCurrentLimitConfiguration;
 import com.ctre.phoenix.motorcontrol.SupplyCurrentLimitConfiguration;
 import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
-import com.kauailabs.navx.frc.AHRS;
+import com.ctre.phoenix.music.Orchestra;
+// import com.ctre.phoenix.music.Orchestra;
+import com.ctre.phoenix.sensors.Pigeon2;
+import com.ctre.phoenix.sensors.Pigeon2Configuration;
 
-import frc.robot.Constants;
-import frc.robot.controllers.DriverController;
 import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds;
-import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
-import edu.wpi.first.wpilibj.interfaces.Gyro;
-import com.ctre.phoenix.sensors.Pigeon2;
-import com.ctre.phoenix.sensors.Pigeon2Configuration;
-
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
+import frc.robot.controllers.DriverController;
 
 public class DriveTrain extends SubsystemBase {
   // Declare Motor Objects
@@ -59,7 +57,15 @@ public class DriveTrain extends SubsystemBase {
 
   SlewRateLimiter filter = new SlewRateLimiter(1.7);
 
+  public Orchestra sound;
+
   public DriveTrain() {
+    // sound = new Orchestra();
+    // sound.addInstrument(leftBack);
+    // sound.addInstrument(leftFront);
+    // sound.addInstrument(rightBack);
+    // sound.addInstrument(rightFront);
+    // sound.loadMusic("music/skril.chrp");
     // Current limit to prevent browning out due to too much current drawn 
     var stator = new StatorCurrentLimitConfiguration(true, 80, 100, 0.05);
     var supply = new SupplyCurrentLimitConfiguration(true, 40, 50, 0.05);
@@ -88,8 +94,8 @@ public class DriveTrain extends SubsystemBase {
     rightBack.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor);
     rightFront.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor);
 
-    // leftBack.configOpenloopRamp(0.5);
-    // rightBack.configOpenloopRamp(0.5);
+    leftBack.configOpenloopRamp(0.5);
+    rightBack.configOpenloopRamp(0.5);
 
     leftBack.configClosedloopRamp(0.5);
     rightBack.configClosedloopRamp(0.5);
@@ -136,7 +142,9 @@ public class DriveTrain extends SubsystemBase {
 
   public static void resetEncoders() {
     leftBack.setSelectedSensorPosition(0);
+    leftFront.setSelectedSensorPosition(0);
     rightBack.setSelectedSensorPosition(0);
+    rightFront.setSelectedSensorPosition(0);
   }
 
   public static void zeroGyro() {
@@ -177,11 +185,11 @@ public class DriveTrain extends SubsystemBase {
   }
 
   public double getRightEncoderVelocity() {
-    return rightBack.getSelectedSensorVelocity() * (Constants.DriveConstants.kLinearDistancePerMotorRotation / 600);
+    return rightBack.getSelectedSensorVelocity() * (Constants.DriveConstants.kLinearDistancePerMotorRotation / 60);
   }
 
   public double getLeftEncoderVelocity() {
-    return leftBack.getSelectedSensorVelocity() * (Constants.DriveConstants.kLinearDistancePerMotorRotation / 600);
+    return leftBack.getSelectedSensorVelocity() * (Constants.DriveConstants.kLinearDistancePerMotorRotation / 60);
   }
 
   public DifferentialDrive getDifferentialDrive() {
@@ -193,6 +201,7 @@ public class DriveTrain extends SubsystemBase {
   }
   
   public void arcadeDrive(double fwd, double rot){
+    // sound.play();
     differentialDrive.arcadeDrive(fwd, rot);
   }
 
@@ -277,19 +286,23 @@ public class DriveTrain extends SubsystemBase {
     return ((rightBack.getSelectedSensorPosition(0)) + leftBack.getSelectedSensorPosition(0))/2;
   }
 
+  public double getRightRawEncoderTicks() {
+    return rightBack.getSelectedSensorPosition();
+  }
+
   public double[] getStraightOutput(double l, double r, double target) {
-    final double angleTolerance = 1;
+    final double angleTolerance = .5;
     double l_out = l;
     double r_out = r;
     // double currentAngle = target- this.getGyroAngle();
-    double currentAngle = target - pigeon.getYaw();
+    double currentAngle = target - getHeading();
 
     if (Math.abs(currentAngle) > angleTolerance) {
       double modifier = currentAngle * Constants.DriveConstants.kAngleP;
-      l_out += modifier;
-      r_out -= modifier;
-      // l_out -= modifier;
-      // r_out += modifier;
+      // l_out += modifier;
+      // r_out -= modifier;
+      l_out -= modifier;
+      r_out += modifier;
     }
 
     return new double[] {l_out, r_out};
@@ -307,15 +320,18 @@ public class DriveTrain extends SubsystemBase {
     rightBack.set(TalonFXControlMode.Position, position);
   }
 
-  public void resetSensors() {
+  public static void resetSensors() {
     // navX.reset();
     zeroGyro();
-    leftBack.setSelectedSensorPosition(0);
-    rightBack.setSelectedSensorPosition(0);
+    resetEncoders();
   }
 
   public double getGyroAngle() {
     return pigeon.getYaw();
+  }
+
+  public double getPigeonPitch() {
+    return pigeon.getPitch();
   }
 
   public boolean rotate() {
@@ -324,9 +340,10 @@ public class DriveTrain extends SubsystemBase {
 
   @Override
   public void periodic() {
+    // sound.play();
+
     SmartDashboard.putNumber("heading", pigeon.getYaw());
-    // SmartDashboard.putNumber("heading", navX.getAngle());
-    // SmartDashboard.putNumber("turn rate", getTurnRate());
+    SmartDashboard.putNumber("pitch", pigeon.getPitch());
 
     SmartDashboard.putNumber("leftEncoder distance", getLeftEncoderPosition());
     SmartDashboard.putNumber("rightEncoder distance", getRightEncoderPosition());
