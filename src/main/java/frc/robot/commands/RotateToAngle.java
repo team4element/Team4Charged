@@ -28,24 +28,25 @@ public class RotateToAngle extends CommandBase {
 
     @Override
     public void initialize() {
-        this.m_drive.resetSensors();
+        DriveTrain.resetSensors();
         anglePID.setSetpoint(this.m_angle);
-        this.m_drive.setPower(0.0, 0.0);
+        // this.m_drive.setPower(0.0, 0.0);
     }
 
     @Override
     public void execute() {
         double power = anglePID.calculate(this.m_drive.getGyroAngle());
-        this.m_drive.setPower(-power, power);
+        this.m_drive.arcadeDrive(0, power);
     }
 
     @Override
     public void end(boolean interrupted) {
-        this.m_drive.setPower(0.0, 0.0);
+        // this.m_drive.setPower(0.0, 0.0);
     }
 
     @Override
     public boolean isFinished() {
-        return anglePID.atSetpoint();
+        // return anglePID.atSetpoint();
+        return false;
     }
 }
