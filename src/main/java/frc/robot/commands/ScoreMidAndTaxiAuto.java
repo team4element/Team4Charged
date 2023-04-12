@@ -19,6 +19,7 @@ public class ScoreMidAndTaxiAuto extends SequentialCommandGroup {
     addCommands(new DriveToPosition(this.m_drive, -12).withTimeout(2),
         new HoldArmPosition(this.m_arm, 74.5).withTimeout(2),
         new DriveToPosition(this.m_drive, 11.5).withTimeout(2),
-        new ToggleClaw(this.m_intake), new LowerArmDown(this.m_arm).withTimeout(2), new TaxiAuto(m_drive));
+        new ToggleClaw(this.m_intake),
+        new LowerArmAndDrive(this.m_drive, this.m_arm, -190).withTimeout(5));
   }
 }

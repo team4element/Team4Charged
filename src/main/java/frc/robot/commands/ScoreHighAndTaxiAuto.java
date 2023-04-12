@@ -22,7 +22,6 @@ public class ScoreHighAndTaxiAuto extends SequentialCommandGroup {
         new ToggleClaw(this.m_intake),
         new DriveToPosition(this.m_drive, -10).withTimeout(2),
         new TogglePivot(this.m_arm),
-        new LowerArmDown(this.m_arm).withTimeout(2), 
-        new TaxiAuto(m_drive));
+        new LowerArmAndDrive(this.m_drive, this.m_arm, -190).withTimeout(5));
   }
 }
