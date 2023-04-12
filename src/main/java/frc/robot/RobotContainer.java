@@ -60,14 +60,18 @@ public class RobotContainer {
       new TaxiAuto(m_driveTrain));
   private final Command ScoreMidAndTaxiMode = new ScoreMidAndTaxiAuto(m_driveTrain, m_arm, m_intake);
   private final Command ScoreHighAndTaxiMode = new ScoreHighAndTaxiAuto(m_driveTrain, m_arm, m_intake);
-  private final Command ScoreLowAndBalanceMode = new ScoreLowAndBalance(m_driveTrain, m_intake);
+  private final Command ScoreLowAndTaxiAndBalanceMode = new ScoreLowAndBalance(m_driveTrain, m_intake);
   private final Command BalanceMode = new DriveToPosition(m_driveTrain, -82);
   private final Command ScoreMidAndTaxiAndBalanceMode = new ScoreMidAndBalance(m_driveTrain, m_arm, m_intake);
+  private final Command ScoreHighAndTaxiAndBalanceMode = new ScoreHighAndBalance(m_driveTrain, m_arm, m_intake);
   private final Command TaxiAndBalanceMode = Commands.sequence(
       new DriveToPosition(m_driveTrain, -148).withTimeout(5),
       new DriveToPosition(m_driveTrain, 68).withTimeout(3),
       new Balance(m_driveTrain, true));
   private final Command NewBalanceMode = new Balance(m_driveTrain, true);
+  private final Command ScoreLowAndIntakeMode = new ScoreLowAndIntake(m_driveTrain, m_intake);
+  private final Command ScoreMidAndIntakeMode = new ScoreMidAndIntake(m_driveTrain, m_arm, m_intake);
+  private final Command ScoreHighAndIntakeMode = new ScoreHighAndIntake(m_driveTrain, m_arm, m_intake);
   // private final Command Straight = new FollowTrajectoryPP(m_driveTrain);
 
   SendableChooser<Command> m_chooser = new SendableChooser<>();
@@ -88,13 +92,17 @@ public class RobotContainer {
     m_chooser.addOption("Score Mid Auto", ScoreMidMode);
     m_chooser.addOption("Score High Auto", ScoreHighMode);
     m_chooser.addOption("Taxi Auto", TaxiMode);
-    m_chooser.addOption("Score Low and Balance Auto", ScoreLowAndBalanceMode);
     m_chooser.addOption("Balance Auto", BalanceMode);
     m_chooser.addOption("Score Low And Taxi Auto", ScoreLowAndTaxiMode);
     m_chooser.addOption("Score High And Taxi Auto", ScoreHighAndTaxiMode);
+    m_chooser.addOption("Score Low, Taxi, and Balance Auto", ScoreLowAndTaxiAndBalanceMode);
     m_chooser.addOption("Score Mid, Taxi, and Balance Auto", ScoreMidAndTaxiAndBalanceMode);
+    m_chooser.addOption("Score High, Taxi, and Balance Auto", ScoreHighAndTaxiAndBalanceMode);
     m_chooser.addOption("Taxi and Balance Auto", TaxiAndBalanceMode);
     m_chooser.addOption("New Balance Auto", NewBalanceMode);
+    m_chooser.addOption("Score Low and Intake Auto", ScoreLowAndIntakeMode);
+    m_chooser.addOption("Score Mid and Intake Auto", ScoreMidAndIntakeMode);
+    m_chooser.addOption("Score High and Intake Auto", ScoreHighAndIntakeMode);
     SmartDashboard.putData(m_chooser);
   }
 
