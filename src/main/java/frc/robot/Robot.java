@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import frc.robot.subsystems.DriveTrain;
 import edu.wpi.first.cameraserver.CameraServer;
 
 
@@ -24,6 +25,7 @@ public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
 
   private RobotContainer m_robotContainer;
+  
 
   /**
    * This function is run when the robot is first started up and should be used
@@ -37,7 +39,8 @@ public class Robot extends TimedRobot {
     // autonomous chooser on the dashboard.
     CameraServer.startAutomaticCapture();
     m_robotContainer = new RobotContainer();
-    RobotContainer.m_driveTrain.resetSensors();
+    DriveTrain.zeroHeading();
+    DriveTrain.resetSensors();
   }
 
   /**
@@ -60,10 +63,10 @@ public class Robot extends TimedRobot {
     // robot's periodic
     // block in order for anything in the Command-based framework to work.
     CommandScheduler.getInstance().run();
-    SmartDashboard.putNumber("gyro angle", RobotContainer.m_driveTrain.getGyroAngle());
-    SmartDashboard.putNumber("dist left", RobotContainer.m_driveTrain.getLeftEncoderDistance());
-    SmartDashboard.putNumber("dist right", RobotContainer.m_driveTrain.getRightEncoderDistance());
-    SmartDashboard.putNumber("Arm Angle", RobotContainer.m_arm.getArmAngle());
+    // SmartDashboard.putNumber("gyro angle", RobotContainer.m_driveTrain.getGyroAngle());
+    // SmartDashboard.putNumber("dist left", RobotContainer.m_driveTrain.getLeftEncoderDistance());
+    // SmartDashboard.putNumber("dist right", RobotContainer.m_driveTrain.getRightEncoderDistance());
+    // SmartDashboard.putNumber("Arm Angle", RobotContainer.m_arm.getArmAngle());
     
   }
 
@@ -97,7 +100,7 @@ public class Robot extends TimedRobot {
   /** This function is called periodically during autonomous. */
   @Override
   public void autonomousPeriodic() {
-    m_autonomousCommand.execute();
+    // m_autonomousCommand.execute();
   }
 
   @Override
@@ -117,7 +120,10 @@ public class Robot extends TimedRobot {
 
   /** This function is called periodically during operator control. */
   @Override
-  public void teleopPeriodic() {}
+  public void teleopPeriodic() {
+    // m_robotContainer.m_driveTrain.sound.play();
+
+  }
 
   @Override
   public void testInit() {
