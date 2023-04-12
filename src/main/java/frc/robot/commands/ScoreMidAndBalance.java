@@ -21,6 +21,6 @@ public class ScoreMidAndBalance extends SequentialCommandGroup {
         new ToggleClaw(this.m_intake), new LowerArmDown(this.m_arm).withTimeout(2), 
         new DriveToPosition(this.m_drive, -148).withTimeout(5),
         new DriveToPosition(this.m_drive, 68).withTimeout(3),
-        new Balance(this.m_drive, true));
+        new Balance(this.m_drive));
   }
 }

@@ -23,6 +23,6 @@ public class ScoreHighAndBalance extends SequentialCommandGroup {
         new TogglePivot(this.m_arm),
         new LowerArmAndDrive(this.m_drive, this.m_arm, -138).withTimeout(5), 
         new DriveToPosition(this.m_drive, 68).withTimeout(3),
-        new Balance(this.m_drive, true));
+        new Balance(this.m_drive));
   }
 }
