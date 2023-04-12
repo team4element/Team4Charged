@@ -8,7 +8,7 @@ package frc.robot;
 import frc.robot.commands.*;
 
 import frc.robot.controllers.DriverController;
-import frc.robot.controllers.OperatorController;
+// import frc.robot.controllers.OperatorController;
 
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.Arm;
@@ -63,11 +63,11 @@ public class RobotContainer {
   private final Command ScoreLowAndBalanceMode = new ScoreLowAndBalance(m_driveTrain, m_intake);
   private final Command BalanceMode = new DriveToPosition(m_driveTrain, -82);
   private final Command ScoreMidAndTaxiAndBalanceMode = new ScoreMidAndBalance(m_driveTrain, m_arm, m_intake);
-  private final Command BalanceAndTaxiMode = Commands.sequence(
+  private final Command TaxiAndBalanceMode = Commands.sequence(
       new DriveToPosition(m_driveTrain, -148).withTimeout(5),
       new DriveToPosition(m_driveTrain, 68).withTimeout(3),
-      new Balance(m_driveTrain));
-  private final Command NewBalanceMode = new Balance(m_driveTrain);
+      new Balance(m_driveTrain, true));
+  private final Command NewBalanceMode = new Balance(m_driveTrain, true);
   // private final Command Straight = new FollowTrajectoryPP(m_driveTrain);
 
   SendableChooser<Command> m_chooser = new SendableChooser<>();
@@ -93,7 +93,7 @@ public class RobotContainer {
     m_chooser.addOption("Score Low And Taxi Auto", ScoreLowAndTaxiMode);
     m_chooser.addOption("Score High And Taxi Auto", ScoreHighAndTaxiMode);
     m_chooser.addOption("Score Mid, Taxi, and Balance Auto", ScoreMidAndTaxiAndBalanceMode);
-    m_chooser.addOption("Balance And Taxi Auto", BalanceAndTaxiMode);
+    m_chooser.addOption("Taxi and Balance Auto", TaxiAndBalanceMode);
     m_chooser.addOption("New Balance Auto", NewBalanceMode);
     SmartDashboard.putData(m_chooser);
   }
