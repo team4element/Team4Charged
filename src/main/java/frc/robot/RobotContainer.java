@@ -61,7 +61,9 @@ public class RobotContainer {
   private final Command ScoreMidAndTaxiMode = new ScoreMidAndTaxiAuto(m_driveTrain, m_arm, m_intake);
   private final Command ScoreHighAndTaxiMode = new ScoreHighAndTaxiAuto(m_driveTrain, m_arm, m_intake);
   private final Command ScoreLowAndTaxiAndBalanceMode = new ScoreLowAndBalance(m_driveTrain, m_intake);
-  private final Command BalanceMode = new DriveToPosition(m_driveTrain, -82);
+  private final Command BalanceMode = Commands.sequence(
+    new DriveToPosition(m_driveTrain, -82).withTimeout(3),
+    new Balance(m_driveTrain));
   private final Command ScoreMidAndTaxiAndBalanceMode = new ScoreMidAndBalance(m_driveTrain, m_arm, m_intake);
   private final Command ScoreHighAndTaxiAndBalanceMode = new ScoreHighAndBalance(m_driveTrain, m_arm, m_intake);
   private final Command TaxiAndBalanceMode = Commands.sequence(
