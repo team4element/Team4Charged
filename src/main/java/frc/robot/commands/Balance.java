@@ -10,7 +10,7 @@ public class Balance extends CommandBase {
   private final DriveTrain m_drive;
   private PIDController balancePID;
   
-  private final double tolerance = 5;
+  private final double tolerance = 2.5;
 
   private double power;
 
@@ -27,6 +27,7 @@ public class Balance extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    this.m_drive.setBrakeMode();
     balancePID.setSetpoint(0);
   }
 
@@ -41,7 +42,9 @@ public class Balance extends CommandBase {
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+    this.m_drive.setCoastMode();
+  }
 
   // Returns true when the command should end.
   @Override

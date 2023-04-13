@@ -49,9 +49,9 @@ public class RobotContainer {
     new LowerArmDown(m_arm).withTimeout(1.5));
   private final Command ScoreHighMode = Commands.sequence(
     new HighConePosition(m_arm).withTimeout(2),
-    new DriveToPosition(m_driveTrain, 11.5).withTimeout(2),
+    new DriveToPosition(m_driveTrain, 23.5).withTimeout(2),
     new ToggleClaw(m_intake),
-    new DriveToPosition(m_driveTrain, -10).withTimeout(2),
+    new DriveToPosition(m_driveTrain, -20).withTimeout(2),
     new TogglePivot(m_arm),
     new LowerArmDown(m_arm).withTimeout(1.5));
   private final Command DoNothingMode = new DoNothingMode();
@@ -74,6 +74,7 @@ public class RobotContainer {
   private final Command ScoreLowAndIntakeMode = new ScoreLowAndIntake(m_driveTrain, m_intake);
   private final Command ScoreMidAndIntakeMode = new ScoreMidAndIntake(m_driveTrain, m_arm, m_intake);
   private final Command ScoreHighAndIntakeMode = new ScoreHighAndIntake(m_driveTrain, m_arm, m_intake);
+  private final Command ProfiledPID = new ProfiledDriveToPosition(m_driveTrain, -80);
   // private final Command Straight = new FollowTrajectoryPP(m_driveTrain);
 
   SendableChooser<Command> m_chooser = new SendableChooser<>();
@@ -105,6 +106,7 @@ public class RobotContainer {
     m_chooser.addOption("Score Low and Intake Auto", ScoreLowAndIntakeMode);
     m_chooser.addOption("Score Mid and Intake Auto", ScoreMidAndIntakeMode);
     m_chooser.addOption("Score High and Intake Auto", ScoreHighAndIntakeMode);
+    m_chooser.addOption("Profiled PID", ProfiledPID);
     SmartDashboard.putData(m_chooser);
   }
 

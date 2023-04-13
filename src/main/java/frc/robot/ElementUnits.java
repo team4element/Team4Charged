@@ -19,6 +19,11 @@ public class ElementUnits {
         return (inches / (6 * 3.145)) * (9.06 * 2048);
     }
 
+    public static double metersToTicks(double meters) {
+        double inches = meters * 39.37;
+        return (inches / (6 * 3.145)) * (9.06 * 2048);
+    }
+
     public static double radiansPerSecondToTicksPer100ms(double rad_s, double encoderPPR) {
         return rad_s / (Math.PI * 2.0) * encoderPPR / 10.0;
     }

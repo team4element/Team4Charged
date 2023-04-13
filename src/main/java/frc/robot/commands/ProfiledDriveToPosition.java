@@ -4,16 +4,19 @@
 
 package frc.robot.commands;
 
-import edu.wpi.first.math.MathUtil;
-import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
+import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.math.util.Units;
+
 import frc.robot.Constants;
 import frc.robot.ElementUnits;
 import frc.robot.subsystems.DriveTrain;
 
-public class DriveToPosition extends CommandBase {
-  private PIDController positionPID;
+public class ProfiledDriveToPosition extends CommandBase {
+  
+  private ProfiledPIDController positionPID;
 
   private final DriveTrain m_drive;
   private final double m_position;
@@ -23,13 +26,12 @@ public class DriveToPosition extends CommandBase {
   SimpleMotorFeedforward feedForward = new SimpleMotorFeedforward(Constants.DriveConstants.kS,
       Constants.DriveConstants.kV, Constants.DriveConstants.kA);
   
-  public DriveToPosition(DriveTrain drive, double position) {
+  public ProfiledDriveToPosition(DriveTrain drive, double position) {
 
     this.m_drive = drive;
     this.m_position = position;
 
-    positionPID = new PIDController(Constants.DriveConstants.kPositionP, Constants.DriveConstants.kPositionI, Constants.DriveConstants.kPositionD);
-
+    positionPID = new ProfiledPIDController(Constants.DriveConstants.kPositionP, Constants.DriveConstants.kPositionI, Constants.DriveConstants.kPositionD, new TrapezoidProfile.Constraints(10, 5));
     positionPID.setTolerance(tolerance);
       
     addRequirements(this.m_drive);
@@ -39,24 +41,20 @@ public class DriveToPosition extends CommandBase {
   @Override
   public void initialize() {
     DriveTrain.resetSensors();
-    positionPID.setSetpoint(ElementUnits.inchesToTicks(this.m_position));
-    // this.m_drive.setPower(0, 0);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    double power = positionPID.calculate(this.m_drive.getAverageRawEncoderTicks());
+    double power = positionPID.calculate(this.m_drive.getAverageEncoderDistance(), Units.inchesToMeters(this.m_position));
     double[] outputs = this.m_drive.getStraightOutput(power, power, 0);
    
-    this.m_drive.setPower(MathUtil.clamp(outputs[0], -Constants.DriveConstants.kHoldPositionClamp, Constants.DriveConstants.kHoldPositionClamp), MathUtil.clamp(outputs[1], -Constants.DriveConstants.kHoldPositionClamp, Constants.DriveConstants.kHoldPositionClamp));
+    this.m_drive.tankDriveVolts(power, power);
   }
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {
-  // this.m_drive.setPower(0, 0);
-  }
+  public void end(boolean interrupted) {}
 
   // Returns true when the command should end.
   @Override
