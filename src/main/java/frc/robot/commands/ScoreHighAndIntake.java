@@ -17,13 +17,13 @@ public class ScoreHighAndIntake extends SequentialCommandGroup {
     this.m_intake = intake;
 
     addCommands(new HighConePosition(this.m_arm).withTimeout(2),
-    new DriveToPosition(this.m_drive, 11.5).withTimeout(2),
+    new ProfiledDriveToPosition(this.m_drive, 23.5),
     new ToggleClaw(this.m_intake), 
-    new DriveToPosition(this.m_drive, -10).withTimeout(1),
+    new ProfiledDriveToPosition(this.m_drive, -24),
     new TogglePivot(this.m_arm),
-    new LowerArmAndDrive(this.m_drive, this.m_arm, -85).withTimeout(4),
+    new LowerArmAndDrive(this.m_drive, this.m_arm, -71),
     new RotateToAngle(this.m_drive, 180).withTimeout(0.5),
-    new DriveToPosition(this.m_drive, 95).withTimeout(3),
+    new ProfiledDriveToPosition(this.m_drive, 95, 2),
     new IntakeForward(this.m_intake).withTimeout(1),
     new RotateToAngle(this.m_drive, 180).withTimeout(0.5));
   }

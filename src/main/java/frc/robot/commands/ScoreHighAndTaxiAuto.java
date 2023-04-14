@@ -16,12 +16,11 @@ public class ScoreHighAndTaxiAuto extends SequentialCommandGroup {
     this.m_arm = arm;
     this.m_intake = intake;
 
-    addCommands(new DriveToPosition(this.m_drive, -12).withTimeout(2),
-        new HighConePosition(this.m_arm).withTimeout(2),
-        new DriveToPosition(this.m_drive, 11.5).withTimeout(2),
+    addCommands(new HighConePosition(this.m_arm).withTimeout(2),
+        new ProfiledDriveToPosition(this.m_drive, 23.5),
         new ToggleClaw(this.m_intake),
-        new DriveToPosition(this.m_drive, -10).withTimeout(2),
+        new ProfiledDriveToPosition(this.m_drive, -24),
         new TogglePivot(this.m_arm),
-        new LowerArmAndDrive(this.m_drive, this.m_arm, -180).withTimeout(5));
+        new LowerArmAndDrive(this.m_drive, this.m_arm, -166));
   }
 }
