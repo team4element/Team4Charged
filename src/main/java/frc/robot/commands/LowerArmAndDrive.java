@@ -13,6 +13,6 @@ public class LowerArmAndDrive extends ParallelCommandGroup {
     this.m_drive = drive;
     this.m_arm = arm;
 
-    addCommands(new LowerArmDown(this.m_arm), new DriveToPosition(this.m_drive, position));
+    addCommands(new LowerArmDown(this.m_arm), new ProfiledDriveToPosition(this.m_drive, position, 1));
   }
 }

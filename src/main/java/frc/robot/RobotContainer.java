@@ -43,15 +43,15 @@ public class RobotContainer {
   private final Command ScoreLowMode = new Score(m_intake).withTimeout(1);
   private final Command ScoreMidMode = Commands.sequence(
     new HoldArmPosition(m_arm, 74.5).withTimeout(2),
-    new DriveToPosition(m_driveTrain, 11.5).withTimeout(2),
+    new ProfiledDriveToPosition(m_driveTrain, 11.5, .5).withTimeout(2),
     new ToggleClaw(m_intake),
-    new DriveToPosition(m_driveTrain, -10).withTimeout(2),
+    new ProfiledDriveToPosition(m_driveTrain, -10, .5).withTimeout(2),
     new LowerArmDown(m_arm).withTimeout(1.5));
   private final Command ScoreHighMode = Commands.sequence(
     new HighConePosition(m_arm).withTimeout(2),
-    new DriveToPosition(m_driveTrain, 23.5).withTimeout(2),
+    new ProfiledDriveToPosition(m_driveTrain, 23.5, 1).withTimeout(2),
     new ToggleClaw(m_intake),
-    new DriveToPosition(m_driveTrain, -20).withTimeout(2),
+    new ProfiledDriveToPosition(m_driveTrain, -24, 1).withTimeout(2),
     new TogglePivot(m_arm),
     new LowerArmDown(m_arm).withTimeout(1.5));
   private final Command DoNothingMode = new DoNothingMode();
@@ -62,19 +62,19 @@ public class RobotContainer {
   private final Command ScoreHighAndTaxiMode = new ScoreHighAndTaxiAuto(m_driveTrain, m_arm, m_intake);
   private final Command ScoreLowAndTaxiAndBalanceMode = new ScoreLowAndBalance(m_driveTrain, m_intake);
   private final Command BalanceMode = Commands.sequence(
-    new DriveToPosition(m_driveTrain, -82).withTimeout(3),
+    new ProfiledDriveToPosition(m_driveTrain, -82, 1).withTimeout(3),
     new Balance(m_driveTrain));
   private final Command ScoreMidAndTaxiAndBalanceMode = new ScoreMidAndBalance(m_driveTrain, m_arm, m_intake);
   private final Command ScoreHighAndTaxiAndBalanceMode = new ScoreHighAndBalance(m_driveTrain, m_arm, m_intake);
   private final Command TaxiAndBalanceMode = Commands.sequence(
-      new DriveToPosition(m_driveTrain, -148).withTimeout(5),
-      new DriveToPosition(m_driveTrain, 68).withTimeout(3),
+      new ProfiledDriveToPosition(m_driveTrain, -148, 1).withTimeout(5),
+      new ProfiledDriveToPosition(m_driveTrain, 68, 1).withTimeout(3),
       new Balance(m_driveTrain));
   private final Command NewBalanceMode = new Balance(m_driveTrain);
   private final Command ScoreLowAndIntakeMode = new ScoreLowAndIntake(m_driveTrain, m_intake);
   private final Command ScoreMidAndIntakeMode = new ScoreMidAndIntake(m_driveTrain, m_arm, m_intake);
   private final Command ScoreHighAndIntakeMode = new ScoreHighAndIntake(m_driveTrain, m_arm, m_intake);
-  private final Command ProfiledPID = new ProfiledDriveToPosition(m_driveTrain, -80);
+  private final Command ProfiledPID = new ProfiledDriveToPosition(m_driveTrain, -160);
   // private final Command Straight = new FollowTrajectoryPP(m_driveTrain);
 
   SendableChooser<Command> m_chooser = new SendableChooser<>();

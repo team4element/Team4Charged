@@ -17,12 +17,12 @@ public class ScoreHighAndBalance extends SequentialCommandGroup {
     this.m_intake = intake;
 
     addCommands(new HighConePosition(this.m_arm).withTimeout(2),
-        new DriveToPosition(this.m_drive, 11.5).withTimeout(2),
+        new ProfiledDriveToPosition(this.m_drive, 11.5, 2.5).withTimeout(2),
         new ToggleClaw(this.m_intake), 
-        new DriveToPosition(this.m_drive, -10).withTimeout(2),
+        new ProfiledDriveToPosition(this.m_drive, -10, 2.5).withTimeout(2),
         new TogglePivot(this.m_arm),
         new LowerArmAndDrive(this.m_drive, this.m_arm, -138).withTimeout(5), 
-        new DriveToPosition(this.m_drive, 68).withTimeout(3),
+        new ProfiledDriveToPosition(this.m_drive, 68, 1).withTimeout(3),
         new ToggleClaw(this.m_intake),
         new Balance(this.m_drive));
   }

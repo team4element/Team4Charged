@@ -69,6 +69,12 @@ public final class Constants {
     public static final double kPositionD = 0;
     public static final double kPositionF = 0;
 
+     // HoldDrivePosition ProfiledPID
+     public static final double kProfiledPositionP = 1.20;
+     public static final double kProfiledPositionI = 0;
+     public static final double kProfiledPositionD = 0;
+     public static final double kProfiledPositionF = 0;
+
     // Balance PID
     public static final double kBalanceP = .055;
     public static final double kBalanceI = 0;
