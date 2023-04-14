@@ -139,6 +139,9 @@ public class RobotContainer {
     new Trigger(m_driveTrain::rotate)
         .onTrue(new RotateToAngle(m_driveTrain, 90));
 
+    // Run Balance Command when Driver X Button is Held
+    new Trigger(m_driveTrain::balance)
+        .whileTrue(new Balance(m_driveTrain));
     // Run SlowTurnLeft Command when Driver Left Trigger is Pressed
     new Trigger(m_driveTrain::slowTurnLeft)
         .whileTrue(new SlowTurnLeft(m_driveTrain, m_driverController));

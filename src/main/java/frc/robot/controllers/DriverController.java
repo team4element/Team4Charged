@@ -32,6 +32,10 @@ public class DriverController {
         return mController.getYButton();
     }
 
+    public boolean getBalance(){
+        return mController.getXButton();
+    }
+
     public boolean getSlowDrive(){
         return mController.getBButton();
     }

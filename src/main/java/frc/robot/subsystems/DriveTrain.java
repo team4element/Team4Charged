@@ -338,6 +338,10 @@ public class DriveTrain extends SubsystemBase {
     return mDriverController.getRotate();
   }
 
+  public boolean balance() {
+    return mDriverController.getBalance();
+  }
+
   @Override
   public void periodic() {
     // sound.play();
