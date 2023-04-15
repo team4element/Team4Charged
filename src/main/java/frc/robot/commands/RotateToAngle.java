@@ -14,7 +14,7 @@ public class RotateToAngle extends CommandBase {
     private final double m_angle;
     private final DriveTrain m_drive;
 
-    private static final double tolerance = 2.0;
+    private static final double tolerance = 1;
 
     public RotateToAngle(DriveTrain drive, double angle) {
         anglePID = new PIDController(Constants.DriveConstants.kAngleP, Constants.DriveConstants.kAngleI, Constants.DriveConstants.kAngleD);
@@ -36,7 +36,8 @@ public class RotateToAngle extends CommandBase {
     @Override
     public void execute() {
         double power = anglePID.calculate(this.m_drive.getGyroAngle());
-        this.m_drive.arcadeDrive(0, power);
+        System.out.println(power);
+        this.m_drive.setPower(-power, power);
     }
 
     @Override
@@ -46,7 +47,6 @@ public class RotateToAngle extends CommandBase {
 
     @Override
     public boolean isFinished() {
-        // return anglePID.atSetpoint();
-        return false;
+        return anglePID.atSetpoint();
     }
 }

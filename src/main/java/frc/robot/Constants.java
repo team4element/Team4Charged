@@ -52,9 +52,9 @@ public final class Constants {
     public static final boolean invertedGyro = false;
     
     // RotateToAngle PID
-    public static final double kAngleP = 0.009;
+    public static final double kAngleP = 0.01275;
     public static final double kAngleI = 0;
-    public static final double kAngleD = 0;
+    public static final double kAngleD = .0031;
     public static final double kAngleF = 0;
 
     // DriveStraight PID
