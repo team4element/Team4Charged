@@ -77,7 +77,7 @@ public class RobotContainer {
   private final Command ScoreMidAndIntakeMode = new ScoreMidAndIntake(m_driveTrain, m_arm, m_intake);
   private final Command ScoreHighAndIntakeMode = new ScoreHighAndIntake(m_driveTrain, m_arm, m_intake);
   private final Command ProfiledPID = new ProfiledDriveToPosition(m_driveTrain, -160);
-  // private final Command Straight = new FollowTrajectoryPP(m_driveTrain);
+  private final Command Turn = new FollowTrajectoryPP(m_driveTrain);
 
   SendableChooser<Command> m_chooser = new SendableChooser<>();
 
@@ -109,6 +109,7 @@ public class RobotContainer {
     m_chooser.addOption("Score Mid and Intake Auto", ScoreMidAndIntakeMode);
     m_chooser.addOption("Score High and Intake Auto", ScoreHighAndIntakeMode);
     m_chooser.addOption("Profiled PID", ProfiledPID);
+    m_chooser.addOption("Turn", Turn);
     SmartDashboard.putData(m_chooser);
   }
 
@@ -137,7 +138,7 @@ public class RobotContainer {
   private void configureBindings() {
     // Run RotateToAngle Command when Driver Y Button is Pressed
     new Trigger(m_driveTrain::rotate)
-        .onTrue(new RotateToAngle(m_driveTrain, 90));
+        .onTrue(new RotateToAngle(m_driveTrain, 180));
 
     // Run Balance Command when Driver X Button is Held
     new Trigger(m_driveTrain::balance)
@@ -159,7 +160,7 @@ public class RobotContainer {
     // Run HoldArmPosition Command for High Cube Position when Operator Left Trigger
     // is Pressed
     new Trigger(m_arm::getHighCubePosition)
-        .onTrue(new HoldArmPosition(m_arm, 73.5))
+        .onTrue(new HoldArmPosition(m_arm, 74.5))
         .onFalse(new LowerArmDown(m_arm));
 
     // Run HoldArmPosition Command for Mid Cube Position when Operator Right Trigger

@@ -79,7 +79,7 @@ public class FollowTrajectoryPP extends SequentialCommandGroup {
 
   public FollowTrajectoryPP(DriveTrain driveTrain) {
     // DriveTrain.resetEncoders();
-    List<PathPlannerTrajectory> trajectory = PathPlanner.loadPathGroup("TaxiAndBalance", new PathConstraints(0.75, 0.5));
+    List<PathPlannerTrajectory> trajectory = PathPlanner.loadPathGroup("180", new PathConstraints(0.75, 0.5));
 
     HashMap<String, Command> eventMap = new HashMap<>();
     eventMap.put("holdPosition", new HoldDrivePosition(RobotContainer.getDriveTrainSubsystem()));
