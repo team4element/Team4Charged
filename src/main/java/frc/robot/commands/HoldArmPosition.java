@@ -45,7 +45,7 @@ public class HoldArmPosition extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    double power = MathUtil.clamp(armPID.calculate(this.m_arm.getEncoderDistance(), this.m_arm.armAngleToTicks(m_angle)), -0.9, 0.9);
+    double power = MathUtil.clamp(armPID.calculate(this.m_arm.getEncoderDistance(), this.m_arm.armAngleToTicks(m_angle)), -1, 1);
     this.m_arm.setArmPower(power);
   }
 

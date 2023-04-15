@@ -16,13 +16,14 @@ public class ScoreMidAndIntake extends SequentialCommandGroup {
     this.m_arm = arm;
     this.m_intake = intake;
 
-    addCommands(new HoldArmPosition(this.m_arm, 74.5).withTimeout(2),
+    addCommands(new HoldArmPosition(this.m_arm, 74.5).withTimeout(1.4),
     new ProfiledDriveToPosition(this.m_drive, 11.5),
     new ToggleClaw(this.m_intake), 
-    new LowerArmAndDrive(this.m_drive, this.m_arm, -95),
-    new RotateToAngle(this.m_drive, 180).withTimeout(0.5),
+    new LowerArmAndDrive(this.m_drive, this.m_arm, -95).withTimeout(3),
+    new RotateToAngle(this.m_drive, 180).withTimeout(2),
     new ProfiledDriveToPosition(this.m_drive, 95, 2),
-    new IntakeForward(this.m_intake).withTimeout(1),
-    new RotateToAngle(this.m_drive, 180).withTimeout(0.5));
+    new LowerArmDown(this.m_arm).withTimeout(1),
+    new IntakeForward(this.m_intake).withTimeout(3),
+    new RotateToAngle(this.m_drive, 180).withTimeout(2));
   }
 }

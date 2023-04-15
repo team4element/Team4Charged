@@ -51,10 +51,10 @@ public class LowerArmDown extends CommandBase {
       m_arm.setArmPower(power);
     } else {
       if (this.m_arm.getPivotState()){
-        double power = MathUtil.clamp(pivotedArmPID.calculate(this.m_arm.getEncoderDistance(), this.m_arm.armAngleToTicks(Constants.ArmConstants.kPivotedAngle)), -0.5, 0.9);
+        double power = MathUtil.clamp(pivotedArmPID.calculate(this.m_arm.getEncoderDistance(), this.m_arm.armAngleToTicks(Constants.ArmConstants.kPivotedAngle)), -0.8, 0.9);
         this.m_arm.setArmPower(power);
       } else {
-        double power = MathUtil.clamp(normalArmPID.calculate(this.m_arm.getEncoderDistance(), this.m_arm.armAngleToTicks(Constants.ArmConstants.kBaseAngle)), -0.5, 0.9);
+        double power = MathUtil.clamp(normalArmPID.calculate(this.m_arm.getEncoderDistance(), this.m_arm.armAngleToTicks(Constants.ArmConstants.kBaseAngle)), -0.8, 0.9);
         this.m_arm.setArmPower(power);
       }
     }
