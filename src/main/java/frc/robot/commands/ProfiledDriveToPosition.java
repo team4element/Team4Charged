@@ -65,7 +65,6 @@ public class ProfiledDriveToPosition extends CommandBase {
   public void execute() {
     double power = positionPID.calculate(this.m_drive.getAverageEncoderDistance());
     double[] outputs = this.m_drive.getStraightOutput(power, power, 0);
-    System.out.println(power);
     this.m_drive.setPower(outputs[0], outputs[1]);
   }
 
