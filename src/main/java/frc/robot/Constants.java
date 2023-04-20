@@ -76,7 +76,7 @@ public final class Constants {
      public static final double kProfiledPositionF = 0;
 
     // Balance PID
-    public static final double kBalanceP = .055;
+    public static final double kBalanceP = .035;
     public static final double kBalanceI = 0;
     public static final double kBalanceD = 0;
 

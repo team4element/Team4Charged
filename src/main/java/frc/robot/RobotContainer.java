@@ -77,7 +77,7 @@ public class RobotContainer {
   private final Command ScoreMidAndIntakeMode = new ScoreMidAndIntake(m_driveTrain, m_arm, m_intake);
   private final Command ScoreHighAndIntakeMode = new ScoreHighAndIntake(m_driveTrain, m_arm, m_intake);
   private final Command ProfiledPID = new ProfiledDriveToPosition(m_driveTrain, -160);
-  private final Command Turn = new FollowTrajectoryPP(m_driveTrain);
+  // private final Command Turn = new FollowTrajectoryPP(m_driveTrain);
 
   SendableChooser<Command> m_chooser = new SendableChooser<>();
 
@@ -109,7 +109,7 @@ public class RobotContainer {
     m_chooser.addOption("Score Mid and Intake Auto", ScoreMidAndIntakeMode);
     m_chooser.addOption("Score High and Intake Auto", ScoreHighAndIntakeMode);
     m_chooser.addOption("Profiled PID", ProfiledPID);
-    m_chooser.addOption("Turn", Turn);
+    // m_chooser.addOption("Turn", Turn);
     SmartDashboard.putData(m_chooser);
   }
 
@@ -172,7 +172,7 @@ public class RobotContainer {
     // Run HoldArmPosition Command for Shelf Position when Operator Right Bumper is
     // Pressed
     new Trigger(m_arm::getShelfPosition)
-        .onTrue(new HoldArmPosition(m_arm, 70))
+        .onTrue(new HoldArmPosition(m_arm, 68))
         .onFalse(new LowerArmDown(m_arm));
 
     // Run TogglePivot Command when Operator A Button is Pressed
