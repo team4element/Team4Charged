@@ -89,7 +89,7 @@ public final class Constants {
 
     // Clamps
     public static final double kHoldPositionClamp = .3;
-    public static final double kBalanceClamp = .35;
+    public static final double kBalanceClamp = .4;
   }
 
   public static class PneumaticsConstants {
