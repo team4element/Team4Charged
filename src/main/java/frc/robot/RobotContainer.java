@@ -72,7 +72,6 @@ public class RobotContainer {
       new ProfiledDriveToPosition(m_driveTrain, -148),
       new ProfiledDriveToPosition(m_driveTrain, 68),
       new Balance(m_driveTrain));
-  private final Command NewBalanceMode = new Balance(m_driveTrain);
   private final Command ScoreLowAndIntakeMode = new ScoreLowAndIntake(m_driveTrain, m_intake);
   private final Command ScoreMidAndIntakeMode = new ScoreMidAndIntake(m_driveTrain, m_arm, m_intake);
   private final Command ScoreHighAndIntakeMode = new ScoreHighAndIntake(m_driveTrain, m_arm, m_intake);
@@ -104,7 +103,6 @@ public class RobotContainer {
     m_chooser.addOption("Score Mid, Taxi, and Balance Auto", ScoreMidAndTaxiAndBalanceMode);
     m_chooser.addOption("Score High, Taxi, and Balance Auto", ScoreHighAndTaxiAndBalanceMode);
     m_chooser.addOption("Taxi and Balance Auto", TaxiAndBalanceMode);
-    m_chooser.addOption("New Balance Auto", NewBalanceMode);
     m_chooser.addOption("Score Low and Intake Auto", ScoreLowAndIntakeMode);
     m_chooser.addOption("Score Mid and Intake Auto", ScoreMidAndIntakeMode);
     m_chooser.addOption("Score High and Intake Auto", ScoreHighAndIntakeMode);
@@ -143,6 +141,7 @@ public class RobotContainer {
     // Run Balance Command when Driver X Button is Held
     new Trigger(m_driveTrain::balance)
         .whileTrue(new Balance(m_driveTrain));
+
     // Run SlowTurnLeft Command when Driver Left Trigger is Pressed
     new Trigger(m_driveTrain::slowTurnLeft)
         .whileTrue(new SlowTurnLeft(m_driveTrain, m_driverController));
@@ -172,7 +171,7 @@ public class RobotContainer {
     // Run HoldArmPosition Command for Shelf Position when Operator Right Bumper is
     // Pressed
     new Trigger(m_arm::getShelfPosition)
-        .onTrue(new HoldArmPosition(m_arm, 65))
+        .onTrue(new HoldArmPosition(m_arm, 65.75))
         .onFalse(new LowerArmDown(m_arm));
 
     // Run TogglePivot Command when Operator A Button is Pressed
