@@ -172,7 +172,7 @@ public class RobotContainer {
     // Run HoldArmPosition Command for Shelf Position when Operator Right Bumper is
     // Pressed
     new Trigger(m_arm::getShelfPosition)
-        .onTrue(new HoldArmPosition(m_arm, 68))
+        .onTrue(new HoldArmPosition(m_arm, 65))
         .onFalse(new LowerArmDown(m_arm));
 
     // Run TogglePivot Command when Operator A Button is Pressed
