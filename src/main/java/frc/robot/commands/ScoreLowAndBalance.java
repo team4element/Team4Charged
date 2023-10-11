@@ -14,7 +14,7 @@ public class ScoreLowAndBalance extends SequentialCommandGroup {
     this.m_intake = intake;
 
     addCommands(new Score(this.m_intake).withTimeout(.25),
-        new ProfiledDriveToPosition(this.m_drive, -148).withTimeout(4),
+        new ProfiledDriveToPosition(this.m_drive, -170).withTimeout(4),
         new ProfiledDriveToPosition(this.m_drive, 68),
         new Balance(this.m_drive));
   }

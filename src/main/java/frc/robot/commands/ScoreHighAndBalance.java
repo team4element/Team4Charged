@@ -21,7 +21,7 @@ public class ScoreHighAndBalance extends SequentialCommandGroup {
         new ToggleClaw(this.m_intake), 
         new ProfiledDriveToPosition(this.m_drive, -24),
         new TogglePivot(this.m_arm),
-        new LowerArmAndDrive(this.m_drive, this.m_arm, -124).withTimeout(4), 
+        new LowerArmAndDrive(this.m_drive, this.m_arm, -150).withTimeout(4), 
         new ProfiledDriveToPosition(this.m_drive, 68),
         new ToggleClaw(this.m_intake),
         new Balance(this.m_drive));

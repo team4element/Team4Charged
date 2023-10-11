@@ -19,7 +19,7 @@ public class ScoreMidAndBalance extends SequentialCommandGroup {
     addCommands(new HoldArmPosition(this.m_arm, 74.5).withTimeout(2),
         new ProfiledDriveToPosition(this.m_drive, 11.5),
         new ToggleClaw(this.m_intake), 
-        new LowerArmAndDrive(this.m_drive, this.m_arm, -148).withTimeout(4), 
+        new LowerArmAndDrive(this.m_drive, this.m_arm, -170).withTimeout(4), 
         new ProfiledDriveToPosition(this.m_drive, 68),
         new ToggleClaw(this.m_intake),
         new Balance(this.m_drive));
