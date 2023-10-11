@@ -65,7 +65,7 @@ public class FollowTrajectory extends SequentialCommandGroup {
   
   public FollowTrajectory(DriveTrain driveTrain) {
     DriveTrain.resetEncoders();
-    addCommands(loadPathWeaverTrajectoryCommand("pathplanner/generatedJSON/TaxiAndBalance.wpilib.json", true));
+   addCommands(loadPathWeaverTrajectoryCommand("pathplanner/generatedJSON/TaxiAndBalance.wpilib.json", true));
 
     addRequirements(driveTrain);
   }
